@@ -16,7 +16,6 @@ import java.util.List;
 public class ClubServiceImpl implements ClubService {
 
     @Autowired
-//    @Qualifier("clubRepo")
     private ClubRepo clubRepo;
 
     @Autowired
