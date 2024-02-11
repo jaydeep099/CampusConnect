@@ -17,7 +17,7 @@ const ClubCard = () => {
         <CardBody paddingBottom="0">
           <Image
             src="./assets/images/campusconnect.jpeg"
-            alt="Green double couch with wooden legs"
+            alt="Club"
             borderRadius="lg"
           />
 

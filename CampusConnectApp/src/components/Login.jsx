@@ -10,9 +10,8 @@ import {
   Heading,
   HStack,
   Input,
-  Link,
   Stack,
-  Text,
+  Image,
   VStack,
 } from "@chakra-ui/react";
 const Login = () => {
@@ -20,11 +19,17 @@ const Login = () => {
     <Box>
       <Center>
         <Stack spacing="4">
-          <Card variant="outline" w="308px">
+          <Card variant="outline" w="150%">
             <VStack as="header" spacing="6" mt="8">
+              <Image
+                borderRadius="full"
+                boxSize="100px"
+                src="./assets/images/campusconnectlogo.jpeg"
+                alt="CampusConnect"
+              />
               <Heading
                 as="h1"
-                fontWeight="300"
+                fontWeight="500"
                 fontSize="24px"
                 letterSpacing="-0.5px"
               >
@@ -43,7 +48,8 @@ const Login = () => {
                       size="sm"
                       borderRadius="6px"
                     />
-                  </FormControl>0
+                  </FormControl>
+                  0
                   <FormControl>
                     <HStack justify="space-between">
                       <FormLabel size="sm">Password</FormLabel>
@@ -56,7 +62,6 @@ const Login = () => {
                       borderRadius="6px"
                     />
                   </FormControl>
-
                   <Button
                     bg="#2da44e"
                     color="white"
@@ -67,16 +72,16 @@ const Login = () => {
                     Sign in
                   </Button>
                   <Button
-                      as="a"
-                      href="#"
-                      variant="link"
-                      size="s"
-                      color="#0969da"
-                      fontWeight="50"
-                      ml="-1"
-                    >
-                      Are you new? Register
-                    </Button>
+                    as="a"
+                    href="#"
+                    variant="link"
+                    size="s"
+                    color="#0969da"
+                    fontWeight="50"
+                    ml="-1"
+                  >
+                    Are you new? Register
+                  </Button>
                 </Stack>
               </form>
             </CardBody>
