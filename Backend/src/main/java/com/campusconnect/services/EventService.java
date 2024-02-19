@@ -9,4 +9,6 @@ public interface EventService
     public EventDto updateEvent(EventDto eventDto);
 
     public EventDto deleteEvent(EventDto eventDto);
+
+
 }

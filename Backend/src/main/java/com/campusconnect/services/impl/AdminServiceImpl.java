@@ -31,8 +31,9 @@ public class AdminServiceImpl implements AdminService {
         return null;
     }
 
+
     @Override
-    public AdminDto getStudentById(AdminDto admindto) {
+    public AdminDto deleteAdmin(AdminDto admindto) {
         return null;
     }
 }
