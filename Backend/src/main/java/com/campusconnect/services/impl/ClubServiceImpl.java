@@ -27,7 +27,6 @@ public class ClubServiceImpl implements ClubService {
 
         Club club = model.map(clubDto,Club.class);
         Club club1 = clubRepo.save(club);
-
         return model.map(club1,ClubDto.class);
     }
 

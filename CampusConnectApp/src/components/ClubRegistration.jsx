@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {signUp} from "../services/club-service"
 import {
   FormControl,
   FormLabel,
@@ -91,6 +92,16 @@ const ClubRegistration = () => {
       departmentName: "",
       logo: null,
     });
+
+    //call server api for sending data
+
+    signUp(clubData).then((resp)=>{
+      console.log(resp);
+      console.log("success log");
+    }).catch((error)=>{
+      console.log(error);
+      console.log("Error log");
+    })
   };
 
   return (
