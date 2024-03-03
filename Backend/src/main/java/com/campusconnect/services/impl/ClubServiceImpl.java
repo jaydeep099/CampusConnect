@@ -41,6 +41,11 @@ public class ClubServiceImpl implements ClubService {
     }
 
     @Override
+    public ClubDto getClubByName(String name) {
+        return null;
+    }
+
+    @Override
     public List<ClubDto> getClubByDept(String dept) {
         return null;
     }
