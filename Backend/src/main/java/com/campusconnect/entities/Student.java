@@ -2,6 +2,7 @@ package com.campusconnect.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -9,31 +10,32 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
+@RequiredArgsConstructor
 public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Student_Id")
-    private Long Id;
+    private Long studentId;
 
     @Column(name = "Student_name")
-    private String Name;
+    private String studentName;
 
     @Column(name = "Student_Email")
-    private String Email;
+    private String studentEmail;
 
     @Column(name = "Student_Username")
-    private String Username;
+    private String studentUsername;
 
     @Column(name = "Student_Password")
-    private String Password;
+    private String studentPassword;
 
     @Column(name = "Semester")
-    private String Sem;
+    private String studentSem;
 
     @Column(name = "Department")
-    private String Dept;
+    private String studentDept;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    private List<Event> Event;
+    private List<Event> eventList;
 }

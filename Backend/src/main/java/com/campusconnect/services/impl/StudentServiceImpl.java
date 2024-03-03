@@ -20,6 +20,7 @@ public class StudentServiceImpl implements StudentService {
     private ModelMapper model;
     @Override
     public StudentDto createStudent(StudentDto studentdto) {
+//        System.out.println(studentdto.getDept());
         Student student = model.map(studentdto,Student.class);
         Student student1 = studentRepo.save(student);
         return model.map(student1,StudentDto.class);

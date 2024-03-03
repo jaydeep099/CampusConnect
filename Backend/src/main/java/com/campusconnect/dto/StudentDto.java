@@ -1,22 +1,25 @@
 package com.campusconnect.dto;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import com.campusconnect.entities.Event;
 import java.util.List;
 
 @Setter
 @Getter
+@RequiredArgsConstructor
 public class StudentDto {
-    private String Name;
+    private Long studentId;
+    private String studentName;
 
-    private String Email;
+    private String studentEmail;
 
-    private String Username;
+    private String studentUsername;
 
-    private String Sem;
+    private String studentSem;
 
-    private String Dept;
+    private String studentDept;
 
-    private List<Event> Event;
+    private List<Event> eventListvent;
 }

@@ -15,7 +15,7 @@ public class EventDto
 
     private String eventName;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date eventDate;
 
     private Time eventTime;

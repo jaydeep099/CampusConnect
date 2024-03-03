@@ -1,7 +1,13 @@
 package com.campusconnect.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -12,8 +18,8 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
-public class Event
-{
+@RequiredArgsConstructor
+public class Event {
     @Id
     @Column(name = "Event_Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,10 +29,11 @@ public class Event
     private String eventName;
 
     @Column(name = "Event_Date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date eventDate;
 
     @Column(name = "Event_Time")
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "HH:mm:ss")
     private Time eventTime;
 
     @Column(name = "Event_Venue")
@@ -38,12 +45,12 @@ public class Event
     @Column(name = "Brochure")
     private String brochure;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Club_FK")
+    @JsonBackReference // Prevents infinite recursion in JSON serialization
     private Club club;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    private List<Student> Student;
-
+    @JsonManagedReference // Manages the serialization of the Student list
+    private List<Student> student;
 }
-

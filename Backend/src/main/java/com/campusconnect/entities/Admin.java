@@ -2,11 +2,13 @@ package com.campusconnect.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Setter
 @Getter
+@RequiredArgsConstructor
 public class Admin {
 
     @Id
