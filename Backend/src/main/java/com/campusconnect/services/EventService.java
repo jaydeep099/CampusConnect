@@ -12,7 +12,7 @@ public interface EventService
 
     public EventDto updateEvent(EventDto eventDto);
 
-    public void deleteEvent(Long eventId);
+    public EventDto deleteEvent(EventDto eventDto);
 
     public List<Event> getAllEventsByClub(Long clubId);
 
