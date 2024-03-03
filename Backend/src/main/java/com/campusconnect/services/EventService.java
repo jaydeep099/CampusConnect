@@ -12,6 +12,11 @@ public interface EventService
 
     public EventDto updateEvent(EventDto eventDto);
 
-    public EventDto deleteEvent(EventDto eventDto);
-    
+    public void deleteEvent(Long eventId);
+
+    public List<Event> getAllEventsByClub(Long clubId);
+
+    public List<Event> getEventsBWDate(Date date1,Date date2);
+
+    public List<Event> getAllEvent();
 }
