@@ -57,7 +57,12 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<Event> getAllEventsByClub(Long clubId) {
-        return null;
+
+        Club club = clubRepo.findById(clubId).orElseThrow();
+
+        List<Event> eventList = club.getEventList();
+
+        return eventList;
     }
 
     @Override

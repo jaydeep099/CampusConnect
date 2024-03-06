@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/event")
+@CrossOrigin(origins = "http://localhost:5173")
 public class EventController
 {
     @Autowired
@@ -38,6 +39,7 @@ public class EventController
     @GetMapping("/club/{clubId}")
     private ResponseEntity<List<EventDto>> geteventbyClub(@PathVariable("clubId") Long clubId)
     {
+        System.out.println("hhhhh");
         List<EventDto> allEventByClub = eventService.getAllEventsByClub(clubId)
                 .stream()
                 .map(event -> modelMapper.map(event,EventDto.class))
