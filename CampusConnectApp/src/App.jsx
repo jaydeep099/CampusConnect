@@ -1,13 +1,20 @@
 import "./App.css";
-import ClubCard from "./components/ClubCard";
-import ClubRegistration from "./components/ClubRegistration";
-import EventRegistration from "./components/EventRegistration";
-import Login from "./components/Login";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./page/Home";
+import Event from "./page/Event";
+import Clubs from "./page/Clubs";
+import Contact from "./page/Contact";
+
 function App() {
   return (
-      <>
-        <ClubCard/>
-      </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/events" element={<Event />}></Route>
+        <Route path="/clubs" element={<Clubs />}></Route>
+        <Route path="/contactus" element={<Contact />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
