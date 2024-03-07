@@ -44,6 +44,6 @@ public class Club {
     private String logo;
 
     @OneToMany(mappedBy = "club", fetch = FetchType.LAZY)
-    @JsonIgnore // Ignores serialization of eventList to avoid circular references
+    @JsonIgnore
     private List<Event> eventList;
 }

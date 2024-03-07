@@ -1,10 +1,16 @@
 import Base from "../components/Base";
-import ImageSlider from "../components/ImageSlider";
-
+import ImageSlider from "../components/Home Components/ImageSlider";
+import InfoCard from "../components/Home Components/InfoCard";
+import { Stack, HStack, VStack } from "@chakra-ui/react";
 const Home = () => {
   return (
     <Base>
-      <ImageSlider />
+      <Stack>
+        <HStack spacing={8}>
+          <ImageSlider />
+          <InfoCard />
+        </HStack>
+      </Stack>
     </Base>
   );
 };

@@ -19,7 +19,7 @@ import {
   DrawerCloseButton,
   DrawerBody,
 } from "@chakra-ui/react";
-import { useState} from "react";
+import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { NavLink as ReactLink } from "react-router-dom";
 import { HamburgerIcon } from "@chakra-ui/icons";
@@ -27,11 +27,8 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 const Navbar = () => {
   const [isLargerThan1117] = useMediaQuery("(min-width: 1117px)");
   const [isOpen, setIsOpen] = useState(false);
- 
 
   const handleToggle = () => setIsOpen(!isOpen);
-
- 
 
   return (
     <Box as="nav" bg="gray.100" px={4} py={2} shadow="md" alignItems="center">
@@ -49,8 +46,10 @@ const Navbar = () => {
             style={{ textDecoration: "none" }}
             as={ReactLink}
             to="/"
+            bgGradient="linear(to-l, #7928CA, #FF0080)"
+            bgClip="text"
             fontSize="xl"
-            fontWeight="bold"
+            fontWeight="extrabold"
           >
             Campus Connect
           </Link>
@@ -161,10 +160,7 @@ const Navbar = () => {
             <InputGroup w="auto">
               <Input placeholder="Search..." />
               <InputRightElement>
-                <IconButton
-                  aria-label="Search"
-                  icon={<FaSearch />}
-                />
+                <IconButton aria-label="Search" icon={<FaSearch />} />
               </InputRightElement>
             </InputGroup>
           </Flex>

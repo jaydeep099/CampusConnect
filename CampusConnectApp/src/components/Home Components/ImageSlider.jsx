@@ -3,11 +3,11 @@ import { Box , useMediaQuery} from "@chakra-ui/react";
 import  { useState, useEffect } from "react";
 
 const ImageSlider = () => {
-  const [isLargerThan700] = useMediaQuery("(min-width: 700px)");
+  const [isLargerThan700] = useMediaQuery("(min-width: 740px)");
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
   
-  const [sliderWidth, setSliderWidth] = useState("100%");
-  const [maxSliderHeight, setMaxSliderHeight] = useState("auto");
+  const [sliderWidth, setSliderWidth] = useState(null);
+  const [maxSliderHeight, setMaxSliderHeight] = useState(null);
 
   useEffect(() => {
     if (isLargerThan900) {
@@ -17,7 +17,7 @@ const ImageSlider = () => {
       setSliderWidth("700px");
       setMaxSliderHeight("400px");
     } else {
-      setSliderWidth("100%");
+      setSliderWidth("400px");
       setMaxSliderHeight("300px");
     }
   }, [isLargerThan700, isLargerThan900]);
@@ -30,7 +30,7 @@ const ImageSlider = () => {
     { url: "./assets/images/fun-party-with-dj.jpg" },
   ];
   return (
-    <Box maxW="100%" overflow="hidden" borderRadius="md">
+    <Box  display="flex" overflow="hidden" borderRadius="md" m={6}>
       <SimpleImageSlider
        width={sliderWidth}
        height={maxSliderHeight}
