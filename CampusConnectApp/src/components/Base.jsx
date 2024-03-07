@@ -1,12 +1,12 @@
-import Navbar from "./Navbar"
+import Navbar from "./Navbar";
 
-const Base = ({children}) => {
+const Base = ({ children }) => {
   return (
-   <>
-   <Navbar/>
-     {children}
-   </>
-  )
-}
+    <>
+      <Navbar />
+      {children}
+    </>
+  );
+};
 
-export default Base
+export default Base;

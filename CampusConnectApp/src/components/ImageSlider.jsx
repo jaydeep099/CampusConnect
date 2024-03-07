@@ -1,6 +1,28 @@
 import SimpleImageSlider from "react-simple-image-slider";
+import { Box , useMediaQuery} from "@chakra-ui/react";
+import  { useState, useEffect } from "react";
 
 const ImageSlider = () => {
+  const [isLargerThan700] = useMediaQuery("(min-width: 700px)");
+  const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
+  
+  const [sliderWidth, setSliderWidth] = useState("100%");
+  const [maxSliderHeight, setMaxSliderHeight] = useState("auto");
+
+  useEffect(() => {
+    if (isLargerThan900) {
+      setSliderWidth("900px");
+      setMaxSliderHeight("550px");
+    } else if (isLargerThan700) {
+      setSliderWidth("700px");
+      setMaxSliderHeight("400px");
+    } else {
+      setSliderWidth("100%");
+      setMaxSliderHeight("300px");
+    }
+  }, [isLargerThan700, isLargerThan900]);
+
+
   const images = [
     { url: "./assets/images/campusconnect.jpeg" },
     { url: "./assets/images/fun-party-with-dj1.jpg" },
@@ -8,15 +30,15 @@ const ImageSlider = () => {
     { url: "./assets/images/fun-party-with-dj.jpg" },
   ];
   return (
-    <div>
+    <Box maxW="100%" overflow="hidden" borderRadius="md">
       <SimpleImageSlider
-        width={700}
-        height={450}
-        images={images}
-        showBullets={true}
-        showNavs={true}
+       width={sliderWidth}
+       height={maxSliderHeight}
+       images={images}
+       showBullets={true}
+       showNavs={true}
       />
-    </div>
+    </Box>
   );
 };
 
