@@ -11,11 +11,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudentDto {
     private Long studentId;
+
     private String studentName;
 
     private String studentEmail;
 
     private String studentUsername;
+
+    private String studentPassword;
 
     private String studentSem;
 

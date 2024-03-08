@@ -20,24 +20,31 @@ public class StudentServiceImpl implements StudentService {
     private ModelMapper model;
     @Override
     public StudentDto createStudent(StudentDto studentdto) {
-//        System.out.println(studentdto.getDept());
-        Student student = model.map(studentdto,Student.class);
-        Student student1 = studentRepo.save(student);
-        return model.map(student1,StudentDto.class);
+        Student student = this.model.map(studentdto,Student.class);
+        Student student1 = this.studentRepo.save(student);
+        return this.model.map(student1,StudentDto.class);
     }
 
     @Override
-    public StudentDto updateStudent(StudentDto studentdto) {
-        return null;
+    public StudentDto updateStudent(StudentDto studentdto,Long studentId) {
+        Student student = this.studentRepo.findById(studentId).orElseThrow();
+        student.setStudentSem(student.getStudentSem());
+        student.setStudentUsername(studentdto.getStudentUsername());
+        student.setStudentEmail(studentdto.getStudentEmail());
+        student.setStudentPassword(studentdto.getStudentPassword());
+        Student updateStudent = this.studentRepo.save(student);
+        return this.model.map(updateStudent,StudentDto.class);
     }
 
     @Override
-    public StudentDto deleteStudent(StudentDto studentdto) {
-        return null;
+    public void deleteStudent(Long studentId) {
+         Student student = this.studentRepo.findById(studentId).orElseThrow();
+         this.studentRepo.delete(student);
     }
 
     @Override
-    public StudentDto getStudentById(StudentDto studentdto) {
-        return null;
+    public StudentDto getStudentById(Long studentId) {
+        Student student = this.studentRepo.findById(studentId).orElseThrow();
+        return this.model.map(student,StudentDto.class);
     }
 }

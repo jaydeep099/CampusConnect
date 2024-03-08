@@ -9,7 +9,7 @@ import java.util.List;
 public interface EventService {
     public EventDto createEvent(EventDto eventDto, Long clubId);
 
-    public EventDto updateEvent(EventDto eventDto);
+    public EventDto updateEvent(EventDto eventDto, Long eventId);
 
     public void deleteEvent(Long eventId);
 
