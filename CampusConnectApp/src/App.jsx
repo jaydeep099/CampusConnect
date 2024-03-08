@@ -6,6 +6,7 @@ import Clubs from "./page/Clubs";
 import Contact from "./page/Contact";
 import Login from "./page/Login";
 import SignUp from "./page/SignUp";
+import Registration from "./page/Registration";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/contactus" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/registration" element={<Registration/>}/>
       </Routes>
     </BrowserRouter>
   );

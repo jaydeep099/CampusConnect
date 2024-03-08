@@ -1,4 +1,5 @@
 import { useState } from "react";
+import {useNavigate, useLocation } from "react-router-dom";
 import {
   Box,
   Button,
@@ -8,22 +9,24 @@ import {
   FormControl,
   FormLabel,
   Heading,
-  HStack,
   Input,
   Stack,
   Image,
   VStack,
-  useToast,
+  Select, // Import Select component for dropdown menu
 } from "@chakra-ui/react";
 
-const SignUp = () => {
+const Registration = () => {
+  
+  const location = useLocation();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    confirmPassword: "",
+    fullName: "",
+    username: location.state.username,
+    sem: "",
+    dept: "",
+    password: location.state.password,
   });
-
-  const toast = useToast();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -36,32 +39,10 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Check if all fields are filled
-    if (!formData.username || !formData.password || !formData.confirmPassword) {
-      toast({
-        title: "Error",
-        description: "All fields are required.",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-      return;
-    }
-
-    // Check if passwords match
-    if (formData.password !== formData.confirmPassword) {
-      toast({
-        title: "Error",
-        description: "Passwords do not match.",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-      return;
-    }
-
-    // If all validations pass, you can navigate to the home page
-    window.location.href = "/";
+    console.log(location.state.username);
+    console.log(formData.password);
+    // Add form submission logic here
+    navigate("/");
   };
 
   return (
@@ -88,12 +69,12 @@ const SignUp = () => {
             <CardBody>
               <form onSubmit={handleSubmit}>
                 <Stack spacing="4">
-                  <FormControl isRequired>
-                    <FormLabel size="sm">Username</FormLabel>
+                  <FormControl>
+                    <FormLabel size="sm">Full Name</FormLabel>
                     <Input
                       type="text"
-                      name="username"
-                      value={formData.username}
+                      name="fullName"
+                      value={formData.fullName}
                       onChange={handleInputChange}
                       bg="white"
                       borderColor="#d8dee4"
@@ -101,14 +82,12 @@ const SignUp = () => {
                       borderRadius="6px"
                     />
                   </FormControl>
-                  <FormControl isRequired>
-                    <HStack justify="space-between">
-                      <FormLabel size="sm">Password</FormLabel>
-                    </HStack>
+                  <FormControl>
+                    <FormLabel size="sm">Semester</FormLabel>
                     <Input
-                      type="password"
-                      name="password"
-                      value={formData.password}
+                      type="number"
+                      name="sem"
+                      value={formData.sem}
                       onChange={handleInputChange}
                       bg="white"
                       borderColor="#d8dee4"
@@ -116,20 +95,23 @@ const SignUp = () => {
                       borderRadius="6px"
                     />
                   </FormControl>
-                  <FormControl isRequired>
-                    <HStack justify="space-between">
-                      <FormLabel size="sm">Confirm Password</FormLabel>
-                    </HStack>
-                    <Input
-                      type="password"
-                      name="confirmPassword"
-                      value={formData.confirmPassword}
+                  <FormControl>
+                    <FormLabel size="sm">Department</FormLabel>
+                    <Select
+                      name="dept"
+                      value={formData.dept}
                       onChange={handleInputChange}
                       bg="white"
                       borderColor="#d8dee4"
                       size="sm"
                       borderRadius="6px"
-                    />
+                    >
+                      <option value="">Select Department</option>
+                      <option value="CSE">Computer Science</option>
+                      <option value="ECE">Electronics</option>
+                      <option value="ME">Mechanical</option>
+                      {/* Add more department options as needed */}
+                    </Select>
                   </FormControl>
                   <Button
                     type="submit"
@@ -151,4 +133,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Registration;
