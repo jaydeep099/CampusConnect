@@ -39,23 +39,31 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventDto updateEvent(EventDto eventDto) {
-        return null;
+    public EventDto updateEvent(EventDto eventDto, Long eventId) {
+        Event event = this.eventRepo.findById(eventId).orElseThrow();
+        event.setEventName(eventDto.getEventName());
+        event.setEventDate(eventDto.getEventDate());
+        event.setEventTime(eventDto.getEventTime());
+        event.setEventVenue(eventDto.getEventVenue());
+        event.setDescription(eventDto.getDescription());
+        event.setBrochure(eventDto.getBrochure());
+        Event updatedEvent = this.eventRepo.save(event);
+        return this.model.map(updatedEvent,EventDto.class);
     }
 
     @Override
     public void deleteEvent(Long eventId)
     {
-        eventRepo.findById(eventId)
+        this.eventRepo.findById(eventId)
                 .orElseThrow();
 
-        eventRepo.deleteById(eventId);
+       this.eventRepo.deleteById(eventId);
     }
 
     @Override
     public List<Event> getAllEventsByClub(Long clubId) {
 
-        Club club = clubRepo.findById(clubId).orElseThrow();
+        Club club = this.clubRepo.findById(clubId).orElseThrow();
 
         List<Event> eventList = club.getEventList();
 

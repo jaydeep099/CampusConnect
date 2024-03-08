@@ -15,11 +15,28 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @PostMapping("/register")
-    private ResponseEntity<?> addStudent(@RequestBody StudentDto studentDto)
+    @PostMapping("/")
+    public ResponseEntity<?> createStudent(@RequestBody StudentDto studentDto)
     {
-//        System.out.println(studentDto.getDept());
-        StudentDto studentDto1 = studentService.createStudent(studentDto);
+        StudentDto studentDto1 = this.studentService.createStudent(studentDto);
         return new ResponseEntity<>(studentDto1, HttpStatus.CREATED);
     }
+
+    @PutMapping("/{studentId}")
+    public ResponseEntity<?> updateStudent(@RequestBody StudentDto studentDto , @PathVariable Long studentId){
+        StudentDto updatedStudent = this.studentService.updateStudent(studentDto,studentId);
+        return  new ResponseEntity<>(updatedStudent,HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{studentId}")
+    public ResponseEntity<?> deleteStudent(@PathVariable long studentId){
+        this.studentService.deleteStudent(studentId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/{studentId}")
+    public  ResponseEntity<?> getSingleStudent(@PathVariable Long studentId){
+       return ResponseEntity.ok(this.studentService.getStudentById(studentId));
+    }
+
 }
