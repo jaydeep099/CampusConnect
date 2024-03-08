@@ -22,7 +22,6 @@ const EventRegistration = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
     console.log("Event Name:", eventName);
     console.log("Date:", date);
     console.log("Time:", time);

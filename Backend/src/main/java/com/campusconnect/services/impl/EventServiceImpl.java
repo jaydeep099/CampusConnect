@@ -31,14 +31,11 @@ public class EventServiceImpl implements EventService {
     @Override
     public EventDto createEvent(EventDto eventDto,Long clubId)
     {
-        Club club = clubRepo.findById(clubId).orElseThrow();
-
-
+        Club club = this.clubRepo.findById(clubId).orElseThrow();
         Event event = model.map(eventDto,Event.class);
         event.setClub(club);
-        Event event1 = eventRepo.save(event);
-
-        return model.map(event1,EventDto.class);
+        Event event1 = this.eventRepo.save(event);
+        return this.model.map(event1,EventDto.class);
     }
 
     @Override

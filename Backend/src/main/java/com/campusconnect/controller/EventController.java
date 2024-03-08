@@ -30,14 +30,14 @@ public class EventController
     private ModelMapper modelMapper;
 
     @PostMapping("/{clubId}")
-    private ResponseEntity<?> createEvent(@RequestBody EventDto eventDto, @PathVariable("clubId") Long clubId)
+    private ResponseEntity<?> createEvent(@RequestBody EventDto eventDto, @PathVariable Long clubId)
     {
-        EventDto eventDto1 = eventService.createEvent(eventDto, clubId);
+        EventDto eventDto1 = this.eventService.createEvent(eventDto, clubId);
         return new ResponseEntity<>(eventDto1, HttpStatus.CREATED);
     }
 
     @GetMapping("/club/{clubId}")
-    private ResponseEntity<List<EventDto>> geteventbyClub(@PathVariable("clubId") Long clubId)
+    private ResponseEntity<List<EventDto>> geteventbyClub(@PathVariable Long clubId)
     {
         System.out.println("hhhhh");
         List<EventDto> allEventByClub = eventService.getAllEventsByClub(clubId)
@@ -61,8 +61,7 @@ public class EventController
     @DeleteMapping("/delete/{eventId}")
     private void deleteEvent(@PathVariable("eventId") Long eventId)
     {
-        eventService.deleteEvent(eventId);
-//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        this.eventService.deleteEvent(eventId);
     }
 
     @GetMapping("/allEvents")
