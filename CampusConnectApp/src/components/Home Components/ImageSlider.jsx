@@ -6,8 +6,8 @@ const ImageSlider = () => {
   const [isLargerThan700] = useMediaQuery("(min-width: 740px)");
   const [isLargerThan900] = useMediaQuery("(min-width: 900px)");
   
-  const [sliderWidth, setSliderWidth] = useState(null);
-  const [maxSliderHeight, setMaxSliderHeight] = useState(null);
+  const [sliderWidth, setSliderWidth] = useState("900px");
+  const [maxSliderHeight, setMaxSliderHeight] = useState("550px");
 
   useEffect(() => {
     if (isLargerThan900) {
@@ -30,7 +30,7 @@ const ImageSlider = () => {
     { url: "./assets/images/fun-party-with-dj.jpg" },
   ];
   return (
-    <Box  display="flex" overflow="hidden" borderRadius="md" m={6}>
+    <Box  display="flex" overflow="hidden" borderRadius="md" m={6} >
       <SimpleImageSlider
        width={sliderWidth}
        height={maxSliderHeight}

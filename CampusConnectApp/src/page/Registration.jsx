@@ -25,6 +25,7 @@ const Registration = () => {
     username: location.state.username,
     sem: "",
     dept: "",
+    email:"",
     password: location.state.password,
   });
 
@@ -41,7 +42,6 @@ const Registration = () => {
 
     console.log(location.state.username);
     console.log(formData.password);
-    // Add form submission logic here
     navigate("/");
   };
 
@@ -63,7 +63,7 @@ const Registration = () => {
                 fontSize="24px"
                 letterSpacing="-0.5px"
               >
-                Sign in to CampusConnect
+                Register Here
               </Heading>
             </VStack>
             <CardBody>
@@ -75,6 +75,19 @@ const Registration = () => {
                       type="text"
                       name="fullName"
                       value={formData.fullName}
+                      onChange={handleInputChange}
+                      bg="white"
+                      borderColor="#d8dee4"
+                      size="sm"
+                      borderRadius="6px"
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel size="sm">Email</FormLabel>
+                    <Input
+                      type="text"
+                      name="email"
+                      value={formData.email}
                       onChange={handleInputChange}
                       bg="white"
                       borderColor="#d8dee4"
@@ -108,6 +121,7 @@ const Registration = () => {
                     >
                       <option value="">Select Department</option>
                       <option value="CSE">Computer Science</option>
+                      <option value="IT">Information Technology</option>
                       <option value="ECE">Electronics</option>
                       <option value="ME">Mechanical</option>
                       {/* Add more department options as needed */}
@@ -121,7 +135,7 @@ const Registration = () => {
                     _hover={{ bg: "#2c974b" }}
                     _active={{ bg: "#298e46" }}
                   >
-                    Sign Up
+                    Register
                   </Button>
                 </Stack>
               </form>

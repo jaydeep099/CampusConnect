@@ -30,11 +30,6 @@ const Club = () => {
 
   return (
     <Base>
-    <Card>
-        <CardBody>
-
-        </CardBody>
-    </Card>
       <Center as="h1" size="xl" mb={4}>
         Club Name
       </Center>
