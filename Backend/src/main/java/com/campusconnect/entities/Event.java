@@ -51,6 +51,6 @@ public class Event {
     private Club club;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JsonManagedReference // Manages the serialization of the Student list
+    @JsonIgnore// Manages the serialization of the Student list
     private List<Student> student;
 }

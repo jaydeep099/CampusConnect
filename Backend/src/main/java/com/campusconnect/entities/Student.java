@@ -1,5 +1,8 @@
 package com.campusconnect.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +38,7 @@ public class Student {
 
     @Column(name = "Department")
     private String studentDept;
-
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Event> eventList;
 }

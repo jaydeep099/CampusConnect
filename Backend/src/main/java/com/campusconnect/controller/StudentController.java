@@ -2,20 +2,22 @@ package com.campusconnect.controller;
 
 
 import com.campusconnect.dto.StudentDto;
+import com.campusconnect.entities.Student;
 import com.campusconnect.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/student")
-@CrossOrigin
 public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @PostMapping("/")
+    @CrossOrigin(origins = "http://localhost:5173/registration")
+    @PostMapping("/create")
     public ResponseEntity<?> createStudent(@RequestBody StudentDto studentDto)
     {
         StudentDto studentDto1 = this.studentService.createStudent(studentDto);
@@ -28,7 +30,7 @@ public class StudentController {
         return  new ResponseEntity<>(updatedStudent,HttpStatus.OK);
     }
 
-    @DeleteMapping("/{studentId}")
+    @DeleteMapping("/delete/{studentId}")
     public ResponseEntity<?> deleteStudent(@PathVariable long studentId){
         this.studentService.deleteStudent(studentId);
         return new ResponseEntity<>(HttpStatus.OK);

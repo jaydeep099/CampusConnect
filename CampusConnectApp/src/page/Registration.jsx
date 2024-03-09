@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
-import {useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   Box,
   Button,
@@ -15,18 +16,22 @@ import {
   VStack,
   Select, // Import Select component for dropdown menu
 } from "@chakra-ui/react";
+import { SignUpFunc } from "../services/student-service";
+import { toast } from "react-toastify";
 
 const Registration = () => {
-  
   const location = useLocation();
   const navigate = useNavigate();
+
+  // const [errors, setErrors] = useState({});
+
   const [formData, setFormData] = useState({
-    fullName: "",
-    username: location.state.username,
-    sem: "",
-    dept: "",
-    email:"",
-    password: location.state.password,
+    studentName: "",
+    studentUsername: location.state.username,
+    studentSem: "",
+    studentDept: "",
+    studentEmail: "",
+    studentPassword: location.state.password,
   });
 
   const handleInputChange = (e) => {
@@ -40,8 +45,30 @@ const Registration = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(location.state.username);
-    console.log(formData.password);
+    //console.log(formData.studentDept);
+    SignUpFunc(formData)
+      .then((response) => {
+        // setFormData(response.data);
+        // console.log(response.data);
+        toast.success("User Registered Successfully!!");
+        
+        // setErrors({});
+        // setFormData({
+        //   fullName: "",
+        //   studentUsername: "",
+        //   studentSem: "",
+        //   studentDept: "",
+        //   studentEmail: "",
+        //   studentPassword: "",
+        // });
+      })
+      .catch((error) => {
+        // setErrors(error.response.data.errors);
+        toast.error(JSON.stringify(error.response.data.message));
+      });
+
+    console.log(location.state.studentUsername);
+    console.log(formData.studentPassword);
     navigate("/");
   };
 
@@ -73,8 +100,8 @@ const Registration = () => {
                     <FormLabel size="sm">Full Name</FormLabel>
                     <Input
                       type="text"
-                      name="fullName"
-                      value={formData.fullName}
+                      name="studentName"
+                      value={formData.studentName}
                       onChange={handleInputChange}
                       bg="white"
                       borderColor="#d8dee4"
@@ -86,8 +113,8 @@ const Registration = () => {
                     <FormLabel size="sm">Email</FormLabel>
                     <Input
                       type="text"
-                      name="email"
-                      value={formData.email}
+                      name="studentEmail"
+                      value={formData.studentEmail}
                       onChange={handleInputChange}
                       bg="white"
                       borderColor="#d8dee4"
@@ -99,8 +126,8 @@ const Registration = () => {
                     <FormLabel size="sm">Semester</FormLabel>
                     <Input
                       type="number"
-                      name="sem"
-                      value={formData.sem}
+                      name="studentSem"
+                      value={formData.studentSem}
                       onChange={handleInputChange}
                       bg="white"
                       borderColor="#d8dee4"
@@ -111,8 +138,8 @@ const Registration = () => {
                   <FormControl>
                     <FormLabel size="sm">Department</FormLabel>
                     <Select
-                      name="dept"
-                      value={formData.dept}
+                      name="studentDept"
+                      value={formData.studentDept}
                       onChange={handleInputChange}
                       bg="white"
                       borderColor="#d8dee4"
