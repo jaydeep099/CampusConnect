@@ -1,5 +1,6 @@
 package com.campusconnect.controller;
 
+import com.campusconnect.dto.EventCardDto;
 import com.campusconnect.dto.EventDto;
 import com.campusconnect.entities.Event;
 import com.campusconnect.services.EventService;
@@ -48,13 +49,23 @@ public class EventController
     }
 
     @GetMapping("/geteventbwdate/{d1}/{d2}")
-    public List<Event> getEventsBtwdate(@PathVariable("d1") String date1,@PathVariable("d2") String date2)
+    public List<Event> getEventsBWDate(@PathVariable("d1") String date1,@PathVariable("d2") String date2)
     {
-        Date d1 = convertToDate(date1);
-        Date d2 = convertToDate(date2);
-        List<Event> eventsBWDate = eventService.getEventsBWDate(d1,d2);
+        Date d1 = convertToDateManually(date1);
+        Date d2 = convertToDateManually(date2);
+        System.out.println("d1: "+d1);
+        System.out.println("d2: "+d2);
 
-        return eventsBWDate;
+        return eventService.getEventsBWDate(d1,d2);
+    }
+    private Date convertToDateManually(String dateString) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            return dateFormat.parse(dateString);
+        } catch (ParseException e) {
+            System.out.println(e);
+            return null;
+        }
     }
 
     @DeleteMapping("/event/{eventId}")
@@ -64,17 +75,31 @@ public class EventController
     }
 
     @GetMapping("/allEvents")
-    public List<Event> getAllEvetn()
+    public ResponseEntity<List<EventCardDto>> getAllEvetn()
     {
-        List<Event> allEvents = eventService.getAllEvent();
+        List<EventCardDto> allEvents = eventService.getAllEvent()
+                .stream()
+                .map(event -> modelMapper.map(event,EventCardDto.class))
+                .collect(Collectors.toList());
 
-        return allEvents;
+        return new ResponseEntity<List<EventCardDto>>(allEvents,HttpStatus.OK);
     }
 
     @PutMapping("event/{eventId}")
     public ResponseEntity<?> updateEvent (@RequestBody EventDto eventDto , @PathVariable Long eventId){
         EventDto updatedEvent = this.eventService.updateEvent(eventDto,eventId);
         return new ResponseEntity<>(updatedEvent , HttpStatus.OK);
+    }
+
+    @GetMapping("/upcomingEvents")
+    public ResponseEntity<List<EventCardDto>> getUpcomingEvents()
+    {
+        List<EventCardDto> upcomingEvents = eventService.getUpcomingEvent()
+                .stream()
+                .map(event -> modelMapper.map(event,EventCardDto.class))
+                .collect(Collectors.toList());
+
+        return new ResponseEntity<List<EventCardDto>>(upcomingEvents,HttpStatus.OK);
     }
 
     private Date convertToDate(String dateString) {

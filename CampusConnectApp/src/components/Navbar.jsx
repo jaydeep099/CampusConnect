@@ -31,7 +31,19 @@ const Navbar = () => {
   const handleToggle = () => setIsOpen(!isOpen);
 
   return (
-    <Box as="nav" bg="gray.100" px={4} py={2} shadow="md" alignItems="center">
+    <Box
+      as="nav"
+      bg="gray.100"
+      px={4}
+      py={2}
+      shadow="md"
+      alignItems="center"
+      position="fixed" // Set position to fixed
+      top={0} // Specify top value to control distance from top
+      left={0}
+      right={0}
+      zIndex={1}
+    >
       <Flex justifyContent="space-between" alignItems="center">
         <Box display="flex" alignItems="center" mr={2}>
           <Image

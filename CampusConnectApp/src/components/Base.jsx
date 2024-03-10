@@ -5,7 +5,7 @@ const Base = ({ children }) => {
   return (
     <>
       <Navbar />
-      {children}
+      <main style={{ paddingTop: "70px" }}>{children}</main>
     </>
   );
 };

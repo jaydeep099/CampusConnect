@@ -11,6 +11,7 @@ import {
   CardBody,
   Text,
   Button,
+  Spacer,
 } from "@chakra-ui/react";
 // import campusconnectlogo from "../images/campusconnectlogo.jpeg";
 // import EventCard from "../components/EventCard";
@@ -18,8 +19,6 @@ import axios from "axios";
 
 const Club = () => {
   const [events, setEvents] = useState([]);
-
-  
 
   useEffect(() => {
     axios.get(`http://localhost:8080/api/event/club/${4}`).then((response) => {
@@ -37,7 +36,7 @@ const Club = () => {
         <Box p={4} textAlign="center">
           <Flex>
             <Box maxW="200px" overflow="hidden" mr={4}>
-              <Image src="./assets/images/campusconnect.jpeg" />
+              <Image borderRadius="20px" src="./assets/images/campusconnect.jpeg" />
             </Box>
             <Box as="h3" ml="50px" mt="20px">
               Demo Club descryption .............. ...........................
@@ -46,31 +45,43 @@ const Club = () => {
         </Box>
         {/* <EventCard/>
                 <EventCard/> */}
-        <Flex direction="row" justifyContent="space-between" maxW="sm">
+        <Flex direction="row" justifyContent="space-between" maxW="100%">
           {events.map((event) => {
             function printDate(numbers) {
-                return new Date(numbers).toLocaleDateString();
+              return new Date(numbers).toLocaleDateString();
             }
             return (
               <Card key={event.eventId} maxW="sm" className="event-card">
-                <CardBody>
-                  <div style={{ flex: 3 }}>
+                <Box
+                  maxW="md"
+                  borderWidth="1px"
+                  borderRadius="lg"
+                  overflow="hidden"
+                >
+                  <Flex direction="row" p="3  ">
                     <Image
                       src="./assets/images/campusconnect.jpeg"
-                      alt="Club"
-                      borderRadius="lg"
+                      alt="Event Logo"
+                      boxSize="100px"
+                      borderRadius="10px"
+                      objectFit="cover"
                     />
-                    <Heading size="sm">{event.eventName}</Heading>
-                    <Text as="h5">Date: {printDate(event.eventDate)}</Text>
-                  </div>
-                  {/* <div style={{ flex: 3, paddingLeft: "10px" }}>
-                  </div> */}
-                </CardBody>
-                <Center>
-                  <Button variant="solid" colorScheme="blue">
-                    View Details
-                  </Button>
-                </Center>
+                    <Flex direction="column" flex="1" ml="2">
+                      <Text fontSize="xl" fontWeight="semibold">
+                        {event.eventName}
+                      </Text>
+                      <Text fontSize="md" mt="2">
+                        Date: {printDate(event.eventDate)}
+                      </Text>
+                    </Flex>
+                  </Flex>
+                  <Center>
+
+                      <Button mt="auto" colorScheme="blue">
+                        View Details
+                      </Button>
+                  </Center>
+                </Box>
               </Card>
             );
           })}

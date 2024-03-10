@@ -18,4 +18,6 @@ public interface EventService {
     public List<Event> getEventsBWDate(Date date1, Date date2);
 
     public List<Event> getAllEvent();
+
+    public List<Event> getUpcomingEvent();
 }

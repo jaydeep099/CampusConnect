@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -78,5 +79,13 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<Event> getAllEvent(){
         return eventRepo.getAllEvent();
+    }
+
+    @Override
+    public List<Event> getUpcomingEvent() {
+        Date date = new Date();
+        List<Event> upcomingEvents = this.eventRepo.getUpcomingEvents(date);
+
+        return upcomingEvents;
     }
 }
