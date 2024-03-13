@@ -10,9 +10,13 @@ import {
   Center,
 } from "@chakra-ui/react";
 
-const ClubCard = () => {
+const ClubCard = (clubs) => {
+  console.log(clubs);
   return (
+    
     <Center>
+      {clubs.map((club)=>{
+
       <Card maxW="sm">
         <CardBody paddingBottom="0">
           <Image
@@ -21,11 +25,9 @@ const ClubCard = () => {
             borderRadius="lg"
           />
 
-          <Heading size="md" paddingTop="10px">Campus Connect</Heading>
+          <Heading size="md" paddingTop="10px">{club.club_name}</Heading>
           <Text>
-            This sofa is perfect for modern tropical spaces, baroque inspired
-            spaces, earthy toned spaces and for people who love a chic design
-            with a sprinkle of vintage design.
+            {club.description}
           </Text>
         </CardBody>
         <Center>
@@ -36,6 +38,7 @@ const ClubCard = () => {
           </CardFooter>
         </Center>
       </Card>
+      })}
     </Center>
   );
 };

@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -28,7 +29,6 @@ public class EventServiceImpl implements EventService {
     @Autowired
     @Qualifier("modelMapper")
     private ModelMapper model;
-
     @Override
     public EventDto createEvent(EventDto eventDto,Long clubId)
     {

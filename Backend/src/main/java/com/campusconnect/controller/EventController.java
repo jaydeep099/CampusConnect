@@ -37,6 +37,7 @@ public class EventController
         return new ResponseEntity<>(eventDto1, HttpStatus.CREATED);
     }
 
+
     @GetMapping("/club/{clubId}")
     public ResponseEntity<List<EventDto>> getEventbyClub(@PathVariable Long clubId)
     {
@@ -58,6 +59,7 @@ public class EventController
 
         return eventService.getEventsBWDate(d1,d2);
     }
+
     private Date convertToDateManually(String dateString) {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

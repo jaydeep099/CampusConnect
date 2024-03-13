@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClubServiceImpl implements ClubService {
@@ -36,8 +37,8 @@ public class ClubServiceImpl implements ClubService {
     }
 
     @Override
-    public ClubDto getClubById(Long clubId) {
-        return null;
+    public Club getClubById(Long clubId) {
+        return clubRepo.findById(clubId).orElseThrow();
     }
 
     @Override
@@ -49,4 +50,11 @@ public class ClubServiceImpl implements ClubService {
     public List<ClubDto> getClubByDept(String dept) {
         return null;
     }
+
+    @Override
+    public List<Club> getAllClub() {
+        return clubRepo.getAllClub();
+    }
+
+
 }

@@ -14,10 +14,11 @@ import java.util.List;
 
 public interface EventRepo extends JpaRepository<Event,Long>
 {
+
     public List<Event> findEventByClub(Club club);
     LocalDate today = LocalDate.now();
 
-    @Query("select e FROM Event e")
+    @Query("SELECT e FROM Event e ORDER BY e.eventDate ASC")
     public List<Event> getAllEvent();
 
     @Query("select e FROM Event e WHERE e.eventDate>= :d1 and e.eventDate<= :d2")

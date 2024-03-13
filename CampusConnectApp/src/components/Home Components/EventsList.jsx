@@ -1,20 +1,63 @@
+/* eslint-disable react/jsx-key */
 import {
   SimpleGrid,
   Card,
   CardBody,
-  CardFooter,
   Text,
-  CardHeader,
   Button,
   Heading,
-  Stack,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { UpcomingEvents } from "../../services/event-service";
+
 const EventsList = () => {
+  const [events, setEvents] = useState([]);
+
+  // UpcomingEvents()
+  //   .then((response) => {
+  //     setEvents([...response]);
+  //   })
+  //   .catch((error) => {
+  //     console.log("Error loading events: ", error);
+  //   });
+  useEffect(() => {
+    UpcomingEvents()
+      .then((response) => {
+        console.log(response);
+        setEvents([...response]);
+      })
+      .catch((error) => {
+        console.log("Error loading events: ", error);
+      });
+  }, []);
+
+  const printDate = (date) => {
+    return new Date(date).toLocaleDateString();
+  };
   return (
     <>
       <Heading ml={4}>Upcoming Events</Heading>
       <hr />
-      <SimpleGrid spacing={30} templateRows="repeat(auto-fill)" ml={4}>
+
+      {events.map((event) => (
+        <SimpleGrid spacing={30} templateRows="repeat(auto-fill)" m={4}>
+            <Card key={event.eventId} borderRadius={0}>
+              <CardBody>
+                <Heading size="md">{event.eventName}</Heading>
+                <Text>
+                  Date: {printDate(event.eventDate)} Time: {event.eventTime} Venue:{" "}
+                  {event.eventVenue}
+                </Text>
+                <Text>{event.description}</Text>
+                <Button variant="solid" colorScheme="blue">
+                  View More
+                </Button>
+              </CardBody>
+            </Card>
+        </SimpleGrid>
+      ))}
+
+      {/* <SimpleGrid spacing={30} templateRows="repeat(auto-fill)" ml={4}>
         <Card borderRadius={0}>
           <CardBody>
             <Heading size="md">
@@ -82,7 +125,7 @@ const EventsList = () => {
             </Button>
           </CardBody>
         </Card>
-      </SimpleGrid>
+      </SimpleGrid> */}
     </>
   );
 };
