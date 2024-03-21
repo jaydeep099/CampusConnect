@@ -3,6 +3,7 @@ package com.campusconnect.controller;
 
 import com.campusconnect.dto.ClubDto;
 import com.campusconnect.dto.EventCardDto;
+import com.campusconnect.dto.StudentDto;
 import com.campusconnect.entities.Club;
 import com.campusconnect.services.ClubService;
 import com.campusconnect.services.impl.ClubServiceImpl;
@@ -30,10 +31,11 @@ public class ClubController
 
 
 
-    @PostMapping("/resgister")
+    @PostMapping("/register")
     private ResponseEntity<?> createClub(@RequestBody ClubDto clubDto)
     {
-        ClubDto clubDto1 = clubService.createClub(clubDto);
+        System.out.println(clubDto.getClub_name());
+        ClubDto clubDto1 = this.clubService.createClub(clubDto);
         return new ResponseEntity<>(clubDto1, HttpStatus.CREATED);
     }
 

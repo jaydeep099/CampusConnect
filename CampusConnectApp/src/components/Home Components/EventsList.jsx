@@ -9,10 +9,11 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { UpcomingEvents } from "../../services/event-service";
+import { useNavigate } from "react-router-dom";
 
 const EventsList = () => {
   const [events, setEvents] = useState([]);
-
+  const navigate = useNavigate();
   // UpcomingEvents()
   //   .then((response) => {
   //     setEvents([...response]);
@@ -30,6 +31,11 @@ const EventsList = () => {
         console.log("Error loading events: ", error);
       });
   }, []);
+
+
+  const handleClick = (eventId) => {
+    navigate("/eventDashBoard",{state:({event_Id:eventId})})
+  }
 
   const printDate = (date) => {
     return new Date(date).toLocaleDateString();
@@ -49,7 +55,7 @@ const EventsList = () => {
                   {event.eventVenue}
                 </Text>
                 <Text>{event.description}</Text>
-                <Button variant="solid" colorScheme="blue">
+                <Button variant="solid" colorScheme="blue" onClick={() => handleClick(event.eventId)}>
                   View More
                 </Button>
               </CardBody>

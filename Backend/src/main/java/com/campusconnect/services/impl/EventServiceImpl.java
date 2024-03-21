@@ -88,4 +88,9 @@ public class EventServiceImpl implements EventService {
 
         return upcomingEvents;
     }
+
+    @Override
+    public Event getEventById(Long eventId) {
+        return eventRepo.findById(eventId).orElseThrow();
+    }
 }

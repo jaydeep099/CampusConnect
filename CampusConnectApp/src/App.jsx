@@ -8,6 +8,8 @@ import Login from "./page/Login";
 import SignUp from "./page/SignUp";
 import Registration from "./page/Registration";
 import ClubDetail from "./page/ClubDetail";
+import ClubRegistration from "./components/ClubRegistration";
+import EventDashBoard from "./page/EventDashBoard";
 
 function App() {
   return (
@@ -21,9 +23,12 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/registration" element={<Registration/>}/>
         <Route path="/clubDetail" element={<ClubDetail/>}/>
+        <Route path="/eventDashBoard" element={<EventDashBoard/>}/>
         
       </Routes>
     </BrowserRouter>
+  //  <ClubRegistration/>
+  //  <EventDashBoard/>
   );
 }
 

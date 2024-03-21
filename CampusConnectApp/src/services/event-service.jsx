@@ -21,3 +21,8 @@ export const EventsBWDate = (d1,d2) => {
     });
 };
 
+export const LoadEventById = (eventId) => {
+    return myAxios.get(`/api/event/${eventId}`).then((response) => {
+        return response.data;
+    });
+};

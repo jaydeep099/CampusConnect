@@ -20,4 +20,6 @@ public interface EventService {
     public List<Event> getAllEvent();
 
     public List<Event> getUpcomingEvent();
+
+    public Event getEventById(Long eventId);
 }

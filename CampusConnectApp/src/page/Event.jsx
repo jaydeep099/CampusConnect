@@ -16,12 +16,15 @@ import {
   UpcomingEvents,
 } from "../services/event-service";
 import { Checkbox } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const Event = () => {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [events, setEvents] = useState([]);
   const [isUpcomingEvent, setIsUpcomingEvent] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleCheckboxChange = (event) => {
     setIsUpcomingEvent(event.target.checked);
@@ -36,6 +39,8 @@ const Event = () => {
         .catch((error) => {
           console.log("Error loading events:", error);
         });
+    } else {
+      handleClearFilter();
     }
   };
 
@@ -75,6 +80,10 @@ const Event = () => {
         console.error("Error loading events:", error);
       });
   };
+
+  const handleClick = (eventId) => {
+    navigate("/eventDashBoard",{state:({event_Id:eventId})})
+  }
 
   return (
     <Base>
@@ -143,7 +152,7 @@ const Event = () => {
                   </Flex>
                 </Flex>
                 <Center>
-                  <Button mt="auto" colorScheme="blue">
+                  <Button mt="auto" colorScheme="blue" onClick={() => handleClick(event.eventId)}>
                     View Details
                   </Button>
                 </Center>
