@@ -14,7 +14,7 @@ import {
   Stack,
   Image,
   VStack,
-  Select, // Import Select component for dropdown menu
+  Select, 
 } from "@chakra-ui/react";
 import { SignUpFunc } from "../services/student-service";
 import { toast } from "react-toastify";

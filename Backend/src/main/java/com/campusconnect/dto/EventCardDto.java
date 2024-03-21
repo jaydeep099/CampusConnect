@@ -2,6 +2,8 @@ package com.campusconnect.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+
+import java.sql.Time;
 import java.util.Date;
 
 @Setter
@@ -13,6 +15,8 @@ public class EventCardDto
     private String eventName;
 
     private Date eventDate;
+
+    private Time eventTime;
 
     private String brochure;
 }
