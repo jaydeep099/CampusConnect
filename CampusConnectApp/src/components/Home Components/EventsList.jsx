@@ -24,6 +24,11 @@ const EventsList = () => {
       });
   }, []);
 
+
+  const handleClick = (eventId) => {
+    navigate("/eventDashBoard",{state:({event_Id:eventId})})
+  }
+
   const printDate = (date) => {
     return new Date(date).toLocaleDateString();
   };

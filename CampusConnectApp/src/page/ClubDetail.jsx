@@ -15,12 +15,14 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { LoadClubById } from "../services/club-service";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Club = () => {
   //   const [events, setEvents] = useState([]);
   const location = useLocation();
   const [club, setClub] = useState({});
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     LoadClubById(location.state.clubId)
@@ -35,6 +37,10 @@ const Club = () => {
 
   function printDate(numbers) {
     return new Date(numbers).toLocaleDateString();
+  }
+
+  const handleClick = (eventId) => {
+    navigate("/eventDashBoard",{state:({event_Id:eventId})})
   }
 
   return (
@@ -60,41 +66,6 @@ const Club = () => {
           {/* <EventCard/>
                 <EventCard/> */}
           <Flex direction="row" justifyContent="space-between" maxW="100%">
-            {/* {club.eventList.map((event) => {
-              return (
-                <Card key={event.eventId} maxW="sm">
-                  <Box
-                    maxW="sm"
-                    borderWidth="1px"
-                    borderRadius="lg"
-                    overflow="hidden"
-                  >
-                    <Flex direction="row" p="3">
-                      <Image
-                        src="./assets/images/campusconnect.jpeg"
-                        alt="Event Logo"
-                        boxSize="100px"
-                        borderRadius="10px"
-                        objectFit="cover"
-                      />
-                      <Flex direction="column" flex="1" ml="2">
-                        <Text fontSize="xl" fontWeight="semibold">
-                          {event.eventName}
-                        </Text>
-                        <Text fontSize="md" mt="2">
-                          Date: {printDate(event.eventDate)}
-                        </Text>
-                      </Flex>
-                    </Flex>
-                    <Center>
-                      <Button mt="auto" colorScheme="blue">
-                        View Details
-                      </Button>
-                    </Center>
-                  </Box>
-                </Card>
-              );
-            })} */}
             {club.eventList &&
               club.eventList.map((event) => (
 
@@ -123,7 +94,7 @@ const Club = () => {
                       </Flex>
                     </Flex>
                     <Center>
-                      <Button mt="auto" colorScheme="blue">
+                      <Button mt="auto" colorScheme="blue" onClick={() => handleClick(event.eventId)}>
                         View Details
                       </Button>
                     </Center>

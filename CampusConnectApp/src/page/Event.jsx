@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import { useEffect, useState } from "react";
 import Base from "../components/Base";
 import {
@@ -24,6 +25,8 @@ const Event = () => {
   const [events, setEvents] = useState([]);
   const [isUpcomingEvent, setIsUpcomingEvent] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleCheckboxChange = (event) => {
     setIsUpcomingEvent(event.target.checked);
 
@@ -37,6 +40,8 @@ const Event = () => {
         .catch((error) => {
           console.log("Error loading events:", error);
         });
+    } else {
+      handleClearFilter();
     }
   };
 
@@ -76,6 +81,10 @@ const Event = () => {
         console.error("Error loading events:", error);
       });
   };
+
+  const handleClick = (eventId) => {
+    navigate("/eventDashBoard",{state:({event_Id:eventId})})
+  }
 
   return (
     <Base>

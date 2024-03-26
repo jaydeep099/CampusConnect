@@ -28,7 +28,6 @@ const Club = () => {
       .then((response) => {
         // console.log(response);
         setClubs([...response]);
-        //ahiya club ma detail aave che k nai?? prove
       })
       .catch((error) => {
         console.error("Error loading events:", error);

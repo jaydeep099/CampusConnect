@@ -30,6 +30,27 @@ const ClubRegistration = () => {
       [name]: value,
     }));
   };
+  const handleLogoChange = (e) => {
+    const file = e.target.files[0];
+    // Resize the image using the react-image-file-resizer library
+    Resizer.imageFileResizer(
+      file,
+      100, // Max width
+      100, // Max height
+      "JPEG", // Output format
+      100, // Quality
+      0, // Rotation
+      (uri) => {
+        // Convert resized image URI to base64 string
+        const base64String = uri.split(",")[1];
+        setClubData((prevData) => ({
+          ...prevData,
+          logo: base64String, // Set the base64 string as the logo
+        }));
+      },
+      "base64" // Output type
+    );
+  };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
