@@ -106,7 +106,6 @@ const EventRegistration = () => {
               onChange={handleChange} 
             />
           </FormControl>
-
           <Flex justify="flex-end">
             <Button type="submit" colorScheme="teal">
               Register Event
