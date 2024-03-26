@@ -10,6 +10,7 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { createClub } from "../services/club-service";
 
 const ClubRegistration = () => {
   const [clubInfo, setClubInfo] = useState({
@@ -39,7 +40,26 @@ const ClubRegistration = () => {
   };
   const createEvent = (e) => {
     e.preventDefault();
+    createClub(clubInfo)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     console.log(clubInfo);
+  };
+
+  const handleReset = (e) => {
+    setClubInfo({
+      clubName: "",
+      clubDepartment: "",
+      clubEmail: "",
+      clubPassword: "",
+      clubDescription: "",
+      clubPresident: "",
+      clubImage: null,
+    });
   };
 
   return (
@@ -121,7 +141,7 @@ const ClubRegistration = () => {
             <Button colorScheme="blue" type="submit">
               Register
             </Button>
-            <Button colorScheme="blue" type="reset">
+            <Button colorScheme="blue" type="reset" onClick={handleReset}>
               Reset
             </Button>
           </HStack>

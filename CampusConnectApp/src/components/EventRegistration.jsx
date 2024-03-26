@@ -10,23 +10,35 @@ import {
   FormLabel,
   Stack,
 } from "@chakra-ui/react";
+import { createEvent } from "../services/event-service";
 
 const EventRegistration = () => {
-  const [eventName, setEventName] = useState("");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
-  const [venue, setVenue] = useState("");
-  const [description, setDescription] = useState("");
-  const [speaker, setSpeaker] = useState("");
+  const [eventInfo, setEventInfo] = useState({
+    eventName: "",
+    eventDate: "",
+    eventTime: "",
+    eventVenue: "",
+    description: "",
+    brochure: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEventInfo((prevInfo) => ({
+      ...prevInfo,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Event Name:", eventName);
-    console.log("Date:", date);
-    console.log("Time:", time);
-    console.log("Venue:", venue);
-    console.log("Description:", description);
-    console.log("Speaker:", speaker);
+    createEvent(eventInfo, 1)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -48,8 +60,9 @@ const EventRegistration = () => {
             <Input
               type="text"
               placeholder="Enter event name"
-              value={eventName}
-              onChange={(e) => setEventName(e.target.value)}
+              name="eventName"
+              value={eventInfo.eventName}
+              onChange={handleChange} 
             />
           </FormControl>
 
@@ -57,8 +70,9 @@ const EventRegistration = () => {
             <FormLabel>Date</FormLabel>
             <Input
               type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
+              name="eventDate"
+              value={eventInfo.eventDate}
+              onChange={handleChange} 
             />
           </FormControl>
 
@@ -66,8 +80,9 @@ const EventRegistration = () => {
             <FormLabel>Time</FormLabel>
             <Input
               type="time"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
+              name="eventTime"
+              value={eventInfo.eventTime}
+              onChange={handleChange} 
             />
           </FormControl>
 
@@ -76,8 +91,9 @@ const EventRegistration = () => {
             <Input
               type="text"
               placeholder="Enter venue"
-              value={venue}
-              onChange={(e) => setVenue(e.target.value)}
+              name="eventVenue"
+              value={eventInfo.eventVenue}
+              onChange={handleChange} 
             />
           </FormControl>
 
@@ -85,18 +101,9 @@ const EventRegistration = () => {
             <FormLabel>Description</FormLabel>
             <Textarea
               placeholder="Enter event description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </FormControl>
-
-          <FormControl>
-            <FormLabel>Speaker</FormLabel>
-            <Input
-              type="text"
-              placeholder="Enter speaker's name"
-              value={speaker}
-              onChange={(e) => setSpeaker(e.target.value)}
+              name="description"
+              value={eventInfo.description}
+              onChange={handleChange} 
             />
           </FormControl>
 

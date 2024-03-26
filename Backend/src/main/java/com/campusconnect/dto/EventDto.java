@@ -19,6 +19,8 @@ public class EventDto
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date eventDate;
 
+
+    @DateTimeFormat(pattern = "HH:mm:ss")
     private Time eventTime;
 
     private String eventVenue;

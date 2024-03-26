@@ -29,10 +29,10 @@ public class ClubController
 
 
     @PostMapping("/register")
-    private ResponseEntity<?> createClub(@RequestBody ClubDto clubDto)
+    private ResponseEntity<ClubDto> createClub(@RequestBody ClubDto clubDto)
     {
         ClubDto clubDto1 = clubService.createClub(clubDto);
-        return new ResponseEntity<>(clubDto1, HttpStatus.CREATED);
+        return new ResponseEntity<ClubDto>(clubDto1, HttpStatus.CREATED);
     }
 
 
