@@ -25,10 +25,9 @@ public class ClubServiceImpl implements ClubService {
 
     @Override
     public ClubDto createClub(ClubDto clubDto) {
-
-        Club club = model.map(clubDto,Club.class);
-        Club club1 = clubRepo.save(club);
-        return model.map(club1,ClubDto.class);
+        Club club = this.model.map(clubDto,Club.class);
+        Club club1 = this.clubRepo.save(club);
+        return this.model.map(club1,ClubDto.class);
     }
 
     @Override

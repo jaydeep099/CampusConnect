@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import Base from "../components/Base";
 import {
@@ -15,8 +13,6 @@ import {
   Spacer,
   CardFooter,
 } from "@chakra-ui/react";
-// import campusconnectlogo from "../images/campusconnectlogo.jpeg";
-// import EventCard from "../components/EventCard";
 import axios from "axios";
 import { LoadAllClubs } from "../services/club-service";
 import ClubCard from "../components/ClubCard";
@@ -36,7 +32,6 @@ const Club = () => {
       .catch((error) => {
         console.error("Error loading events:", error);
       });
-    // SetUsedEffect(true);
   }, []);
 
   const handleClearFilter = () => {};

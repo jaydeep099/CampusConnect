@@ -1,6 +1,4 @@
 import { useState } from "react";
-import {useNavigate} from "react-router-dom";
-import {message} from "antd";
 import {
   Box,
   Button,
@@ -15,19 +13,17 @@ import {
   Stack,
   Image,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 
-
-
 const SignUp = () => {
-  const navigate = useNavigate();
-
-
   const [formData, setFormData] = useState({
     username: "",
     password: "",
     confirmPassword: "",
   });
+
+  const toast = useToast();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -39,16 +35,29 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-      if(formData.password != formData.confirmPassword)
-      {
-        message.error("Password and Confirm Password are Not Same")
-        return;
-      }
+    if (!formData.username || !formData.password || !formData.confirmPassword) {
+      toast({
+        title: "Error",
+        description: "All fields are required.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
 
-    console.log(formData.username);
-    
-    navigate("/registration",{state:({password:formData.password,username:formData.username})});
-
+    // Check if passwords match
+    if (formData.password !== formData.confirmPassword) {
+      toast({
+        title: "Error",
+        description: "Passwords do not match.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+    window.location.href = "/";
   };
 
   return (
@@ -75,7 +84,7 @@ const SignUp = () => {
             <CardBody>
               <form onSubmit={handleSubmit}>
                 <Stack spacing="4">
-                  <FormControl>
+                  <FormControl isRequired>
                     <FormLabel size="sm">Username</FormLabel>
                     <Input
                       type="text"
@@ -86,10 +95,9 @@ const SignUp = () => {
                       borderColor="#d8dee4"
                       size="sm"
                       borderRadius="6px"
-                      required={true}
                     />
                   </FormControl>
-                  <FormControl>
+                  <FormControl isRequired>
                     <HStack justify="space-between">
                       <FormLabel size="sm">Password</FormLabel>
                     </HStack>
@@ -102,10 +110,9 @@ const SignUp = () => {
                       borderColor="#d8dee4"
                       size="sm"
                       borderRadius="6px"
-                      required={true}
                     />
                   </FormControl>
-                  <FormControl>
+                  <FormControl isRequired>
                     <HStack justify="space-between">
                       <FormLabel size="sm">Confirm Password</FormLabel>
                     </HStack>
@@ -118,7 +125,6 @@ const SignUp = () => {
                       borderColor="#d8dee4"
                       size="sm"
                       borderRadius="6px"
-                      required={true}
                     />
                   </FormControl>
                   <Button

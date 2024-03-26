@@ -1,6 +1,5 @@
 package com.campusconnect.controller;
 
-import com.campusconnect.dto.EventCardDto;
 import com.campusconnect.dto.EventDto;
 import com.campusconnect.entities.Event;
 import com.campusconnect.services.EventService;
@@ -10,12 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.crypto.Data;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @RestController
@@ -77,14 +74,14 @@ public class EventController
     }
 
     @GetMapping("/allEvents")
-    public ResponseEntity<List<EventCardDto>> getAllEvetn()
+    public ResponseEntity<List<EventDto>> getAllEvetn()
     {
-        List<EventCardDto> allEvents = eventService.getAllEvent()
+        List<EventDto> allEvents = eventService.getAllEvent()
                 .stream()
-                .map(event -> modelMapper.map(event,EventCardDto.class))
+                .map(event -> modelMapper.map(event,EventDto.class))
                 .collect(Collectors.toList());
 
-        return new ResponseEntity<List<EventCardDto>>(allEvents,HttpStatus.OK);
+        return new ResponseEntity<List<EventDto>>(allEvents,HttpStatus.OK);
     }
 
     @PutMapping("event/{eventId}")
@@ -94,14 +91,14 @@ public class EventController
     }
 
     @GetMapping("/upcomingEvents")
-    public ResponseEntity<List<EventCardDto>> getUpcomingEvents()
+    public ResponseEntity<List<EventDto>> getUpcomingEvents()
     {
-        List<EventCardDto> upcomingEvents = eventService.getUpcomingEvent()
+        List<EventDto> upcomingEvents = eventService.getUpcomingEvent()
                 .stream()
-                .map(event -> modelMapper.map(event,EventCardDto.class))
+                .map(event -> modelMapper.map(event,EventDto.class))
                 .collect(Collectors.toList());
 
-        return new ResponseEntity<List<EventCardDto>>(upcomingEvents,HttpStatus.OK);
+        return new ResponseEntity<List<EventDto>>(upcomingEvents,HttpStatus.OK);
     }
 
     @GetMapping("/{eventId}")

@@ -17,7 +17,7 @@ import {
   UpcomingEvents,
 } from "../services/event-service";
 import { Checkbox } from "antd";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Event = () => {
   const [fromDate, setFromDate] = useState("");
@@ -148,9 +148,14 @@ const Event = () => {
                   </Flex>
                 </Flex>
                 <Center>
-                  <Button mt="auto" colorScheme="blue" onClick={() => handleClick(event.eventId)}>
+                  <Link
+                    mt="auto"
+                    colorScheme="blue"
+                    to={"/eventdetails/"+event.eventId}
+                    className="btn btn-primary"
+                  >
                     View Details
-                  </Button>
+                  </Link>
                 </Center>
               </Card>
             </Box>

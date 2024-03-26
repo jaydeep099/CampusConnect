@@ -2,11 +2,8 @@ package com.campusconnect.controller;
 
 
 import com.campusconnect.dto.ClubDto;
-import com.campusconnect.dto.EventCardDto;
-import com.campusconnect.dto.StudentDto;
 import com.campusconnect.entities.Club;
 import com.campusconnect.services.ClubService;
-import com.campusconnect.services.impl.ClubServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,11 +29,10 @@ public class ClubController
 
 
     @PostMapping("/register")
-    private ResponseEntity<?> createClub(@RequestBody ClubDto clubDto)
+    private ResponseEntity<ClubDto> createClub(@RequestBody ClubDto clubDto)
     {
-        System.out.println(clubDto.getClub_name());
-        ClubDto clubDto1 = this.clubService.createClub(clubDto);
-        return new ResponseEntity<>(clubDto1, HttpStatus.CREATED);
+        ClubDto clubDto1 = clubService.createClub(clubDto);
+        return new ResponseEntity<ClubDto>(clubDto1, HttpStatus.CREATED);
     }
 
 
