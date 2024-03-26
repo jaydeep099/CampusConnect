@@ -25,7 +25,7 @@ import { NavLink as ReactLink } from "react-router-dom";
 import { HamburgerIcon } from "@chakra-ui/icons";
 
 const Navbar = () => {
-  const [isLargerThan1117] = useMediaQuery("(min-width: 1117px)");
+  const [isLargerThan1023] = useMediaQuery("(min-width: 1024px)");
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => setIsOpen(!isOpen);
@@ -38,8 +38,8 @@ const Navbar = () => {
       py={2}
       shadow="md"
       alignItems="center"
-      position="fixed" // Set position to fixed
-      top={0} // Specify top value to control distance from top
+      position="fixed" 
+      top={0} 
       left={0}
       right={0}
       zIndex={1}
@@ -67,7 +67,7 @@ const Navbar = () => {
           </Link>
         </Box>
         <Box display="flex" alignItems="center" mr={2}>
-          {isLargerThan1117 ? (
+          {isLargerThan1023 ? (
             <Box display="flex" alignItems="center" mr={2}>
               <Link
                 _hover={{ textDecoration: "none" }}

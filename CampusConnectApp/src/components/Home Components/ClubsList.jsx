@@ -7,16 +7,16 @@ import {
   CardHeader,
   Button,
   Heading,
+  Box,
 } from "@chakra-ui/react";
 const ClubsList = () => {
   return (
-    <>
+    <Box m={2}>
       <Heading ml={4}>Clubs</Heading>
         <hr/> 
       <SimpleGrid
         spacing={30}
         templateColumns="repeat(auto-fill, minmax(250px, 1fr))"
-        ml={4}
       >
         <Card borderRadius={0}>
           <CardHeader>
@@ -77,8 +77,17 @@ const ClubsList = () => {
             <Button  variant="solid" colorScheme="blue" >View here</Button>
           </CardFooter>
         </Card>
+        <Card borderRadius={0}>
+          <CardBody>
+            <Text>
+              🔐💻 Crack the code! Join Decrypters for coding challenges,
+              competitions, and workshops, unlocking a world of tech brilliance.
+              🚀
+            </Text>
+          </CardBody>
+        </Card>
       </SimpleGrid>
-    </>
+    </Box>
   );
 };
 
