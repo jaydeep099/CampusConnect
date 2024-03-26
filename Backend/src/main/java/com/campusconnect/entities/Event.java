@@ -1,9 +1,6 @@
 package com.campusconnect.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -19,6 +16,7 @@ import java.util.List;
 @Setter
 @Getter
 @RequiredArgsConstructor
+@JsonIgnoreProperties({"club"})
 public class Event {
     @Id
     @Column(name = "Event_Id")
@@ -47,10 +45,8 @@ public class Event {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Club_FK")
-    @JsonBackReference // Prevents infinite recursion in JSON serialization
     private Club club;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JsonIgnore// Manages the serialization of the Student list
     private List<Student> student;
 }

@@ -1,6 +1,7 @@
 package com.campusconnect.dto;
 
 import com.campusconnect.entities.Club;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,5 +27,6 @@ public class EventDto
 
     private String brochure;
 
+    @JsonIgnore
     private Club club;
 }
