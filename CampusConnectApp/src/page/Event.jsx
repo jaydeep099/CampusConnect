@@ -118,13 +118,8 @@ const Event = () => {
 
         <Flex direction="column" flex="1" p="4">
           {events.map((event) => (
-            <Card key={event.eventId} maxW="sm" mb="4">
-              <Box
-                maxW="md"
-                borderWidth="1px"
-                borderRadius="lg"
-                overflow="hidden"
-              >
+            <Box borderWidth="1px" borderRadius="lg" overflow="hidden">
+              <Card key={event.eventId} mb="4">
                 <Flex direction="row" p="3">
                   <Image
                     src="./assets/images/campusconnect.jpeg"
@@ -143,12 +138,16 @@ const Event = () => {
                   </Flex>
                 </Flex>
                 <Center>
-                  <Button mt="auto" colorScheme="blue">
+                  <Button
+                    mt="auto"
+                    colorScheme="blue"
+                    
+                  >
                     View Details
                   </Button>
                 </Center>
-              </Box>
-            </Card>
+              </Card>
+            </Box>
           ))}
         </Flex>
       </Flex>

@@ -44,6 +44,6 @@ public class Club {
     private String logo;
 
     @OneToMany(mappedBy = "club", fetch = FetchType.LAZY)
-//    @JsonIgnore
+    @JsonIgnore
     private List<Event> eventList;
 }

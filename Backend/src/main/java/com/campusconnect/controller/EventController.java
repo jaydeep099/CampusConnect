@@ -104,6 +104,11 @@ public class EventController
         return new ResponseEntity<List<EventCardDto>>(upcomingEvents,HttpStatus.OK);
     }
 
+    @GetMapping("/{eventId}")
+    public ResponseEntity<EventDto> getEventById(@PathVariable Long eventId){
+        EventDto eventDto = this.eventService.getEventbyId(eventId);
+        return new ResponseEntity<EventDto>(eventDto,HttpStatus.OK);
+    }
     private Date convertToDate(String dateString) {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");

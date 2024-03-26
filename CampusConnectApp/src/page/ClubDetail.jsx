@@ -13,8 +13,6 @@ import {
   Button,
   Spacer,
 } from "@chakra-ui/react";
-// import campusconnectlogo from "../images/campusconnectlogo.jpeg";
-// import EventCard from "../components/EventCard";
 import axios from "axios";
 import { LoadClubById } from "../services/club-service";
 import { useLocation } from "react-router-dom";

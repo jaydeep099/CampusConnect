@@ -65,9 +65,7 @@ public class EventServiceImpl implements EventService {
     public List<Event> getAllEventsByClub(Long clubId) {
 
         Club club = this.clubRepo.findById(clubId).orElseThrow();
-
         List<Event> eventList = club.getEventList();
-
         return eventList;
     }
 
@@ -87,5 +85,11 @@ public class EventServiceImpl implements EventService {
         List<Event> upcomingEvents = this.eventRepo.getUpcomingEvents(date);
 
         return upcomingEvents;
+    }
+
+    @Override
+    public EventDto getEventbyId(Long eventId) {
+        Event event = this.eventRepo.findById(eventId).orElseThrow();
+        return this.model.map(event, EventDto.class);
     }
 }
