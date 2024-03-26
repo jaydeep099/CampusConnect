@@ -9,6 +9,8 @@ import SignUp from "./page/SignUp";
 import Registration from "./page/Registration";
 import ClubDetail from "./page/ClubDetail";
 import EventDashboard from "./components/EventDashboard";
+import EventRegistration from "./components/EventRegistration";
+import ClubRegistration from "./components/ClubRegistration";
 
 function App() {
   return (
@@ -21,12 +23,13 @@ function App() {
         <Route path="/contactus" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/registration" element={<Registration/>}/>
-        <Route path="/clubDetail" element={<ClubDetail/>}/>
-        
+        <Route path="/registration" element={<Registration />} />
+        <Route path="/clubDetail" element={<ClubDetail />} />
+        {/*Private Event and club ma avse */}
+        <Route path="/eventRegistry" element={<EventRegistration />} />
+        <Route path="/clubRegistry" element={<ClubRegistration />} />
       </Routes>
     </BrowserRouter>
-    
   );
 }
 

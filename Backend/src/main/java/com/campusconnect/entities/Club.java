@@ -28,8 +28,8 @@ public class Club {
     @Column(name = "Mentor_Name")
     private String mentor;
 
-    @Column(name = "Username")
-    private String club_username;
+    @Column(name = "Email")
+    private String club_email;
 
     @Column(name = "Password")
     private String club_password;
@@ -39,6 +39,9 @@ public class Club {
 
     @Column(name = "Department")
     private String dept;
+
+    @Column(name="President")
+    private String president;
 
     @Column(name = "Logo_link", length = Integer.MAX_VALUE)
     private String logo;

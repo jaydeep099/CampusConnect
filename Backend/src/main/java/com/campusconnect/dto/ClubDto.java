@@ -17,11 +17,13 @@ public class ClubDto
 
     private String mentor;
 
-    private String club_username;
+    private String club_email;
 
     private String club_password;
 
     private String description;
+
+    private String president;
 
     private String dept;
 

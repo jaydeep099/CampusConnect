@@ -9,7 +9,6 @@ import {
   FormControl,
   FormLabel,
   Stack,
-  Select,
 } from "@chakra-ui/react";
 
 const EventRegistration = () => {
