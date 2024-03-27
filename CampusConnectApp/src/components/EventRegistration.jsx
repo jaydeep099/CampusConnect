@@ -255,7 +255,6 @@ const EventRegistration = () => {
               required
             />
           </FormControl>
-
           <Flex justify="flex-end">
             <Button type="submit" colorScheme="teal">
               Register Event
