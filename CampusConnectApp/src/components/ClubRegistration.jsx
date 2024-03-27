@@ -9,19 +9,11 @@ import {
   Card,
   HStack,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import  { useState } from "react";
 import { createClub } from "../services/club-service";
 
 const ClubRegistration = () => {
-  const [clubInfo, setClubInfo] = useState({
-    clubName: "",
-    clubDepartment: "",
-    clubEmail: "",
-    clubPassword: "",
-    clubDescription: "",
-    clubPresident: "",
-    clubImage: null,
-  });
+  const [clubInfo, setClubInfo] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,27 +22,27 @@ const ClubRegistration = () => {
       [name]: value,
     }));
   };
-  const handleLogoChange = (e) => {
-    const file = e.target.files[0];
-    // Resize the image using the react-image-file-resizer library
-    Resizer.imageFileResizer(
-      file,
-      100, // Max width
-      100, // Max height
-      "JPEG", // Output format
-      100, // Quality
-      0, // Rotation
-      (uri) => {
-        // Convert resized image URI to base64 string
-        const base64String = uri.split(",")[1];
-        setClubData((prevData) => ({
-          ...prevData,
-          logo: base64String, // Set the base64 string as the logo
-        }));
-      },
-      "base64" // Output type
-    );
-  };
+  // const handleLogoChange = (e) => {
+  //   const file = e.target.files[0];
+  //   // Resize the image using the react-image-file-resizer library
+  //   Resizer.imageFileResizer(
+  //     file,
+  //     100, // Max width
+  //     100, // Max height
+  //     "JPEG", // Output format
+  //     100, // Quality
+  //     0, // Rotation
+  //     (uri) => {
+  //       // Convert resized image URI to base64 string
+  //       const base64String = uri.split(",")[1];
+  //       setClubInfo((prevData) => ({
+  //         ...prevData,
+  //         logo: base64String, // Set the base64 string as the logo
+  //       }));
+  //     },
+  //     "base64" // Output type
+  //   );
+  // };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -71,7 +63,7 @@ const ClubRegistration = () => {
     console.log(clubInfo);
   };
 
-  const handleReset = (e) => {
+  const handleReset = () => {
     setClubInfo({
       clubName: "",
       clubDepartment: "",
@@ -92,8 +84,8 @@ const ClubRegistration = () => {
             <FormLabel>Club Name</FormLabel>
             <Input
               type="text"
-              name="clubName"
-              value={clubInfo.clubName}
+              name="club_name"
+              value={clubInfo.club_name}
               onChange={handleChange}
               placeholder="Enter club name"
             />
@@ -103,8 +95,8 @@ const ClubRegistration = () => {
             <FormLabel>Club Department</FormLabel>
             <Input
               type="text"
-              name="clubDepartment"
-              value={clubInfo.clubDepartment}
+              name="dept"
+              value={clubInfo.dept}
               onChange={handleChange}
               placeholder="Enter club department"
             />
@@ -114,8 +106,8 @@ const ClubRegistration = () => {
             <FormLabel>Club President</FormLabel>
             <Input
               type="text"
-              name="clubPresident"
-              value={clubInfo.clubPresident}
+              name="president"
+              value={clubInfo.president}
               onChange={handleChange}
               placeholder="Enter club president"
             />
@@ -125,8 +117,8 @@ const ClubRegistration = () => {
             <FormLabel>Club Email</FormLabel>
             <Input
               type="email"
-              name="clubEmail"
-              value={clubInfo.clubEmail}
+              name="club_email"
+              value={clubInfo.club_email}
               onChange={handleChange}
               placeholder="Enter club email"
             />
@@ -136,8 +128,8 @@ const ClubRegistration = () => {
             <FormLabel>Club Password</FormLabel>
             <Input
               type="password"
-              name="clubPassword"
-              value={clubInfo.clubPassword}
+              name="club_password"
+              value={clubInfo.club_password}
               onChange={handleChange}
               placeholder="Enter club password"
             />
@@ -146,8 +138,8 @@ const ClubRegistration = () => {
           <FormControl mt={4}>
             <FormLabel>Club Description</FormLabel>
             <Textarea
-              name="clubDescription"
-              value={clubInfo.clubDescription}
+              name="description"
+              value={clubInfo.description}
               onChange={handleChange}
               placeholder="Enter club description"
             />
@@ -155,7 +147,7 @@ const ClubRegistration = () => {
 
           <FormControl mt={4}>
             <FormLabel>Club Image</FormLabel>
-            <Input type="file" name="clubImage" onChange={handleImageChange} />
+            <Input type="file" name="logo" value={clubInfo.logo} onChange={handleImageChange} />
           </FormControl>
 
           <HStack justifyContent="center" mt={5}>

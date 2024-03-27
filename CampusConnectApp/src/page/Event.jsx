@@ -17,7 +17,7 @@ import {
   UpcomingEvents,
 } from "../services/event-service";
 import { Checkbox } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Event = () => {
   const [fromDate, setFromDate] = useState("");

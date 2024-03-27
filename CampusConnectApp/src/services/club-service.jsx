@@ -20,5 +20,7 @@ export const LoadClubById = (clubId) => {
 };
 
 export const createClub = (clubdata) => {
-  return myAxios.post(`/api/club/register`,clubdata).then((response) => response.data);
+  return myAxios
+    .post(`/api/club/register`, clubdata)
+    .then((response) => {response.data});
 };

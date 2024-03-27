@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { LoadClubById } from "../services/club-service";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Club = () => {
   //   const [events, setEvents] = useState([]);
@@ -40,7 +40,11 @@ const Club = () => {
   }
 
   const handleClick = (eventId) => {
-    navigate("/eventDashBoard",{state:({event_Id:eventId})})
+    navigate("/eventdetails", { state: { event_Id: eventId } });
+  };
+
+  const handleCreate = (clubId) => {
+    navigate("/eventRegistry",{state:{club_Id:clubId}});
   }
 
   return (
@@ -63,12 +67,18 @@ const Club = () => {
               </Box>
             </Flex>
           </Box>
+          <Button
+            variant="solid"
+            colorScheme="blue"
+            onClick={() => handleCreate(club.club_id)}
+          >
+            Create New Event
+          </Button>
           {/* <EventCard/>
                 <EventCard/> */}
           <Flex direction="row" justifyContent="space-between" maxW="100%">
             {club.eventList &&
               club.eventList.map((event) => (
-
                 <Card key={event.eventId} maxW="sm">
                   <Box
                     maxW="sm"
@@ -94,9 +104,16 @@ const Club = () => {
                       </Flex>
                     </Flex>
                     <Center>
-                      <Button mt="auto" colorScheme="blue" onClick={() => handleClick(event.eventId)}>
+                      {/* <Button mt="auto" colorScheme="blue" onClick={() => handleClick(event.eventId)}>
                         View Details
-                      </Button>
+                      </Button> */}
+                      <Link
+                        mt="auto"
+                        to={"/eventdetails/" + event.eventId}
+                        className="btn btn-primary"
+                      >
+                        View Details
+                      </Link>
                     </Center>
                   </Box>
                 </Card>

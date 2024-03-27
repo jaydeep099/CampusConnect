@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,13 +28,32 @@ public class EventController
     @Autowired
     private ModelMapper modelMapper;
 
-    @PostMapping("/{clubId}")
+    @PostMapping("/createEvent/{clubId}")
     public ResponseEntity<?> createEvent(@RequestBody EventDto eventDto, @PathVariable Long clubId)
     {
+        System.out.println("hii");
         EventDto eventDto1 = this.eventService.createEvent(eventDto, clubId);
         return new ResponseEntity<>(eventDto1, HttpStatus.CREATED);
     }
 
+
+//    @PostMapping("/createEvent/{clubId}")
+//    public ResponseEntity<?> createEvent(@RequestBody EventDto eventDto, @PathVariable Long clubId)
+//    {
+//        // Split the eventTime string into hours and minutes components
+//        String[] timeComponents = eventDto.getEventTime().split(":");
+//        int hours = Integer.parseInt(timeComponents[0]);
+//        int minutes = Integer.parseInt(timeComponents[1]);
+//
+//        // Create a java.sql.Time object using the extracted components
+//        Time eventTime = Time.valueOf(String.format("%02d:%02d:00", hours, minutes));
+//
+//        // Set the converted eventTime to the EventDto
+//        eventDto.setEventTime(eventTime);
+//
+//        EventDto createdEvent = this.eventService.createEvent(eventDto, clubId);
+//        return new ResponseEntity<>(createdEvent, HttpStatus.CREATED);
+//    }
 
     @GetMapping("/club/{clubId}")
     public ResponseEntity<List<EventDto>> getEventbyClub(@PathVariable Long clubId)
@@ -104,9 +124,9 @@ public class EventController
     @GetMapping("/{eventId}")
     public ResponseEntity<Event> getEventById(@PathVariable("eventId") Long eventId)
     {
-        Event event = eventService.getEventById(eventId);
+        EventDto eventDto = eventService.getEventbyId(eventId);
 
-        return new ResponseEntity<Event>(event,HttpStatus.OK);
+        return new ResponseEntity<Event>(modelMapper.map(eventDto,Event.class),HttpStatus.OK);
     }
 
     private Date convertToDate(String dateString) {

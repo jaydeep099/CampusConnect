@@ -36,6 +36,7 @@ public class EventServiceImpl implements EventService {
         Event event = model.map(eventDto,Event.class);
         event.setClub(club);
         Event event1 = this.eventRepo.save(event);
+        System.out.println(event1.getEventTime());
         return this.model.map(event1,EventDto.class);
     }
 
