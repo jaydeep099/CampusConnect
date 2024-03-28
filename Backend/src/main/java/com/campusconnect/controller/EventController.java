@@ -3,12 +3,20 @@ package com.campusconnect.controller;
 import com.campusconnect.dto.EventDto;
 import com.campusconnect.entities.Event;
 import com.campusconnect.services.EventService;
+import com.campusconnect.services.FileService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,6 +35,12 @@ public class EventController
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private FileService fileService;
+
+    @Value("${project.image}")
+    private String path;
 
     @PostMapping("/createEvent/{clubId}")
     public ResponseEntity<?> createEvent(@RequestBody EventDto eventDto, @PathVariable Long clubId)
@@ -127,6 +141,28 @@ public class EventController
         EventDto eventDto = eventService.getEventbyId(eventId);
 
         return new ResponseEntity<Event>(modelMapper.map(eventDto,Event.class),HttpStatus.OK);
+    }
+
+    @PostMapping("/image/upload/{eventId}")
+    public ResponseEntity<EventDto>  uploadImage(
+            @RequestParam("image") MultipartFile image,
+            @PathVariable Long eventId
+    ) throws IOException
+    {
+        EventDto eventDto = this.eventService.getEventbyId(eventId);
+        String fileName =  this.fileService.uploadImage(path,image);
+        eventDto.setBrochure(fileName);
+        EventDto updatePost = this.eventService.updateEvent(eventDto,eventId);
+        return  new ResponseEntity<EventDto>(updatePost,HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/eventbroucher/{image}" , produces = MediaType.IMAGE_JPEG_VALUE)
+    public void ShowImage(@PathVariable("image") String image,
+                            HttpServletResponse response) throws IOException {
+        InputStream resource = this.fileService.getResources(path,image);
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        StreamUtils.copy(resource,response.getOutputStream());
+
     }
 
     private Date convertToDate(String dateString) {

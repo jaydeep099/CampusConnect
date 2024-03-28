@@ -9,8 +9,9 @@ import SignUp from "./page/SignUp";
 import Registration from "./page/Registration";
 import ClubDetail from "./page/ClubDetail";
 import EventDashboard from "./components/EventDashboard";
-import EventRegistration from "./components/EventRegistration";
+import EventRegistration from "./components/ClubComponents/EventRegistration";
 import ClubRegistration from "./components/ClubRegistration";
+import ClubNavbar from "./components/ClubComponents/ClubNavbar";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/clubRegistry" element={<ClubRegistration />} />
       </Routes>
     </BrowserRouter>
+   // <ClubNavbar/>
   );
 }
 
