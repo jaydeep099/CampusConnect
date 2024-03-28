@@ -20,19 +20,19 @@ public class Club {
     @Id
     @Column(name = "Club_Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long club_id;
+    private Long clubId;
 
     @Column(name = "Club_Name")
-    private String club_name;
+    private String clubName;
 
     @Column(name = "Mentor_Name")
     private String mentor;
 
     @Column(name = "Email")
-    private String club_email;
+    private String clubEmail;
 
     @Column(name = "Password")
-    private String club_password;
+    private String clubPassword;
 
     @Column(name = "Description")
     private String description;

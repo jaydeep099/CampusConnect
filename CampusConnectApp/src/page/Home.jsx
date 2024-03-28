@@ -4,7 +4,7 @@ import EventsList from "../components/Home Components/EventsList";
 const Home = () => {
   return (
     <Base>
-      <br/>
+    <br/>
       <ClubsList />
       <br />
       <EventsList />

@@ -10,4 +10,6 @@ public interface StudentService {
     public void deleteStudent(Long studentId);
 
     public StudentDto getStudentById(Long studentId);
+
+    public StudentDto loginStudent(String username,String password);
 }

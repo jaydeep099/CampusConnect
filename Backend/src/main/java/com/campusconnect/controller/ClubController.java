@@ -55,4 +55,12 @@ public class ClubController
 
         return new ResponseEntity<Club>(club,HttpStatus.OK);
     }
+
+    @GetMapping("/{club_name}/{club_password}")
+    private ResponseEntity<?> loginClub(@PathVariable("club_name") String club_name,@PathVariable("club_password") String club_password)
+    {
+        ClubDto clubDto = clubService.loginClub(club_name,club_password);
+
+        return new ResponseEntity<Long>(clubDto.getClubId(),HttpStatus.ACCEPTED);
+    }
 }

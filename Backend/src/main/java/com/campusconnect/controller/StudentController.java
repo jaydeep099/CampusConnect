@@ -41,4 +41,11 @@ public class StudentController {
        return ResponseEntity.ok(this.studentService.getStudentById(studentId));
     }
 
+    @GetMapping("/{username}/{password}")
+    public ResponseEntity<?> loginStudent(@PathVariable("username") String username,@PathVariable("password") String password)
+    {
+        StudentDto studentDto = studentService.loginStudent(username,password);
+
+        return new ResponseEntity<Long>(studentDto.getStudentId(),HttpStatus.ACCEPTED);
+    }
 }

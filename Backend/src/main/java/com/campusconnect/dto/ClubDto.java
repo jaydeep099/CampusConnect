@@ -11,15 +11,15 @@ import java.util.List;
 @Getter
 public class ClubDto
 {
-    private Long club_id;
+    private Long clubId;
 
-    private String club_name;
+    private String clubName;
 
     private String mentor;
 
-    private String club_email;
+    private String clubEmail;
 
-    private String club_password;
+    private String clubPassword;
 
     private String description;
 

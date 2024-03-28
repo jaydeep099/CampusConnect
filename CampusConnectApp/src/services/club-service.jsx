@@ -24,3 +24,9 @@ export const createClub = (clubdata) => {
     .post(`/api/club/register`, clubdata)
     .then((response) => {response.data});
 };
+
+export const LoginClub = (username,password) => {
+  return myAxios.get(`/api/club/${username}/${password}`).then((response) => {
+    return response.data;
+  });
+}

@@ -31,6 +31,7 @@ const Club = () => {
         setClub(response);
       })
       .catch((error) => {
+        console.log(location.state.clubId);
         console.log("jj", error);
       });
   }, []);

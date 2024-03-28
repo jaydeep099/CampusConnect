@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface ClubRepo extends JpaRepository<Club,Long> {
     @Query("SELECT c FROM Club c")
     public List<Club> getAllClub();
+
+    public Club findClubByClubNameAndClubPassword(String username,String password);
 }

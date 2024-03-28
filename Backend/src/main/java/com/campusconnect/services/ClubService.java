@@ -20,4 +20,6 @@ public interface ClubService
     public List<ClubDto> getClubByDept(String dept);
 
     public List<Club> getAllClub();
+
+    public ClubDto loginClub(String username,String password);
 }
