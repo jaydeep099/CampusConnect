@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { loadEventById } from "../services/event-service";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { BASE_URL } from "../services/helper";
 
 const EventDashboard = () => {
   const { eventId } = useParams();
@@ -26,7 +27,7 @@ const EventDashboard = () => {
 
   return (
     <Box
-      m={4}
+      m={10}
       display="flex"
       justifyContent="center"
       alignItems="center"
@@ -45,9 +46,9 @@ const EventDashboard = () => {
         <Box flex="1" display="flex">
           <Box flex="2" padding="4">
             <Image
-              src="./assets/images/campusconnect.jpeg"
-              alt="Club"
-              borderRadius="lg"
+              src={BASE_URL+"/api/event/eventbroucher/"+event?.brochure}
+              alt="Event Brochure"
+              objectFit="cover"
             />
           </Box>
           <Box flex="3" padding="4">

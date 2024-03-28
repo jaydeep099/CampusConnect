@@ -1,6 +1,6 @@
 import Base from "../components/Base";
-import ClubsList from "../components/Home Components/ClubsList";
-import EventsList from "../components/Home Components/EventsList";
+import ClubsList from "../components/HomeComponents/ClubsList";
+import EventsList from "../components/HomeComponents/EventsList";
 const Home = () => {
   return (
     <Base>
