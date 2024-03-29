@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
   Box,
   Flex,
@@ -21,14 +22,49 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import { NavLink as ReactLink } from "react-router-dom";
+import { NavLink as ReactLink, useNavigate } from "react-router-dom";
 import { HamburgerIcon } from "@chakra-ui/icons";
+import { getStudetnIdByStudentUsername } from "../services/student-service";
+import { getClubByClubUsername } from "../services/club-service";
 
 const Navbar = () => {
   const [isLargerThan1023] = useMediaQuery("(min-width: 1024px)");
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleToggle = () => setIsOpen(!isOpen);
+
+  const handleClick = () => {
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    // var studetn_Id;
+    if (user) {
+      console.log(user.username);
+      if (user.role === "student") {
+        getStudetnIdByStudentUsername(user.username, user.password)
+          .then((response) => {
+            navigate("/studentProfile/" + response.studentId);
+            // studetn_Id = response.studentId;
+          })
+          .catch((error) => {
+            console.log(error);
+            return;
+          });
+      } else if (user.role === "club") {
+        getClubByClubUsername(user.username, user.password)
+          .then((response) => {
+            // console.log(response);
+            navigate("/clubDetail/" + response.clubId);
+            // studetn_Id = response.studentId;
+          })
+          .catch((error) => {
+            console.log(error);
+            return;
+          });
+      }
+
+      // console.log(studetn_Id);
+    }
+  };
 
   return (
     <Box
@@ -38,8 +74,8 @@ const Navbar = () => {
       py={2}
       shadow="md"
       alignItems="center"
-      position="fixed" 
-      top={0} 
+      position="fixed"
+      top={0}
       left={0}
       right={0}
       zIndex={1}
@@ -179,7 +215,7 @@ const Navbar = () => {
         </Box>
         <Box ml={4}>
           <Menu>
-            <MenuButton as={Avatar} size="md" />
+            <MenuButton as={Avatar} size="md" onClick={handleClick} />
             <MenuList>
               <Link
                 _hover={{ textDecoration: "none" }}

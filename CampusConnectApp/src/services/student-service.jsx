@@ -22,3 +22,11 @@ export const LoadStudentById = (studentId) => {
     .get(`/api/student/${studentId}`)
     .then((response) => response.data);
 };
+
+export const getStudetnIdByStudentUsername = (username, password) => {
+  return myAxios
+    .get(`/api/student/getstudentid/${username}/${password}`)
+    .then((response) => {
+      return response.data;
+    });
+};

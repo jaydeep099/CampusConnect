@@ -29,8 +29,11 @@ const ClubRegistration = () => {
       clubImage: file,
     }));
   };
-  const createEvent = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+
+    
+
     createClub(clubInfo)
       .then((data) => {
         console.log(data);
@@ -44,12 +47,12 @@ const ClubRegistration = () => {
   const handleReset = () => {
     setClubInfo({
       clubName: "",
-      clubDepartment: "",
+      dept: "",
       clubEmail: "",
       clubPassword: "",
-      clubDescription: "",
+      description: "",
       clubPresident: "",
-      clubImage: null,
+      logo: null,
     });
   };
 
@@ -57,13 +60,13 @@ const ClubRegistration = () => {
     <Card p={8} m={4} borderRadius={0} boxShadow="lg" maxW="70%" mx="auto">
       <Stack spacing={4}>
         <Heading mb={4}>Register Your Club Here!</Heading>
-        <form onSubmit={createEvent}>
+        <form onSubmit={handleSubmit}>
           <FormControl mt={4}>
             <FormLabel>Club Name</FormLabel>
             <Input
               type="text"
-              name="club_name"
-              value={clubInfo.club_name}
+              name="clubName"
+              value={clubInfo.clubName}
               onChange={handleChange}
               placeholder="Enter club name"
             />
@@ -95,8 +98,8 @@ const ClubRegistration = () => {
             <FormLabel>Club Email</FormLabel>
             <Input
               type="email"
-              name="club_email"
-              value={clubInfo.club_email}
+              name="clubEmail"
+              value={clubInfo.clubEmail}
               onChange={handleChange}
               placeholder="Enter club email"
             />
@@ -106,8 +109,8 @@ const ClubRegistration = () => {
             <FormLabel>Club Password</FormLabel>
             <Input
               type="password"
-              name="club_password"
-              value={clubInfo.club_password}
+              name="clubPassword"
+              value={clubInfo.clubPassword}
               onChange={handleChange}
               placeholder="Enter club password"
             />

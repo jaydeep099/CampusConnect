@@ -48,4 +48,13 @@ public class StudentController {
 
         return new ResponseEntity<Long>(studentDto.getStudentId(),HttpStatus.ACCEPTED);
     }
+
+    @GetMapping("/getstudentid/{username}/{password}")
+    public ResponseEntity<?> getStudentIdByUsername(@PathVariable("username") String username,@PathVariable("password") String password)
+    {
+        StudentDto studentDto = studentService.getStudetnIdUsernameAndPassword(username,password);
+        System.out.println(studentDto.getStudentId());
+
+        return new ResponseEntity<StudentDto>(studentDto,HttpStatus.OK);
+    }
 }

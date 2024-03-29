@@ -1,8 +1,14 @@
 package com.campusconnect.controller;
 
 
+import com.campusconnect.dto.AdminDto;
 import com.campusconnect.dto.ClubDto;
+import com.campusconnect.dto.StudentDto;
+import com.campusconnect.entities.Admin;
 import com.campusconnect.entities.Club;
+import com.campusconnect.repositories.AdminRepo;
+import com.campusconnect.repositories.ClubRepo;
+import com.campusconnect.services.AdminService;
 import com.campusconnect.services.ClubService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +32,23 @@ public class ClubController
     @Qualifier("modelMapper")
     private ModelMapper modelMapper;
 
+    @Autowired
+    private AdminService adminService;
 
+    @Autowired
+    private AdminRepo adminRepo;
+
+    @Autowired
+    private ClubRepo clubRepo;
 
     @PostMapping("/register")
     private ResponseEntity<ClubDto> createClub(@RequestBody ClubDto clubDto)
     {
+        System.out.println(clubDto.getClubEmail());
+        Admin admin = new Admin();
+        admin.setClubEmail(clubDto.getClubEmail());
+        admin.setClubStatus("pending");
+        adminRepo.save(admin);
         ClubDto clubDto1 = clubService.createClub(clubDto);
         return new ResponseEntity<ClubDto>(clubDto1, HttpStatus.CREATED);
     }
@@ -39,9 +57,9 @@ public class ClubController
     @GetMapping("/AllClub")
     private ResponseEntity<List<ClubDto>> getAllCLub()
     {
-        List<ClubDto> allClubs = clubService.getAllClub()
-                .stream()
-                .map(club -> modelMapper.map(club,ClubDto.class))
+        List<ClubDto> allClubs = adminService.getClubEmails().stream()
+                .filter(admin -> admin.getClubStatus().equals("pending"))
+                .map(admin -> modelMapper.map(clubRepo.findClubByClubEmail(admin.getClubEmail()),ClubDto.class  ))
                 .collect(Collectors.toList());
 
         return new ResponseEntity<List<ClubDto>>(allClubs,HttpStatus.OK);
@@ -61,6 +79,22 @@ public class ClubController
     {
         ClubDto clubDto = clubService.loginClub(club_name,club_password);
 
+        Admin admin = adminRepo.findAdminByClubEmail(clubDto.getClubEmail());
+
+        if(admin.getClubStatus() == "pending")
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         return new ResponseEntity<Long>(clubDto.getClubId(),HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/getclubtid/{username}/{password}")
+    public ResponseEntity<?> getClubIdByUsername(@PathVariable("username") String username,@PathVariable("password") String password)
+    {
+        ClubDto clubDto = clubService.getClubIdByUsernameAndPassword(username,password);
+        System.out.println(clubDto.getClubId());
+
+        return new ResponseEntity<ClubDto>(clubDto,HttpStatus.OK);
     }
 }

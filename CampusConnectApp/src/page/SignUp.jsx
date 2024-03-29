@@ -1,6 +1,6 @@
 import { useState } from "react";
-import {useNavigate} from "react-router-dom";
-import {message} from "antd";
+import { useNavigate } from "react-router-dom";
+import { Select, message } from "antd";
 import {
   Box,
   Button,
@@ -16,12 +16,11 @@ import {
   Image,
   VStack,
 } from "@chakra-ui/react";
-
-
+import ClubRegistration from "../components/ClubRegistration";
 
 const SignUp = () => {
   const navigate = useNavigate();
-
+  const [role, setRole] = useState("student");
 
   const [formData, setFormData] = useState({
     username: "",
@@ -39,16 +38,20 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-      if(formData.password != formData.confirmPassword)
-      {
-        message.error("Password and Confirm Password are Not Same")
-        return;
-      }
+    if (formData.password !== formData.confirmPassword) {
+      message.error("Password and Confirm Password are Not Same");
+      return;
+    }
 
     console.log(formData.username);
-    
-    navigate("/registration",{state:({password:formData.password,username:formData.username})});
 
+    navigate("/registration", {
+      state: { password: formData.password, username: formData.username },
+    });
+  };
+
+  const handleSelection = (value) => {
+    setRole(value);
   };
 
   return (
@@ -73,66 +76,89 @@ const SignUp = () => {
               </Heading>
             </VStack>
             <CardBody>
-              <form onSubmit={handleSubmit}>
-                <Stack spacing="4">
-                  <FormControl>
-                    <FormLabel size="sm">Username</FormLabel>
-                    <Input
-                      type="text"
-                      name="username"
-                      value={formData.username}
-                      onChange={handleInputChange}
-                      bg="white"
-                      borderColor="#d8dee4"
+              <FormControl>
+                <FormLabel size="sm">SignUp as a..</FormLabel>
+                <Select
+                  id="select"
+                  value={role}
+                  onChange={handleSelection}
+                  bg="white"
+                  borderColor="#d8dee4"
+                  size="sm"
+                  borderRadius="6px"
+                >
+                  <option className="py-2" value="student">
+                    Student
+                  </option>
+                  <option className="py-2" value="club">
+                    Club
+                  </option>
+                </Select>
+              </FormControl>
+              {role === "student" ? (
+                <form onSubmit={handleSubmit}>
+                  <Stack spacing="4">
+                    <FormControl>
+                      <FormLabel size="sm">Username</FormLabel>
+                      <Input
+                        type="text"
+                        name="username"
+                        value={formData.username}
+                        onChange={handleInputChange}
+                        bg="white"
+                        borderColor="#d8dee4"
+                        size="sm"
+                        borderRadius="6px"
+                        required={true}
+                      />
+                    </FormControl>
+                    <FormControl>
+                      <HStack justify="space-between">
+                        <FormLabel size="sm">Password</FormLabel>
+                      </HStack>
+                      <Input
+                        type="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleInputChange}
+                        bg="white"
+                        borderColor="#d8dee4"
+                        size="sm"
+                        borderRadius="6px"
+                        required={true}
+                      />
+                    </FormControl>
+                    <FormControl>
+                      <HStack justify="space-between">
+                        <FormLabel size="sm">Confirm Password</FormLabel>
+                      </HStack>
+                      <Input
+                        type="password"
+                        name="confirmPassword"
+                        value={formData.confirmPassword}
+                        onChange={handleInputChange}
+                        bg="white"
+                        borderColor="#d8dee4"
+                        size="sm"
+                        borderRadius="6px"
+                        required={true}
+                      />
+                    </FormControl>
+                    <Button
+                      type="submit"
+                      bg="#2da44e"
+                      color="white"
                       size="sm"
-                      borderRadius="6px"
-                      required={true}
-                    />
-                  </FormControl>
-                  <FormControl>
-                    <HStack justify="space-between">
-                      <FormLabel size="sm">Password</FormLabel>
-                    </HStack>
-                    <Input
-                      type="password"
-                      name="password"
-                      value={formData.password}
-                      onChange={handleInputChange}
-                      bg="white"
-                      borderColor="#d8dee4"
-                      size="sm"
-                      borderRadius="6px"
-                      required={true}
-                    />
-                  </FormControl>
-                  <FormControl>
-                    <HStack justify="space-between">
-                      <FormLabel size="sm">Confirm Password</FormLabel>
-                    </HStack>
-                    <Input
-                      type="password"
-                      name="confirmPassword"
-                      value={formData.confirmPassword}
-                      onChange={handleInputChange}
-                      bg="white"
-                      borderColor="#d8dee4"
-                      size="sm"
-                      borderRadius="6px"
-                      required={true}
-                    />
-                  </FormControl>
-                  <Button
-                    type="submit"
-                    bg="#2da44e"
-                    color="white"
-                    size="sm"
-                    _hover={{ bg: "#2c974b" }}
-                    _active={{ bg: "#298e46" }}
-                  >
-                    Sign Up
-                  </Button>
-                </Stack>
-              </form>
+                      _hover={{ bg: "#2c974b" }}
+                      _active={{ bg: "#298e46" }}
+                    >
+                      Sign Up
+                    </Button>
+                  </Stack>
+                </form>
+              ) : (
+                <ClubRegistration />
+              )}
             </CardBody>
           </Card>
         </Stack>

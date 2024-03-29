@@ -12,5 +12,7 @@ public class AdminDto {
 
     private String Username;
 
+    private String clubEmail;
 
+    private String clubStatus;
 }

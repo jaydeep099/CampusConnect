@@ -30,7 +30,7 @@ const EventRegistration = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(eventInfo);
-    createEvent(eventInfo, location.state.club_Id)
+    createEvent(eventInfo, 2)
       .then((data) => {
         console.log(data);
       })

@@ -10,24 +10,38 @@ import {
   Td,
   Tr,
   Card,
-  Table
+  Table,
+  Button,
 } from "@chakra-ui/react";
 // import { Card, Table } from "antd";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { LoadStudentById } from "../services/student-service";
 
 const StudentProfile = () => {
   const [profileData, setProfileData] = useState(null);
   const location = useLocation();
+  const { studentId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    LoadStudentById(location.state.student_Id).then((response) => {
-      setProfileData(response);
-    }).catch((error) => {
-      console.log(error);
-    })
-  },[]);
-  
+    if (localStorage.getItem("loggedInUser") === null) {
+      navigate("/login");
+      return;
+    }
+    LoadStudentById(studentId)
+      .then((response) => {
+        setProfileData(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("loggedInUser");
+    navigate("/");
+  };
+
   return (
     <Base>
       <Box className="Profile" mt={4} mb={4} minHeight="500px">
@@ -59,6 +73,9 @@ const StudentProfile = () => {
                   </Tbody>
                 </Table>
               </CardBody>
+              <Button variant="solid" colorScheme="blue" maxW={"10%"} onClick={handleLogout}>
+                Logout
+              </Button>
             </Card>
           )}
         </Container>
