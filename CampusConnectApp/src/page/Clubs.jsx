@@ -92,7 +92,7 @@ const Club = () => {
                   borderRadius="lg"
                 />
                 <Heading size="md" paddingTop="10px">
-                  {club.club_name}
+                  {club.clubName}
                 </Heading>
                 <Text>{club.description}</Text>
               </CardBody>

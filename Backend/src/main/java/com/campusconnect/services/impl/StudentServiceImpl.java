@@ -53,4 +53,12 @@ public class StudentServiceImpl implements StudentService {
         Student student = studentRepo.findStudentByStudentUsernameAndStudentPassword(username,password) ;
         return model.map(student,StudentDto.class);
     }
+
+    @Override
+    public StudentDto getStudetnIdUsernameAndPassword(String username,String password) {
+
+        Student student = studentRepo.findStudentByStudentUsernameAndStudentPassword(username,password);
+
+        return model.map(student,StudentDto.class);
+    }
 }

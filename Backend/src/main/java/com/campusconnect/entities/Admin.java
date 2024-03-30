@@ -28,5 +28,9 @@ public class Admin {
     @Column(name = "Admin_Password")
     private String Password;
 
+    @Column(name = "Club_Email")
+    private String clubEmail;
 
+    @Column
+    private String clubStatus;
 }

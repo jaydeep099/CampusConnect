@@ -2,6 +2,7 @@ package com.campusconnect.services;
 
 
 import com.campusconnect.dto.ClubDto;
+import com.campusconnect.dto.StudentDto;
 import com.campusconnect.entities.Club;
 import com.campusconnect.entities.Event;
 
@@ -22,4 +23,6 @@ public interface ClubService
     public List<Club> getAllClub();
 
     public ClubDto loginClub(String username,String password);
+
+    public ClubDto getClubIdByUsernameAndPassword(String username, String password);
 }

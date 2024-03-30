@@ -20,6 +20,7 @@ import Base from "../components/Base";
 import { LoginStudent } from "../services/student-service";
 import { useNavigate } from "react-router-dom";
 import { LoginClub } from "../services/club-service";
+import { doLogin } from "../services/helper";
 const Login = () => {
   const [data, setData] = useState({
     username: "",
@@ -34,10 +35,18 @@ const Login = () => {
 
   const handleLogin = () => {
     if (data.role === "student") {
+
+      if(data.username === "admin" && data.password === "admin")
+      {
+        console.log("admin");
+        navigate("/admin");
+      }
+
       console.log(data);
       LoginStudent(data.username, data.password)
         .then((studentId) => {
-          navigate("/studentProfile", { state: { student_Id: studentId } });
+          doLogin(data);
+          navigate("/studentProfile/" + studentId);
         })
         .catch((error) => {
           console.log(error);
@@ -47,7 +56,8 @@ const Login = () => {
     else if(data.role === "club")
     {
       LoginClub(data.username,data.password).then((clubId) => {
-        navigate("/clubDetail",{state:{clubId:clubId}});
+        doLogin(data);
+        navigate("/clubDetail/" + clubId);
       }).catch((error) => {
         console.log(error);
       });

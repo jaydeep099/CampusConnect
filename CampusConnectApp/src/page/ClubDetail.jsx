@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import Base from "../components/Base";
 import {
@@ -14,20 +13,32 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { LoadClubById } from "../services/club-service";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { CheckClubStatus, LoadClubById } from "../services/club-service";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { BASE_URL } from "../services/helper";
 
 const Club = () => {
   //   const [events, setEvents] = useState([]);
   const location = useLocation();
   const [club, setClub] = useState({});
-
+  const { clubId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    LoadClubById(location.state.clubId)
+    if (localStorage.getItem("loggedInUser") === null) {
+      navigate("/login");
+      return;
+    }
+
+    LoadClubById(clubId)
       .then((response) => {
+        CheckClubStatus(response.clubEmail).then((res) => {
+          console.log("checkCLubStatus",res);
+          if(res === "pending")
+          {
+            navigate("/");
+          }
+        })
         console.log("then ", response);
         setClub(response);
       })
@@ -45,14 +56,19 @@ const Club = () => {
   };
 
   const handleCreate = (clubId) => {
-    navigate("/eventRegistry",{state:{club_Id:clubId}});
-  }
+    navigate("/eventRegistry", { state: { club_Id: clubId } });
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("loggedInUser");
+    navigate("/");
+  };
 
   return (
     <Base>
       <div>
         <Center as="h1" size="xl" mb={4}>
-          {club.club_name}
+          {club.clubName}
         </Center>
         <Box ml="25%">
           <Box p={4} textAlign="center">
@@ -72,9 +88,17 @@ const Club = () => {
           <Button
             variant="solid"
             colorScheme="blue"
-            onClick={() => handleCreate(club.club_id)}
+            onClick={() => handleCreate(club.clubId)}
           >
             Create New Event
+          </Button>
+          <Button
+            variant="solid"
+            colorScheme="blue"
+            maxW={"10%"}
+            onClick={handleLogout}
+          >
+            Logout
           </Button>
           {/* <EventCard/>
                 <EventCard/> */}

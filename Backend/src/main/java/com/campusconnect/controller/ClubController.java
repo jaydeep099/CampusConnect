@@ -1,9 +1,15 @@
 package com.campusconnect.controller;
 
 
+import com.campusconnect.dto.AdminDto;
 import com.campusconnect.dto.ClubDto;
+import com.campusconnect.dto.StudentDto;
+import com.campusconnect.entities.Admin;
 import com.campusconnect.dto.EventDto;
 import com.campusconnect.entities.Club;
+import com.campusconnect.repositories.AdminRepo;
+import com.campusconnect.repositories.ClubRepo;
+import com.campusconnect.services.AdminService;
 import com.campusconnect.services.ClubService;
 import com.campusconnect.services.FileService;
 import org.modelmapper.ModelMapper;
@@ -32,6 +38,11 @@ public class ClubController
     private ModelMapper modelMapper;
 
     @Autowired
+    private AdminService adminService;
+
+    @Autowired
+    private AdminRepo adminRepo;
+    @Autowired
     private FileService fileService;
 
     @Value("${project.image}")
@@ -40,6 +51,11 @@ public class ClubController
     @PostMapping("/register")
     private ResponseEntity<ClubDto> createClub(@RequestBody ClubDto clubDto)
     {
+        System.out.println(clubDto.getClubEmail());
+        Admin admin = new Admin();
+        admin.setClubEmail(clubDto.getClubEmail());
+        admin.setClubStatus("pending");
+        adminRepo.save(admin);
         ClubDto clubDto1 = clubService.createClub(clubDto);
         return new ResponseEntity<ClubDto>(clubDto1, HttpStatus.CREATED);
     }
@@ -48,9 +64,9 @@ public class ClubController
     @GetMapping("/allclub")
     private ResponseEntity<List<ClubDto>> getAllCLub()
     {
-        List<ClubDto> allClubs = clubService.getAllClub()
-                .stream()
-                .map(club -> modelMapper.map(club,ClubDto.class))
+        List<ClubDto> allClubs = adminService.getClubEmails().stream()
+                .filter(admin -> admin.getClubStatus().equals("pending"))
+                .map(admin -> modelMapper.map(clubRepo.findClubByClubEmail(admin.getClubEmail()),ClubDto.class))
                 .collect(Collectors.toList());
 
         return new ResponseEntity<List<ClubDto>>(allClubs,HttpStatus.OK);
@@ -70,8 +86,13 @@ public class ClubController
     {
         ClubDto clubDto = clubService.loginClub(club_name,club_password);
 
+        Admin admin = adminRepo.findAdminByClubEmail(clubDto.getClubEmail());
+
+        if(admin.getClubStatus() == "pending")
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         return new ResponseEntity<Long>(clubDto.getClubId(),HttpStatus.ACCEPTED);
     }
-
-
 }

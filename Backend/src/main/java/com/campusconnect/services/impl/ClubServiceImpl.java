@@ -2,7 +2,9 @@ package com.campusconnect.services.impl;
 
 
 import com.campusconnect.dto.ClubDto;
+import com.campusconnect.dto.StudentDto;
 import com.campusconnect.entities.Club;
+import com.campusconnect.entities.Student;
 import com.campusconnect.repositories.ClubRepo;
 import com.campusconnect.services.ClubService;
 import org.modelmapper.ModelMapper;
@@ -63,5 +65,12 @@ public class ClubServiceImpl implements ClubService {
         return model.map(club,ClubDto.class);
     }
 
+    @Override
+    public ClubDto getClubIdByUsernameAndPassword(String username, String password) {
+
+        Club club = clubRepo.findClubByClubNameAndClubPassword(username,password);
+
+        return model.map(club,ClubDto.class);
+    }
 
 }
