@@ -12,13 +12,11 @@ import {
   Button,
   Spacer,
 } from "@chakra-ui/react";
-import axios from "axios";
 import { CheckClubStatus, LoadClubById } from "../services/club-service";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { BASE_URL } from "../services/helper";
 
-const Club = () => {
-  //   const [events, setEvents] = useState([]);
+const ClubDetails = () => {
   const location = useLocation();
   const [club, setClub] = useState({});
   const { clubId } = useParams();
@@ -100,8 +98,6 @@ const Club = () => {
           >
             Logout
           </Button>
-          {/* <EventCard/>
-                <EventCard/> */}
           <Flex direction="row" justifyContent="space-between" maxW="100%">
             {club.eventList &&
               club.eventList.map((event) => (
@@ -130,9 +126,6 @@ const Club = () => {
                       </Flex>
                     </Flex>
                     <Center>
-                      {/* <Button mt="auto" colorScheme="blue" onClick={() => handleClick(event.eventId)}>
-                        View Details
-                      </Button> */}
                       <Link
                         mt="auto"
                         to={"/eventdetails/" + event.eventId}
@@ -147,9 +140,8 @@ const Club = () => {
           </Flex>
         </Box>
       </div>
-      ;
     </Base>
   );
 };
 
-export default Club;
+export default ClubDetails;

@@ -33,25 +33,22 @@ public class ClubServiceImpl implements ClubService {
     }
 
     @Override
-    public ClubDto updateClub(ClubDto clubDto) {
-
-        return null;
+    public ClubDto updateClub(ClubDto clubDto,Long clubId) {
+        Club club = this.clubRepo.findById(clubId).orElseThrow();
+        club.setDept(clubDto.getDept());
+        club.setMentor(clubDto.getMentor());
+        club.setLogo(clubDto.getLogo());
+        club.setClubName(clubDto.getClubName());
+        club.setDescription(clubDto.getDescription());
+        club.setPresident(clubDto.getPresident());
+        Club club1 = this.clubRepo.save(club);
+        return this.model.map(club1,ClubDto.class);
     }
 
     @Override
     public ClubDto getClubById(Long clubId) {
         Club club = this.clubRepo.findById(clubId).orElseThrow();
         return this.model.map(club,ClubDto.class);
-    }
-
-    @Override
-    public ClubDto getClubByName(String name) {
-        return null;
-    }
-
-    @Override
-    public List<ClubDto> getClubByDept(String dept) {
-        return null;
     }
 
     @Override

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { ChangeClubStatus, LoadAllClubs, LoadPendingClubs } from "../services/club-service";
 import { Button, Card, CardBody, CardFooter, Center, Heading, Image, Text } from "@chakra-ui/react";

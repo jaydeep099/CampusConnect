@@ -10,17 +10,18 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { LoadAllClubs, createClub } from "../services/club-service";
+import { LoadAllClubs, createClub, uploadlogo } from "../services/club-service";
 import { uploadImage } from "../services/event-service";
 
 const ClubRegistration = () => {
   const [clubInfo, setClubInfo] = useState({
-    club_name: "",
+    clubName: "",
     dept: "",
     president: "",
-    club_email: "",
-    club_password: "",
+    clubEmail: "",
+    clubPassword: "",
     description: "",
+    mentor: "",
   });
   let [clubIds, setClubIds] = useState();
   const [image, setImage] = useState();
@@ -54,12 +55,9 @@ const ClubRegistration = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    
-
     createClub(clubInfo)
       .then((data) => {
-
-        uploadImage(image, clubIds)
+        uploadlogo(image, clubIds)
           .then((data) => {
             console.log("logo is uploaded");
           })
@@ -78,11 +76,11 @@ const ClubRegistration = () => {
     setClubInfo({
       clubName: "",
       dept: "",
+      president: "",
       clubEmail: "",
       clubPassword: "",
       description: "",
-      clubPresident: "",
-      logo: null,
+      mentor: "",
     });
   };
 
@@ -95,8 +93,8 @@ const ClubRegistration = () => {
             <FormLabel>Club Name</FormLabel>
             <Input
               type="text"
-              name="clubName"
-              value={clubInfo.clubName}
+              name="club_name"
+              value={clubInfo.club_name}
               onChange={handleChange}
               placeholder="Enter club name"
             />
@@ -110,6 +108,17 @@ const ClubRegistration = () => {
               value={clubInfo.dept}
               onChange={handleChange}
               placeholder="Enter club department"
+            />
+          </FormControl>
+
+          <FormControl mt={4}>
+            <FormLabel>Club Mentor</FormLabel>
+            <Input
+              type="text"
+              name="mentor"
+              value={clubInfo.mentor}
+              onChange={handleChange}
+              placeholder="Enter club mentor"
             />
           </FormControl>
 
@@ -128,8 +137,8 @@ const ClubRegistration = () => {
             <FormLabel>Club Email</FormLabel>
             <Input
               type="email"
-              name="clubEmail"
-              value={clubInfo.clubEmail}
+              name="club_email"
+              value={clubInfo.club_email}
               onChange={handleChange}
               placeholder="Enter club email"
             />
@@ -139,8 +148,8 @@ const ClubRegistration = () => {
             <FormLabel>Club Password</FormLabel>
             <Input
               type="password"
-              name="clubPassword"
-              value={clubInfo.clubPassword}
+              name="club_password"
+              value={clubInfo.club_password}
               onChange={handleChange}
               placeholder="Enter club password"
             />
@@ -158,7 +167,7 @@ const ClubRegistration = () => {
 
           <FormControl mt={4}>
             <FormLabel>Club Image</FormLabel>
-            <Input type="file" name="brochure" onChange={handleImageChange} />
+            <Input type="file" name="logo" onChange={handleImageChange} />
           </FormControl>
 
           <HStack justifyContent="center" mt={5}>

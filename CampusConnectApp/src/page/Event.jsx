@@ -128,7 +128,7 @@ const Event = () => {
 
         <Flex direction="column" flex="1" p="4">
           {events.map((event) => (
-            <Box borderWidth="1px" borderRadius="lg" overflow="hidden">
+            <Box key={event.eventId} borderWidth="1px" borderRadius="lg" overflow="hidden">
               <Card key={event.eventId} mb="4">
                 <Flex direction="row" p="3">
                   <Image
@@ -150,7 +150,6 @@ const Event = () => {
                 <Center>
                   <Link
                     mt="auto"
-                    colorScheme="blue"
                     to={"/eventdetails/"+event.eventId}
                     className="btn btn-primary"
                   >
