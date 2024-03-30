@@ -2,15 +2,20 @@ package com.campusconnect.controller;
 
 
 import com.campusconnect.dto.ClubDto;
+import com.campusconnect.dto.EventDto;
 import com.campusconnect.entities.Club;
 import com.campusconnect.services.ClubService;
+import com.campusconnect.services.FileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +31,11 @@ public class ClubController
     @Qualifier("modelMapper")
     private ModelMapper modelMapper;
 
+    @Autowired
+    private FileService fileService;
 
+    @Value("${project.image}")
+    private String path;
 
     @PostMapping("/register")
     private ResponseEntity<ClubDto> createClub(@RequestBody ClubDto clubDto)
@@ -36,7 +45,7 @@ public class ClubController
     }
 
 
-    @GetMapping("/AllClub")
+    @GetMapping("/allclub")
     private ResponseEntity<List<ClubDto>> getAllCLub()
     {
         List<ClubDto> allClubs = clubService.getAllClub()
@@ -49,11 +58,11 @@ public class ClubController
 
 
     @GetMapping("/{club_id}")
-    private ResponseEntity<Club> getClubById(@PathVariable("club_id") Long club_id)
+    private ResponseEntity<ClubDto> getClubById(@PathVariable("club_id") Long club_id)
     {
-        Club club = clubService.getClubById(club_id);
+        ClubDto club = clubService.getClubById(club_id);
 
-        return new ResponseEntity<Club>(club,HttpStatus.OK);
+        return new ResponseEntity<ClubDto>(club,HttpStatus.OK);
     }
 
     @GetMapping("/{club_name}/{club_password}")
@@ -63,4 +72,6 @@ public class ClubController
 
         return new ResponseEntity<Long>(clubDto.getClubId(),HttpStatus.ACCEPTED);
     }
+
+
 }

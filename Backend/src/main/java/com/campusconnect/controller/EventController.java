@@ -50,25 +50,6 @@ public class EventController
         return new ResponseEntity<>(eventDto1, HttpStatus.CREATED);
     }
 
-
-//    @PostMapping("/createEvent/{clubId}")
-//    public ResponseEntity<?> createEvent(@RequestBody EventDto eventDto, @PathVariable Long clubId)
-//    {
-//        // Split the eventTime string into hours and minutes components
-//        String[] timeComponents = eventDto.getEventTime().split(":");
-//        int hours = Integer.parseInt(timeComponents[0]);
-//        int minutes = Integer.parseInt(timeComponents[1]);
-//
-//        // Create a java.sql.Time object using the extracted components
-//        Time eventTime = Time.valueOf(String.format("%02d:%02d:00", hours, minutes));
-//
-//        // Set the converted eventTime to the EventDto
-//        eventDto.setEventTime(eventTime);
-//
-//        EventDto createdEvent = this.eventService.createEvent(eventDto, clubId);
-//        return new ResponseEntity<>(createdEvent, HttpStatus.CREATED);
-//    }
-
     @GetMapping("/club/{clubId}")
     public ResponseEntity<List<EventDto>> getEventbyClub(@PathVariable Long clubId)
     {
@@ -145,7 +126,7 @@ public class EventController
 
     @PostMapping("/image/upload/{eventId}")
     public ResponseEntity<EventDto>  uploadImage(
-            @RequestParam("image") MultipartFile image,
+            @RequestParam("brochure") MultipartFile image,
             @PathVariable Long eventId
     ) throws IOException
     {

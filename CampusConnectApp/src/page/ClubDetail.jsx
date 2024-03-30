@@ -16,6 +16,7 @@ import {
 import axios from "axios";
 import { LoadClubById } from "../services/club-service";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { BASE_URL } from "../services/helper";
 
 const Club = () => {
   //   const [events, setEvents] = useState([]);
@@ -32,7 +33,6 @@ const Club = () => {
       })
       .catch((error) => {
         console.log(location.state.clubId);
-        console.log("jj", error);
       });
   }, []);
 
@@ -58,10 +58,11 @@ const Club = () => {
           <Box p={4} textAlign="center">
             <Flex>
               <Box maxW="200px" overflow="hidden" mr={4}>
-                <Image
-                  borderRadius="20px"
-                  src="./assets/images/campusconnect.jpeg"
-                />
+              <Image
+              src={BASE_URL+"/api/event/eventbroucher/"+club?.logo}
+              alt="club logo"
+              objectFit="cover"
+            />
               </Box>
               <Box as="h3" ml="50px" mt="20px">
                 {club.description}

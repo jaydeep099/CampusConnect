@@ -32,12 +32,14 @@ public class ClubServiceImpl implements ClubService {
 
     @Override
     public ClubDto updateClub(ClubDto clubDto) {
+
         return null;
     }
 
     @Override
-    public Club getClubById(Long clubId) {
-        return clubRepo.findById(clubId).orElseThrow();
+    public ClubDto getClubById(Long clubId) {
+        Club club = this.clubRepo.findById(clubId).orElseThrow();
+        return this.model.map(club,ClubDto.class);
     }
 
     @Override

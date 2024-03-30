@@ -26,8 +26,22 @@ export const loadEventById = (eventId) => {
 
 export const createEvent = (eventData, clubId) => {
   return myAxios
-    .post(`/api/event/createEvent/` + clubId, eventData)
+    .post(`/api/event/createEvent/${clubId}` , eventData)
     .then((response) => {
       response.data;
+    });
+};
+
+export const uploadImage = (image, eventId) => {
+  let formData = new FormData();
+  formData.append("brochure", image.brochure); 
+  return myAxios
+    .post(`/api/event/image/upload/${eventId}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((response) => {
+      return response.data; 
     });
 };

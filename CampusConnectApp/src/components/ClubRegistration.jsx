@@ -9,11 +9,33 @@ import {
   Card,
   HStack,
 } from "@chakra-ui/react";
-import  { useState } from "react";
-import { createClub } from "../services/club-service";
+import { useEffect, useState } from "react";
+import { LoadAllClubs, createClub } from "../services/club-service";
+import { uploadImage } from "../services/event-service";
 
 const ClubRegistration = () => {
-  const [clubInfo, setClubInfo] = useState({});
+  const [clubInfo, setClubInfo] = useState({
+    club_name: "",
+    dept: "",
+    president: "",
+    club_email: "",
+    club_password: "",
+    description: "",
+  });
+  let [clubIds, setClubIds] = useState();
+  const [image, setImage] = useState();
+
+  useEffect(() => {
+    LoadAllClubs().then((data) => {
+      console.log(data);
+      const highestclubId = data.reduce(
+        (max, club) => Math.max(max, club.clubId),
+        0
+      );
+      clubIds = highestclubId + 1;
+      console.log(clubIds);
+    });
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,16 +45,24 @@ const ClubRegistration = () => {
     }));
   };
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setClubInfo((prevInfo) => ({
-      ...prevInfo,
-      clubImage: file,
+    console.log(e.target.files[0]);
+    setImage((prevImage) => ({
+      ...prevImage,
+      logo: e.target.files[0],
     }));
   };
   const createEvent = (e) => {
     e.preventDefault();
     createClub(clubInfo)
       .then((data) => {
+
+        uploadImage(image, clubIds)
+          .then((data) => {
+            console.log("logo is uploaded");
+          })
+          .catch((error) => {
+            console.log("Reupload and make sure it's size is less than 20MB");
+          });
         console.log(data);
       })
       .catch((error) => {
@@ -43,13 +73,12 @@ const ClubRegistration = () => {
 
   const handleReset = () => {
     setClubInfo({
-      clubName: "",
-      clubDepartment: "",
-      clubEmail: "",
-      clubPassword: "",
-      clubDescription: "",
-      clubPresident: "",
-      clubImage: null,
+      club_name: "",
+      dept: "",
+      president: "",
+      club_email: "",
+      club_password: "",
+      description: "",
     });
   };
 
@@ -125,7 +154,7 @@ const ClubRegistration = () => {
 
           <FormControl mt={4}>
             <FormLabel>Club Image</FormLabel>
-            <Input type="file" name="logo" value={clubInfo.logo} onChange={handleImageChange} />
+            <Input type="file" name="brochure" onChange={handleImageChange} />
           </FormControl>
 
           <HStack justifyContent="center" mt={5}>

@@ -10,29 +10,66 @@ import {
   FormLabel,
   Stack,
 } from "@chakra-ui/react";
-import { createEvent } from "../../services/event-service";
+import { toast } from "react-toastify";
+import {
+  LoadAllEvents,
+  createEvent,
+  uploadImage,
+} from "../../services/event-service";
 import { useLocation } from "react-router-dom";
 
 const EventRegistration = () => {
-  const [eventInfo, setEventInfo] = useState({});
+  const [eventInfo, setEventInfo] = useState({
+    eventName: "",
+    eventDate: "",
+    eventTime: "",
+    eventVenue: "",
+    description: "",
+  });
 
+  const [image, setImage] = useState({
+    brochure: "",
+  });
+
+  let [eventId, setEventId] = useState();
+  useEffect(() => {
+    LoadAllEvents().then((data) => {
+      const highestEventId = data.reduce(
+        (maxId, event) => Math.max(maxId, event.eventId),
+        0
+      );
+      eventId = highestEventId + 1;
+    });
+  });
   const location = useLocation();
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEventInfo((prevInfo) => ({
-      ...prevInfo,
-      [name]: value,
+    setEventInfo(() => ({
+      ...eventInfo,
+      [e.target.name]: e.target.value,
     }));
   };
 
+  const handleImageChange = (e) => {
+    console.log(e.target.files[0]);
+    setImage((prevImage) => ({
+      ...prevImage,
+      brochure: e.target.files[0],
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(eventInfo);
-    createEvent(eventInfo, location.state.club_Id)
+    createEvent(eventInfo, /*location.state.clubId*/ 1)
       .then((data) => {
-        console.log(data);
+        uploadImage(image, eventId)
+          .then((data) => {
+            console.log("Brochure is uploaded");
+          })
+          .catch((error) => {
+            console.log("Reupload and make sure it's size is less than 20MB");
+          });
       })
       .catch((error) => {
         console.log(error);
@@ -108,6 +145,11 @@ const EventRegistration = () => {
               onChange={handleChange}
               required
             />
+          </FormControl>
+
+          <FormControl>
+            <FormLabel>Event Brochure</FormLabel>
+            <Input type="file" name="brochure" onChange={handleImageChange} />
           </FormControl>
           <Flex justify="flex-end">
             <Button type="submit" colorScheme="teal">
