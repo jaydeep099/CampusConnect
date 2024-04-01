@@ -59,14 +59,14 @@ public class ClubServiceImpl implements ClubService {
 
     @Override
     public ClubDto loginClub(String username, String password) {
-        Club club = clubRepo.findClubByClubNameAndClubPassword(username,password);
+        Club club = clubRepo.findClubByClubEmailAndClubPassword(username,password);
         return model.map(club,ClubDto.class);
     }
 
     @Override
-    public ClubDto getClubIdByUsernameAndPassword(String username, String password) {
+    public ClubDto getClubIdByEmailAndPassword(String email, String password) {
 
-        Club club = clubRepo.findClubByClubNameAndClubPassword(username,password);
+        Club club = clubRepo.findClubByClubEmailAndClubPassword(email,password);
 
         return model.map(club,ClubDto.class);
     }

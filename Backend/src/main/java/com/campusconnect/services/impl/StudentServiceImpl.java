@@ -49,13 +49,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentDto loginStudent(String username, String password) {
-        Student student = studentRepo.findStudentByStudentUsernameAndStudentPassword(username,password) ;
+    public StudentDto loginStudent(String email, String password) {
+        Student student = studentRepo.findStudentByStudentUsernameAndStudentPassword(email,password) ;
         return model.map(student,StudentDto.class);
     }
 
     @Override
-    public StudentDto getStudetnIdUsernameAndPassword(String username,String password) {
+    public StudentDto getStudentIdByEmailAndPassword(String username,String password) {
 
         Student student = studentRepo.findStudentByStudentUsernameAndStudentPassword(username,password);
 

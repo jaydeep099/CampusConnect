@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -46,7 +47,17 @@ public class Club {
     @Column(name = "Logo_link", length = Integer.MAX_VALUE)
     private String logo;
 
-    @OneToMany(mappedBy = "club", fetch = FetchType.LAZY)
+//    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+//    @JsonManagedReference
+//    private List<Post> allposts=new ArrayList<>();
+
+    @OneToMany(mappedBy = "club", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
-    private List<Event> eventList;
+    private List<Event> eventList = new ArrayList<>();
+
+//    @OneToMany(mappedBy = "studentCollege",
+//            cascade = CascadeType.ALL,
+//            fetch = FetchType.EAGER
+//    )
+//    private List<Student> students;
 }

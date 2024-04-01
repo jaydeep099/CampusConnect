@@ -24,5 +24,5 @@ public interface ClubService
 
     public ClubDto loginClub(String username,String password);
 
-    public ClubDto getClubIdByUsernameAndPassword(String username, String password);
+    public ClubDto getClubIdByEmailAndPassword(String username, String password);
 }

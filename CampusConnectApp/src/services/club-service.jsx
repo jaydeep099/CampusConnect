@@ -13,6 +13,7 @@ export const LoadAllClubs = () => {
 };
 
 export const LoadClubById = (clubId) => {
+  console.log(clubId);
   return myAxios.get(`/api/club/${clubId}`).then((response) => {
     console.log("loadclubbyid -- ", response.data);
     return response.data;
@@ -20,38 +21,21 @@ export const LoadClubById = (clubId) => {
 };
 
 export const createClub = (clubdata) => {
-  return myAxios.post(`/api/club/register`, clubdata).then((response) => {
-    response.data;
-  });
+  return myAxios.post(`/api/club/register`, clubdata);
 };
 
-export const LoginClub = (username, password) => {
-  return myAxios.get(`/api/club/${username}/${password}`).then((response) => {
+export const LoginClub = (email, password) => {
+  return myAxios.get(`/api/club/${email}/${password}`).then((response) => {
     return response.data;
   });
 };
 
-export const LoadPendingClubs = () => {
-  return myAxios.get("/api/admin/clubs").then((response) => {
-    return response.data;
-  });
-};
-
-export const ChangeClubStatus = (clubEmail) => {
-  console.log(clubEmail);
-  return myAxios.put(`/api/admin/changeStatus/${clubEmail}`);
-};
-
-export const getClubByClubUsername = (username, password) => {
+export const getClubByClubEmail = (email, password) => {
   return myAxios
-    .get(`/api/club/getclubtid/${username}/${password}`)
+    .get(`/api/club/getclubtid/${email}/${password}`)
     .then((response) => {
       return response.data;
     });
 };
 
-export const CheckClubStatus = (clubEmail) => {
-  return myAxios.get(`/api/admin/checkStatus/${clubEmail}`).then((response) => {
-    return response.data;
-  });
-};
+

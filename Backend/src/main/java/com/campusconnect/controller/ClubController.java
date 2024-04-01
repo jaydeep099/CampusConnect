@@ -58,7 +58,7 @@ public class ClubController
     private ResponseEntity<List<ClubDto>> getAllCLub()
     {
         List<ClubDto> allClubs = adminService.getClubEmails().stream()
-                .filter(admin -> admin.getClubStatus().equals("pending"))
+                .filter(admin -> admin.getClubStatus().equals("accepted"))
                 .map(admin -> modelMapper.map(clubRepo.findClubByClubEmail(admin.getClubEmail()),ClubDto.class  ))
                 .collect(Collectors.toList());
 
@@ -74,10 +74,10 @@ public class ClubController
         return new ResponseEntity<Club>(club,HttpStatus.OK);
     }
 
-    @GetMapping("/{club_name}/{club_password}")
-    private ResponseEntity<?> loginClub(@PathVariable("club_name") String club_name,@PathVariable("club_password") String club_password)
+    @GetMapping("/{club_email}/{club_password}")
+    private ResponseEntity<?> loginClub(@PathVariable("club_email") String club_email,@PathVariable("club_password") String club_password)
     {
-        ClubDto clubDto = clubService.loginClub(club_name,club_password);
+        ClubDto clubDto = clubService.loginClub(club_email,club_password);
 
         Admin admin = adminRepo.findAdminByClubEmail(clubDto.getClubEmail());
 
@@ -89,10 +89,12 @@ public class ClubController
         return new ResponseEntity<Long>(clubDto.getClubId(),HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/getclubtid/{username}/{password}")
-    public ResponseEntity<?> getClubIdByUsername(@PathVariable("username") String username,@PathVariable("password") String password)
+    @GetMapping("/getclubtid/{email}/{password}")
+    public ResponseEntity<?> getClubIdByEmail(@PathVariable("email") String email,@PathVariable("password") String password)
     {
-        ClubDto clubDto = clubService.getClubIdByUsernameAndPassword(username,password);
+        System.out.println(email);
+        System.out.println(password);
+        ClubDto clubDto = clubService.getClubIdByEmailAndPassword(email,password);
         System.out.println(clubDto.getClubId());
 
         return new ResponseEntity<ClubDto>(clubDto,HttpStatus.OK);

@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import Base from "../components/Base";
 import {
-  Box,
   Heading,
   Center,
   Image,
@@ -12,19 +11,13 @@ import {
   CardBody,
   Text,
   Button,
-  Spacer,
-  CardFooter,
 } from "@chakra-ui/react";
-import axios from "axios";
 import { LoadAllClubs } from "../services/club-service";
-import ClubCard from "../components/ClubCard";
-import { Checkbox } from "antd";
 import { useNavigate } from "react-router-dom";
 
 const Club = () => {
   const navigate = useNavigate();
   const [clubs, setClubs] = useState([]);
-  const [usedeffect, SetUsedEffect] = useState(false);
   useEffect(() => {
     LoadAllClubs()
       .then((response) => {
@@ -36,54 +29,18 @@ const Club = () => {
       });
   }, []);
 
-  const handleClearFilter = () => {};
 
-  const handleClick = (club_id) => {
+  const handleClick = (clubId) => {
       // e.preventDefault();
 
-      navigate("/clubDetail",{state:({clubId:club_id})})
+      navigate(`/clubDetail/${clubId}`);
   }
 
   return (
     <Base>
       <Flex direction="row" maxW="100%">
         <Flex direction="row" flex="1" p="4">
-          {/* {usedeffect && <ClubCard club={clubs}/> } */}
-          {/* {Club}
-             {clubs && <ClubCard clubs
-             
-             
-             ={clubs}/>} */}
           {clubs.map((club) => (
-            // <ClubCard club={club}/>
-            // <Card key={club.club_id} maxW="sm" mb="4">
-            //   <Box
-            //     maxW="md"
-            //     borderWidth="1px"
-            //     borderRadius="lg"
-            //     overflow="hidden"
-            //   >
-            //     <Flex direction="row" p="3">
-            //       <Image
-            //         src="./assets/images/campusconnect.jpeg"
-            //         alt="Event Logo"
-            //         boxSize="150px"
-            //         borderRadius="10px"
-            //         objectFit="cover"
-            //       />
-            //       <Flex direction="column" flex="1" ml="2">
-            //         <Text fontSize="xl" fontWeight="semibold">
-            //           {club.club_name}
-            //         </Text>
-            //       </Flex>
-            //     </Flex>
-            //     <Center>
-            //       <Button mt="auto" colorScheme="blue">
-            //         View Details
-            //       </Button>
-            //     </Center>
-            //   </Box>
-            // </Card>
             <Card maxW="sm">
               <CardBody paddingBottom="0">
                 <Image
@@ -97,10 +54,10 @@ const Club = () => {
                 <Text>{club.description}</Text>
               </CardBody>
               <Center>
-                <Button variant="solid" colorScheme="blue" onClick={() => handleClick(club.club_id)}>
+                <Button variant="solid" colorScheme="blue" onClick={() => handleClick(club.clubId)}>
                   View Details
                 </Button>
-              </Center>
+              </Center> 
             </Card>
           ))}
         </Flex>

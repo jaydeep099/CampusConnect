@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-key */
 import { useEffect, useState } from "react";
 import Base from "../components/Base";
@@ -18,6 +19,7 @@ import {
 } from "../services/event-service";
 import { Checkbox } from "antd";
 import { Link, useNavigate } from "react-router-dom";
+import { EventCard } from "../components/EventCard";
 
 const Event = () => {
   const [fromDate, setFromDate] = useState("");
@@ -85,6 +87,7 @@ const Event = () => {
   const handleClick = (eventId) => {
     navigate("/eventDashBoard",{state:({event_Id:eventId})})
   }
+  
 
   return (
     <Base>
@@ -128,8 +131,9 @@ const Event = () => {
 
         <Flex direction="column" flex="1" p="4">
           {events.map((event) => (
-            <Box borderWidth="1px" borderRadius="lg" overflow="hidden">
-              <Card key={event.eventId} mb="4">
+            <Box key={event.eventId} borderWidth="1px" borderRadius="lg" overflow="hidden">
+                <EventCard event={event}/>
+              {/* <Card key={event.eventId} mb="4">
                 <Flex direction="row" p="3">
                   <Image
                     src="./assets/images/campusconnect.jpeg"
@@ -157,7 +161,7 @@ const Event = () => {
                     View Details
                   </Link>
                 </Center>
-              </Card>
+              </Card> */}
             </Box>
           ))}
         </Flex>

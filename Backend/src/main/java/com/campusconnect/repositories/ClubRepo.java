@@ -12,7 +12,7 @@ public interface ClubRepo extends JpaRepository<Club,Long> {
     @Query("SELECT c FROM Club c")
     public List<Club> getAllClub();
 
-    public Club findClubByClubNameAndClubPassword(String username,String password);
+    public Club findClubByClubEmailAndClubPassword(String email,String password);
 
     public Club findClubByClubEmail(String email);
 }

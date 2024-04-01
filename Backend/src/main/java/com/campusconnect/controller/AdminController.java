@@ -47,11 +47,11 @@ public class    AdminController {
         return new ResponseEntity<List<Club>>(adminList,HttpStatus.OK);
     }
 
-    @PutMapping("/changeStatus/{clubEmail}")
-    private ResponseEntity<?> changeClubStatus(@PathVariable("clubEmail") String clubEmail)
+    @PutMapping("/changeStatus/{clubEmail}/{status}")
+    private ResponseEntity<?> changeClubStatus(@PathVariable("clubEmail") String clubEmail,@PathVariable("status") String status)
     {
         System.out.println("changestutas is called");
-        AdminDto adminDto = adminService.changeStatus(clubEmail);
+        AdminDto adminDto = adminService.changeStatus(clubEmail,status);
         return new ResponseEntity<AdminDto>(adminDto,HttpStatus.OK);
     }
 

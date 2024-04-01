@@ -43,10 +43,15 @@ public class Event {
     @Column(name = "Brochure")
     private String brochure;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "Club_FK")
     @JsonBackReference
     private Club club;
+    
+//    @ManyToOne
+//    @JoinColumn(name = "uid")
+//    @JsonBackReference
+//    private User user;
 
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Student> student;

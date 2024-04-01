@@ -11,10 +11,11 @@ import {
 } from "@chakra-ui/react";
 import  { useState } from "react";
 import { createClub } from "../services/club-service";
+import { useNavigate } from "react-router-dom";
 
 const ClubRegistration = () => {
   const [clubInfo, setClubInfo] = useState({});
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setClubInfo((prevInfo) => ({
@@ -32,11 +33,10 @@ const ClubRegistration = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    
-
     createClub(clubInfo)
       .then((data) => {
-        console.log(data);
+        console.log(data.data);
+        navigate("/clubDetail/" + data.data.clubId)
       })
       .catch((error) => {
         console.log(error);

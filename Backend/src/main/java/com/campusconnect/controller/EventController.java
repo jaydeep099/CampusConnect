@@ -101,10 +101,11 @@ public class EventController
         }
     }
 
-    @DeleteMapping("/event/{eventId}")
-    public void deleteEvent(@PathVariable("eventId") Long eventId)
+    @DeleteMapping("/{eventId}")
+    public ResponseEntity<?> deleteEvent(@PathVariable("eventId") Long eventId)
     {
         this.eventService.deleteEvent(eventId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/allEvents")
@@ -118,10 +119,10 @@ public class EventController
         return new ResponseEntity<List<EventDto>>(allEvents,HttpStatus.OK);
     }
 
-    @PutMapping("event/{eventId}")
+    @PutMapping("updateEvent/{eventId}")
     public ResponseEntity<?> updateEvent (@RequestBody EventDto eventDto , @PathVariable Long eventId){
         EventDto updatedEvent = this.eventService.updateEvent(eventDto,eventId);
-        return new ResponseEntity<>(updatedEvent , HttpStatus.OK);
+        return new ResponseEntity<EventDto>(updatedEvent , HttpStatus.OK);
     }
 
     @GetMapping("/upcomingEvents")
@@ -136,34 +137,34 @@ public class EventController
     }
 
     @GetMapping("/{eventId}")
-    public ResponseEntity<Event> getEventById(@PathVariable("eventId") Long eventId)
+    public ResponseEntity<EventDto> getEventById(@PathVariable("eventId") Long eventId)
     {
-        EventDto eventDto = eventService.getEventbyId(eventId);
-
-        return new ResponseEntity<Event>(modelMapper.map(eventDto,Event.class),HttpStatus.OK);
+        Event event = eventService.getEventbyId(eventId);
+        System.out.println(event.getClub().getClubId());
+        return new ResponseEntity<EventDto>(modelMapper.map(event,EventDto.class),HttpStatus.OK);
     }
 
-    @PostMapping("/image/upload/{eventId}")
-    public ResponseEntity<EventDto>  uploadImage(
-            @RequestParam("image") MultipartFile image,
-            @PathVariable Long eventId
-    ) throws IOException
-    {
-        EventDto eventDto = this.eventService.getEventbyId(eventId);
-        String fileName =  this.fileService.uploadImage(path,image);
-        eventDto.setBrochure(fileName);
-        EventDto updatePost = this.eventService.updateEvent(eventDto,eventId);
-        return  new ResponseEntity<EventDto>(updatePost,HttpStatus.OK);
-    }
+//    @PostMapping("/image/upload/{eventId}")
+//    public ResponseEntity<EventDto>  uploadImage(
+//            @RequestParam("image") MultipartFile image,
+//            @PathVariable Long eventId
+//    ) throws IOException
+//    {
+//        EventDto eventDto = this.eventService.getEventbyId(eventId);
+//        String fileName =  this.fileService.uploadImage(path,image);
+//        eventDto.setBrochure(fileName);
+//        EventDto updatePost = this.eventService.updateEvent(eventDto,eventId);
+//        return  new ResponseEntity<EventDto>(updatePost,HttpStatus.OK);
+//    }
 
-    @GetMapping(value = "/eventbroucher/{image}" , produces = MediaType.IMAGE_JPEG_VALUE)
-    public void ShowImage(@PathVariable("image") String image,
-                            HttpServletResponse response) throws IOException {
-        InputStream resource = this.fileService.getResources(path,image);
-        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
-        StreamUtils.copy(resource,response.getOutputStream());
-
-    }
+//    @GetMapping(value = "/eventbroucher/{image}" , produces = MediaType.IMAGE_JPEG_VALUE)
+//    public void ShowImage(@PathVariable("image") String image,
+//                            HttpServletResponse response) throws IOException {
+//        InputStream resource = this.fileService.getResources(path,image);
+//        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+//        StreamUtils.copy(resource,response.getOutputStream());
+//
+//    }
 
     private Date convertToDate(String dateString) {
         try {

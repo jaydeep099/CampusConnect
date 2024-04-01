@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import {  useState } from "react";
 import {
   Box,
   Heading,
@@ -11,12 +11,12 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { createEvent } from "../../services/event-service";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const EventRegistration = () => {
   const [eventInfo, setEventInfo] = useState({});
-
-  const location = useLocation();
+  const { clubId } = useParams();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,10 +29,11 @@ const EventRegistration = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(eventInfo);
-    createEvent(eventInfo, 2)
+    console.log(eventInfo,clubId);
+    createEvent(eventInfo, clubId)
       .then((data) => {
-        console.log(data);
+        console.log(data.data.eventId);
+        navigate("/eventdetails/" + data.data.eventId);
       })
       .catch((error) => {
         console.log(error);

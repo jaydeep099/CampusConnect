@@ -15,6 +15,7 @@ import ClubRegistration from "./components/ClubRegistration";
 import ClubNavbar from "./components/ClubComponents/ClubNavbar";
 import { AdminPage } from "./page/AdminPage";
 import StudentProfile from "./page/StudentProfile";
+import { EditEvent } from "./page/EditEvent";
 
 function App() {
   return (
@@ -30,10 +31,11 @@ function App() {
         <Route path="/registration" element={<Registration />} />
         <Route path="/clubDetail/:clubId" element={<ClubDetail />} />
         {/*Private Event and club ma avse */}
-        <Route path="/eventRegistry" element={<EventRegistration />} />
+        <Route path="/eventRegistry/:clubId" element={<EventRegistration />} />
         <Route path="/clubRegistry" element={<ClubRegistration />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/studentProfile/:studentId" element={<StudentProfile />} />
+        <Route path="/editEvent/:eventId" element={<EditEvent />} />
       </Routes>
     </BrowserRouter>
    // <ClubNavbar/>

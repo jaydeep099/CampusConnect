@@ -1,6 +1,7 @@
 package com.campusconnect.dto;
 
 import com.campusconnect.entities.Club;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,6 +30,6 @@ public class EventDto
 
     private String brochure;
 
-    @JsonIgnore
-    private Club club;
+//    @JsonBackReference
+    private ClubDto club    ;
 }
