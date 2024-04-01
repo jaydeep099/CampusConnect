@@ -7,7 +7,7 @@ export const signUp = (club) => {
 };
 
 export const LoadAllClubs = () => {
-  return myAxios.get("/api/club/AllClub").then((response) => {
+  return myAxios.get("/api/club/allclub").then((response) => {
     return response.data;
   });
 };

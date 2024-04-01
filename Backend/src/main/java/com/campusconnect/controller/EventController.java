@@ -50,25 +50,6 @@ public class EventController
         return new ResponseEntity<>(eventDto1, HttpStatus.CREATED);
     }
 
-
-//    @PostMapping("/createEvent/{clubId}")
-//    public ResponseEntity<?> createEvent(@RequestBody EventDto eventDto, @PathVariable Long clubId)
-//    {
-//        // Split the eventTime string into hours and minutes components
-//        String[] timeComponents = eventDto.getEventTime().split(":");
-//        int hours = Integer.parseInt(timeComponents[0]);
-//        int minutes = Integer.parseInt(timeComponents[1]);
-//
-//        // Create a java.sql.Time object using the extracted components
-//        Time eventTime = Time.valueOf(String.format("%02d:%02d:00", hours, minutes));
-//
-//        // Set the converted eventTime to the EventDto
-//        eventDto.setEventTime(eventTime);
-//
-//        EventDto createdEvent = this.eventService.createEvent(eventDto, clubId);
-//        return new ResponseEntity<>(createdEvent, HttpStatus.CREATED);
-//    }
-
     @GetMapping("/club/{clubId}")
     public ResponseEntity<List<EventDto>> getEventbyClub(@PathVariable Long clubId)
     {
@@ -144,18 +125,18 @@ public class EventController
         return new ResponseEntity<EventDto>(modelMapper.map(event,EventDto.class),HttpStatus.OK);
     }
 
-//    @PostMapping("/image/upload/{eventId}")
-//    public ResponseEntity<EventDto>  uploadImage(
-//            @RequestParam("image") MultipartFile image,
-//            @PathVariable Long eventId
-//    ) throws IOException
-//    {
-//        EventDto eventDto = this.eventService.getEventbyId(eventId);
-//        String fileName =  this.fileService.uploadImage(path,image);
-//        eventDto.setBrochure(fileName);
-//        EventDto updatePost = this.eventService.updateEvent(eventDto,eventId);
-//        return  new ResponseEntity<EventDto>(updatePost,HttpStatus.OK);
-//    }
+    @PostMapping("/image/upload/{eventId}")
+    public ResponseEntity<EventDto>  uploadImage(
+            @RequestParam("brochure") MultipartFile image,
+            @PathVariable Long eventId
+    ) throws IOException
+    {
+        EventDto eventDto = this.eventService.getEventbyId(eventId);
+        String fileName =  this.fileService.uploadImage(path,image);
+        eventDto.setBrochure(fileName);
+        EventDto updatePost = this.eventService.updateEvent(eventDto,eventId);
+        return  new ResponseEntity<EventDto>(updatePost,HttpStatus.OK);
+    }
 
 //    @GetMapping(value = "/eventbroucher/{image}" , produces = MediaType.IMAGE_JPEG_VALUE)
 //    public void ShowImage(@PathVariable("image") String image,

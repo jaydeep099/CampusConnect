@@ -9,13 +9,35 @@ import {
   Card,
   HStack,
 } from "@chakra-ui/react";
-import  { useState } from "react";
-import { createClub } from "../services/club-service";
+import { useEffect, useState } from "react";
+import { LoadAllClubs, createClub } from "../services/club-service";
+import { uploadImage } from "../services/event-service";
 import { useNavigate } from "react-router-dom";
 
 const ClubRegistration = () => {
-  const [clubInfo, setClubInfo] = useState({});
-  const navigate = useNavigate();
+  const [clubInfo, setClubInfo] = useState({
+    club_name: "",
+    dept: "",
+    president: "",
+    club_email: "",
+    club_password: "",
+    description: "",
+  });
+  let [clubIds, setClubIds] = useState();
+  const [image, setImage] = useState();
+
+  useEffect(() => {
+    LoadAllClubs().then((data) => {
+      console.log(data);
+      const highestclubId = data.reduce(
+        (max, club) => Math.max(max, club.clubId),
+        0
+      );
+      clubIds = highestclubId + 1;
+      console.log(clubIds);
+    });
+  });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setClubInfo((prevInfo) => ({
@@ -24,10 +46,10 @@ const ClubRegistration = () => {
     }));
   };
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setClubInfo((prevInfo) => ({
-      ...prevInfo,
-      clubImage: file,
+    console.log(e.target.files[0]);
+    setImage((prevImage) => ({
+      ...prevImage,
+      logo: e.target.files[0],
     }));
   };
   const handleSubmit = (e) => {
@@ -35,8 +57,15 @@ const ClubRegistration = () => {
 
     createClub(clubInfo)
       .then((data) => {
-        console.log(data.data);
-        navigate("/clubDetail/" + data.data.clubId)
+
+        uploadImage(image, clubIds)
+          .then((data) => {
+            console.log("logo is uploaded");
+          })
+          .catch((error) => {
+            console.log("Reupload and make sure it's size is less than 20MB");
+          });
+        console.log(data);
       })
       .catch((error) => {
         console.log(error);
@@ -128,7 +157,7 @@ const ClubRegistration = () => {
 
           <FormControl mt={4}>
             <FormLabel>Club Image</FormLabel>
-            <Input type="file" name="logo" value={clubInfo.logo} onChange={handleImageChange} />
+            <Input type="file" name="brochure" onChange={handleImageChange} />
           </FormControl>
 
           <HStack justifyContent="center" mt={5}>

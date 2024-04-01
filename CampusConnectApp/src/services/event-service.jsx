@@ -38,3 +38,17 @@ export const DeleteEventById = (eventId) => {
 export const UpdateEvent = (eventData,eventId) => {
   return myAxios.put('/api/event/updateEvent/' + eventId,eventData);
 }
+
+export const uploadImage = (image, eventId) => {
+  let formData = new FormData();
+  formData.append("brochure", image.brochure); 
+  return myAxios
+    .post(`/api/event/image/upload/${eventId}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((response) => {
+      return response.data; 
+    });
+};
