@@ -46,6 +46,14 @@ public class ClubServiceImpl implements ClubService {
     }
 
     @Override
+    public void deleteClub(Long clubId) {
+        this.clubRepo.findById(clubId)
+                .orElseThrow();
+
+        this.clubRepo.deleteById(clubId);
+    }
+
+    @Override
     public ClubDto getClubById(Long clubId) {
         Club club = this.clubRepo.findById(clubId).orElseThrow();
         return this.model.map(club,ClubDto.class);

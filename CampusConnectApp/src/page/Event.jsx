@@ -10,6 +10,7 @@ import {
   Text,
   Button,
   Input,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import {
   EventsBWDate,
@@ -18,6 +19,7 @@ import {
 } from "../services/event-service";
 import { Checkbox } from "antd";
 import { Link, useNavigate } from "react-router-dom";
+import { BASE_URL } from "../services/helper";
 
 const Event = () => {
   const [fromDate, setFromDate] = useState("");
@@ -83,8 +85,8 @@ const Event = () => {
   };
 
   const handleClick = (eventId) => {
-    navigate("/eventDashBoard",{state:({event_Id:eventId})})
-  }
+    navigate("/eventDashBoard", { state: { event_Id: eventId } });
+  };
 
   return (
     <Base>
@@ -128,34 +130,44 @@ const Event = () => {
 
         <Flex direction="column" flex="1" p="4">
           {events.map((event) => (
-            <Box key={event.eventId} borderWidth="1px" borderRadius="lg" overflow="hidden">
+            <Box
+              key={event.eventId}
+              borderWidth="1px"
+              borderRadius="lg"
+              overflow="hidden"
+            >
               <Card key={event.eventId} mb="4">
                 <Flex direction="row" p="3">
                   <Image
-                    src="./assets/images/campusconnect.jpeg"
-                    alt="Event Logo"
-                    boxSize="100px"
-                    borderRadius="10px"
+                    src={
+                      BASE_URL + "/api/event/eventbroucher/" + event?.brochure
+                    }
+                    alt="Event Brochure"
                     objectFit="cover"
+                    boxSize="200px"
+                    borderRadius="10px"
                   />
+
                   <Flex direction="column" flex="1" ml="2">
                     <Text fontSize="xl" fontWeight="semibold">
                       {event.eventName}
                     </Text>
-                    <Text fontSize="md" mt="2">
+                    <Text fontSize="md">
                       Date: {printDate(event.eventDate)}
                     </Text>
+                    <Text fontSize="md">Time: {event.eventTime}</Text>
+                    <Text fontSize="md">Venue: {event.eventVenue}</Text>
                   </Flex>
                 </Flex>
-                <Center>
+                <Box> 
                   <Link
                     mt="auto"
-                    to={"/eventdetails/"+event.eventId}
+                    to={"/eventdetails/" + event.eventId}
                     className="btn btn-primary"
                   >
                     View Details
                   </Link>
-                </Center>
+                </Box>
               </Card>
             </Box>
           ))}

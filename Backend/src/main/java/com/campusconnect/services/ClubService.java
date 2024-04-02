@@ -15,6 +15,8 @@ public interface ClubService
 
     public ClubDto updateClub(ClubDto clubDto,Long clubId);
 
+    public void deleteClub(Long clubId);
+
     public ClubDto getClubById(Long clubId);
 
     public List<Club> getAllClub();

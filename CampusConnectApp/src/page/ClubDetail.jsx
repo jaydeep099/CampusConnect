@@ -10,7 +10,6 @@ import {
   CardBody,
   Text,
   Button,
-  Spacer,
 } from "@chakra-ui/react";
 import { CheckClubStatus, LoadClubById } from "../services/club-service";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
@@ -73,7 +72,7 @@ const ClubDetails = () => {
             <Flex>
               <Box maxW="200px" overflow="hidden" mr={4}>
               <Image
-              src={BASE_URL+"/api/event/eventbroucher/"+club?.logo}
+              src={BASE_URL+"/api/club/logo/"+club?.logo}
               alt="club logo"
               objectFit="cover"
             />

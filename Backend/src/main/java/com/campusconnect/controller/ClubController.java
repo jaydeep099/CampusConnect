@@ -65,6 +65,17 @@ public class ClubController
         return new ResponseEntity<ClubDto>(clubDto1, HttpStatus.CREATED);
     }
 
+    @PutMapping("/updateclub/{clubId}")
+    private ResponseEntity<ClubDto> updateClub(@RequestBody ClubDto clubDto, @PathVariable Long clubId){
+        ClubDto clubDto1 = this.clubService.updateClub(clubDto,clubId);
+        return new ResponseEntity<>(clubDto1,HttpStatus.OK);
+
+    }
+
+    @DeleteMapping("/deleteClub/{clubId}")
+    private  void deleteClub(@PathVariable Long clubId){
+        this.clubService.deleteClub(clubId);
+    }
 
     @GetMapping("/allclub")
     private ResponseEntity<List<ClubDto>> getAllCLub()
@@ -124,5 +135,4 @@ public class ClubController
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         StreamUtils.copy(resource,response.getOutputStream());
     }
-
 }
