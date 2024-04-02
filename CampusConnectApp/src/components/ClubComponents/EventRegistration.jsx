@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import {  useState } from "react";
 import {
   Box,
   Heading,
@@ -60,8 +60,8 @@ const EventRegistration = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(eventInfo);
-    createEvent(eventInfo, /*location.state.clubId*/ 1)
+    console.log(eventInfo,clubId);
+    createEvent(eventInfo, clubId)
       .then((data) => {
         uploadImage(image, eventId)
           .then((data) => {

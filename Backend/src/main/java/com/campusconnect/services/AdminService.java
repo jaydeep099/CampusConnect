@@ -13,7 +13,7 @@ public interface AdminService {
 
     public List<Admin> getClubEmails();
 
-    public AdminDto changeStatus(String clubEmail);
+    public AdminDto changeStatus(String clubEmail,String status);
 
     public String checkStatus(String clubEmail);
 }

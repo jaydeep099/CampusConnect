@@ -41,10 +41,10 @@ public class StudentController {
        return ResponseEntity.ok(this.studentService.getStudentById(studentId));
     }
 
-    @GetMapping("/{username}/{password}")
-    public ResponseEntity<?> loginStudent(@PathVariable("username") String username,@PathVariable("password") String password)
+    @GetMapping("/{email}/{password}")
+    public ResponseEntity<?> loginStudent(@PathVariable("email") String email,@PathVariable("password") String password)
     {
-        StudentDto studentDto = studentService.loginStudent(username,password);
+        StudentDto studentDto = studentService.loginStudent(email,password);
 
         return new ResponseEntity<Long>(studentDto.getStudentId(),HttpStatus.ACCEPTED);
     }
@@ -52,7 +52,7 @@ public class StudentController {
     @GetMapping("/getstudentid/{username}/{password}")
     public ResponseEntity<?> getStudentIdByUsername(@PathVariable("username") String username,@PathVariable("password") String password)
     {
-        StudentDto studentDto = studentService.getStudetnIdUsernameAndPassword(username,password);
+        StudentDto studentDto = studentService.getStudentIdByEmailAndPassword(username,password);
         System.out.println(studentDto.getStudentId());
 
         return new ResponseEntity<StudentDto>(studentDto,HttpStatus.OK);

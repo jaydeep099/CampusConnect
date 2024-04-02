@@ -23,7 +23,7 @@ import { LoginClub } from "../services/club-service";
 import { doLogin } from "../services/helper";
 const Login = () => {
   const [data, setData] = useState({
-    username: "",
+    email: "",
     password: "",
     role: "student",
   });
@@ -36,14 +36,14 @@ const Login = () => {
   const handleLogin = () => {
     if (data.role === "student") {
 
-      if(data.username === "admin" && data.password === "admin")
+      if(data.email === "admin" && data.password === "admin")
       {
         console.log("admin");
         navigate("/admin");
       }
 
       console.log(data);
-      LoginStudent(data.username, data.password)
+      LoginStudent(data.email, data.password)
         .then((studentId) => {
           doLogin(data);
           navigate("/studentProfile/" + studentId);
@@ -55,7 +55,7 @@ const Login = () => {
 
     else if(data.role === "club")
     {
-      LoginClub(data.username,data.password).then((clubId) => {
+      LoginClub(data.email,data.password).then((clubId) => {
         doLogin(data);
         navigate("/clubDetail/" + clubId);
       }).catch((error) => {
@@ -97,8 +97,8 @@ const Login = () => {
                         borderColor="#d8dee4"
                         size="sm"
                         borderRadius="6px"
-                        name="username"
-                        value={data.username}
+                        name="email"
+                        value={data.email}
                         onChange={handleChange}
                       />
                     </FormControl>

@@ -23,8 +23,8 @@ import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { NavLink as ReactLink, useNavigate } from "react-router-dom";
 import { HamburgerIcon } from "@chakra-ui/icons";
-import { getStudetnIdByStudentUsername } from "../services/student-service";
-import { getClubByClubUsername } from "../services/club-service";
+import { getStudetnIdByStudentEmail } from "../services/student-service";
+import { getClubByClubEmail } from "../services/club-service";
 
 const Navbar = () => {
   const [isLargerThan1023, isLargerThan768] = useMediaQuery(
@@ -38,8 +38,9 @@ const Navbar = () => {
   const handleClick = () => {
     const user = JSON.parse(localStorage.getItem("loggedInUser"));
     if (user) {
+      console.log(user.email);
       if (user.role === "student") {
-        getStudetnIdByStudentUsername(user.username, user.password)
+        getStudetnIdByStudentEmail(user.email, user.password)
           .then((response) => {
             navigate("/studentProfile/" + response.studentId);
           })
@@ -48,8 +49,9 @@ const Navbar = () => {
             return;
           });
       } else if (user.role === "club") {
-        getClubByClubUsername(user.username, user.password)
+        getClubByClubEmail(user.email, user.password)
           .then((response) => {
+            console.log("navbar", response);
             navigate("/clubDetail/" + response.clubId);
           })
           .catch((error) => {
@@ -258,6 +260,46 @@ const Navbar = () => {
               </Drawer>
             </Box>
           )}
+
+          <Flex ml="auto" flexGrow={1} mr={100}>
+            <InputGroup w="auto">
+              <Input placeholder="Search..." />
+              <InputRightElement>
+                <IconButton aria-label="Search" icon={<FaSearch />} />
+              </InputRightElement>
+            </InputGroup>
+          </Flex>
+        </Box>
+        <Box ml={4}>
+          <Menu>
+            <MenuButton as={Avatar} size="md" onClick={handleClick} />
+            {localStorage.getItem("loggedInUser") ? (
+              <></>
+            ) : (
+              <MenuList>
+                <Link
+                  _hover={{ textDecoration: "none" }}
+                  style={{ textDecoration: "none" }}
+                  as={ReactLink}
+                  to="/login"
+                  ml={2}
+                >
+                  Login
+                </Link>
+                <MenuDivider />
+
+                <Link
+                  _hover={{ textDecoration: "none" }}
+                  style={{ textDecoration: "none" }}
+                  as={ReactLink}
+                  to="/signup"
+                  ml={2}
+                >
+                  SignUp
+                </Link>
+              </MenuList>
+            )}
+          </Menu>
         </Box>
       </Flex>
     </Box>

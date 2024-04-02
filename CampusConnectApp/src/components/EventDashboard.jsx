@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
   Box,
   Card,
@@ -9,10 +10,11 @@ import {
   BreadcrumbLink,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { loadEventById } from "../services/event-service";
-import { useParams } from "react-router-dom";
+import { DeleteEventById, loadEventById } from "../services/event-service";
+import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../services/helper";
+import { getClubByClubEmail } from "../services/club-service";
 import Navbar from "./Navbar";
 
 const EventDashboard = () => {
@@ -21,19 +23,54 @@ const EventDashboard = () => {
   const printDate = (date) => {
     return new Date(date).toLocaleDateString();
   };
+
+  const [check, setCheck] = useState(false);
+
   useEffect(() => {
-    if (eventId) {
-      loadEventById(eventId)
-        .then((data) => {
-          console.log(data);
-          setEvent(data);
-        })
-        .catch((error) => {
-          console.log(error);
-          toast.error("Error in loading the event");
-        });
-    }
+    // console.log(eventId);
+    // if (eventId !== undefined) {
+    // console.log("inIf");
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+
+    
+    loadEventById(eventId)
+    .then((data) => {
+      // console.log(data);
+      // if(data.club.clubId === )
+      setEvent(data);
+      console.log(data);
+      if (user) {
+        getClubByClubEmail(user.email, user.password)
+          .then((response) => {
+            console.log("navbar", response);
+            if (response.clubId === data.club.clubId) {
+              setCheck(true);
+            }
+            // studetn_Id = response.studentId;
+          })
+          .catch((error) => {
+            console.log(error);
+            return;
+          });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      toast.error("Error in loading the event");
+    });
+    // }
+    // console.log("clubclucb",event.club.clubId);
   }, [eventId]);
+
+  const handleDelete = () => {
+    DeleteEventById(eventId)
+      .then((response) => {
+        toast.success("Post Deleted Successfully!!");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <>

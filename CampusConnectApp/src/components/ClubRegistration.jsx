@@ -12,6 +12,7 @@ import {
 import { useEffect, useState } from "react";
 import { LoadAllClubs, createClub, uploadlogo } from "../services/club-service";
 import { uploadImage } from "../services/event-service";
+import { useNavigate } from "react-router-dom";
 
 const ClubRegistration = () => {
   const [clubInfo, setClubInfo] = useState({

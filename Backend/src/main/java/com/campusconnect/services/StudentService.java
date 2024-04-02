@@ -11,7 +11,7 @@ public interface StudentService {
 
     public StudentDto getStudentById(Long studentId);
 
-    public StudentDto loginStudent(String username,String password);
+    public StudentDto loginStudent(String email,String password);
 
-    public StudentDto getStudetnIdUsernameAndPassword(String username,String password);
+    public StudentDto getStudentIdByEmailAndPassword(String username,String password);
 }

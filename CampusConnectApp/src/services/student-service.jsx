@@ -6,12 +6,12 @@ export const SignUpFunc = (student) => {
   return myAxios.post("/api/student/create", student);
 };
 
-export const LoginStudent = (username, password) => {
-  console.log(username);
-  console.log(password);
+export const LoginStudent = (email, password) => {
+  // console.log(username);
+  // console.log(password);
 
   return myAxios
-    .get(`/api/student/${username}/${password}`)
+    .get(`/api/student/${email}/${password}`)
     .then((response) => {
       return response.data;
     });
@@ -23,9 +23,9 @@ export const LoadStudentById = (studentId) => {
     .then((response) => response.data);
 };
 
-export const getStudetnIdByStudentUsername = (username, password) => {
+export const getStudetnIdByStudentEmail = (email, password) => {
   return myAxios
-    .get(`/api/student/getstudentid/${username}/${password}`)
+    .get(`/api/student/getstudentid/${email}/${password}`)
     .then((response) => {
       return response.data;
     });

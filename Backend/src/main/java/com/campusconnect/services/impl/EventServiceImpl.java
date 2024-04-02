@@ -36,19 +36,19 @@ public class EventServiceImpl implements EventService {
         Event event = model.map(eventDto,Event.class);
         event.setClub(club);
         Event event1 = this.eventRepo.save(event);
-        System.out.println(event1.getEventTime());
+//        System.out.println(event1.getEventTime());
         return this.model.map(event1,EventDto.class);
     }
 
     @Override
     public EventDto updateEvent(EventDto eventDto, Long eventId) {
         Event event = this.eventRepo.findById(eventId).orElseThrow();
-        event.setEventName(eventDto.getEventName());
-        event.setEventDate(eventDto.getEventDate());
-        event.setEventTime(eventDto.getEventTime());
-        event.setEventVenue(eventDto.getEventVenue());
-        event.setDescription(eventDto.getDescription());
-        event.setBrochure(eventDto.getBrochure());
+        event.setEventName(eventDto.getEventName() == null ? event.getEventName() : eventDto.getEventName());
+        event.setEventDate(eventDto.getEventDate() == null ? event.getEventDate() : eventDto.getEventDate());
+        event.setEventTime(eventDto.getEventTime() == null ? event.getEventTime() : eventDto.getEventTime());
+        event.setEventVenue(eventDto.getEventVenue() == null ? event.getEventVenue() : eventDto.getEventVenue());
+        event.setDescription(eventDto.getDescription() == null ? event.getDescription() : eventDto.getDescription());
+        event.setBrochure(eventDto.getBrochure() == null ? event.getBrochure() : eventDto.getBrochure());
         Event updatedEvent = this.eventRepo.save(event);
         return this.model.map(updatedEvent,EventDto.class);
     }
@@ -89,8 +89,9 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventDto getEventbyId(Long eventId) {
+    public Event getEventbyId(Long eventId) {
         Event event = this.eventRepo.findById(eventId).orElseThrow();
-        return this.model.map(event, EventDto.class);
+//        System.out.println(event.getClub().getClubId());
+        return event;
     }
 }

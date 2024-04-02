@@ -47,11 +47,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public AdminDto changeStatus(String clubEmail) {
+    public AdminDto changeStatus(String clubEmail,String status) {
         System.out.println(clubEmail);
         Admin admin = adminRepo.findAdminByClubEmail(clubEmail);
 
-        admin.setClubStatus("accepted");
+        admin.setClubStatus(status);
 
         adminRepo.save(admin);
 

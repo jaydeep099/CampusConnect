@@ -26,11 +26,18 @@ export const loadEventById = (eventId) => {
 
 export const createEvent = (eventData, clubId) => {
   return myAxios
-    .post(`/api/event/createEvent/${clubId}` , eventData)
-    .then((response) => {
-      response.data;
-    });
+    .post(`/api/event/createEvent/` + clubId, eventData);
 };
+
+export const DeleteEventById = (eventId) => {
+  return myAxios.delete(`/api/event/${eventId}`).then((response) => {
+    return response.data;
+  })
+};
+
+export const UpdateEvent = (eventData,eventId) => {
+  return myAxios.put('/api/event/updateEvent/' + eventId,eventData);
+}
 
 export const uploadImage = (image, eventId) => {
   let formData = new FormData();

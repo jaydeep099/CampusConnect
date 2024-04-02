@@ -2,6 +2,7 @@ package com.campusconnect.dto;
 
 
 import com.campusconnect.entities.Event;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,5 +30,6 @@ public class ClubDto
 
     private String logo;
 
-    private List<Event> eventList;
+//    @JsonManagedReference
+//    private List<Event> eventList;
 }

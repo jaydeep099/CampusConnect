@@ -80,14 +80,10 @@ public class ClubController
     @GetMapping("/allclub")
     private ResponseEntity<List<ClubDto>> getAllCLub()
     {
-
-        List<ClubDto> allClubs = clubService.getAllClub()
-                .stream()
-                .map(club -> modelMapper.map(club,ClubDto.class)).collect(Collectors.toList());
-//        List<ClubDto> allClubs = adminService.getClubEmails().stream()
-//                .filter(admin -> admin.getClubStatus().equals("pending"))
-//                .map(admin -> modelMapper.map(clubRepo.findClubByClubEmail(admin.getClubEmail()),ClubDto.class))
-//                .collect(Collectors.toList());
+        List<ClubDto> allClubs = adminService.getClubEmails().stream()
+                .filter(admin -> admin.getClubStatus().equals("accepted"))
+                .map(admin -> modelMapper.map(clubRepo.findClubByClubEmail(admin.getClubEmail()),ClubDto.class  ))
+                .collect(Collectors.toList());
 
         return new ResponseEntity<List<ClubDto>>(allClubs,HttpStatus.OK);
     }
@@ -101,10 +97,10 @@ public class ClubController
         return new ResponseEntity<ClubDto>(club,HttpStatus.OK);
     }
 
-    @GetMapping("/{club_name}/{club_password}")
-    private ResponseEntity<?> loginClub(@PathVariable("club_name") String club_name,@PathVariable("club_password") String club_password)
+    @GetMapping("/{club_email}/{club_password}")
+    private ResponseEntity<?> loginClub(@PathVariable("club_email") String club_email,@PathVariable("club_password") String club_password)
     {
-        ClubDto clubDto = clubService.loginClub(club_name,club_password);
+        ClubDto clubDto = clubService.loginClub(club_email,club_password);
 
         Admin admin = adminRepo.findAdminByClubEmail(clubDto.getClubEmail());
 

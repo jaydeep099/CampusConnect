@@ -77,15 +77,6 @@ const ClubsList = () => {
             <Button  variant="solid" colorScheme="blue" >View here</Button>
           </CardFooter>
         </Card>
-        <Card borderRadius={0}>
-          <CardBody>
-            <Text>
-              🔐💻 Crack the code! Join Decrypters for coding challenges,
-              competitions, and workshops, unlocking a world of tech brilliance.
-              🚀
-            </Text>
-          </CardBody>
-        </Card>
       </SimpleGrid>
     </Box>
   );

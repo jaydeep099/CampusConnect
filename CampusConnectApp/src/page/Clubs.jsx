@@ -19,7 +19,6 @@ import { BASE_URL } from "../services/helper";
 const Clubs = () => {
   const navigate = useNavigate();
   const [clubs, setClubs] = useState([]);
-  const [usedeffect, SetUsedEffect] = useState(false);
   useEffect(() => {
     LoadAllClubs()
       .then((response) => {
@@ -31,8 +30,10 @@ const Clubs = () => {
   }, []);
 
 
-  const handleClick = (club_id) => {
-      navigate("/clubDetail",{state:({clubId:club_id})})
+  const handleClick = (clubId) => {
+      // e.preventDefault();
+
+      navigate(`/clubDetail/${clubId}`);
   }
 
   return (
@@ -54,10 +55,10 @@ const Clubs = () => {
                 <Text>{club.description}</Text>
               </CardBody>
               <Center>
-                <Button variant="solid" colorScheme="blue" onClick={() => handleClick(club.club_id)}>
+                <Button variant="solid" colorScheme="blue" onClick={() => handleClick(club.clubId)}>
                   View Details
                 </Button>
-              </Center>
+              </Center> 
             </Card>
           ))}
         </Flex>

@@ -21,5 +21,5 @@ public interface EventService {
 
     public List<Event> getUpcomingEvent();
 
-    public EventDto getEventbyId(Long eventId);
+    public Event getEventbyId(Long eventId);
 }
