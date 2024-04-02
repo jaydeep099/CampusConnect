@@ -2,6 +2,7 @@ package com.campusconnect.controller;
 
 import com.campusconnect.dto.EventDto;
 import com.campusconnect.entities.Event;
+import com.campusconnect.repositories.EventRepo;
 import com.campusconnect.services.EventService;
 import com.campusconnect.services.FileService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,6 +33,8 @@ public class EventController
     @Autowired
     private EventService eventService;
 
+    @Autowired
+    private EventRepo eventRepo;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -154,5 +157,15 @@ public class EventController
             e.printStackTrace();
             return null;
         }
+    }
+
+
+    @GetMapping("/search/{query}")
+    public ResponseEntity<List<Event>> search(@PathVariable("query") String query)
+    {
+        System.out.println(query);
+        List<Event> eventList = this.eventRepo.findByEventNameContaining(query);
+
+        return new ResponseEntity<List<Event>>(eventList, HttpStatus.OK);
     }
 }

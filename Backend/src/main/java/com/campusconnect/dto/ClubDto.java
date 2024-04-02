@@ -31,5 +31,5 @@ public class ClubDto
     private String logo;
 
 //    @JsonManagedReference
-//    private List<Event> eventList;
+    private List<Event> eventList;
 }

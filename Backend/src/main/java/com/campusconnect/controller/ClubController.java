@@ -35,6 +35,9 @@ public class ClubController
     private ClubService clubService;
 
     @Autowired
+    private ClubRepo clubRepo;
+
+    @Autowired
     @Qualifier("modelMapper")
     private ModelMapper modelMapper;
 
@@ -44,14 +47,12 @@ public class ClubController
     @Autowired
     private AdminRepo adminRepo;
 
+
     @Autowired
     private FileService fileService;
 
     @Value("${project.image}")
     private String path;
-
-    @Autowired
-    private ClubRepo clubRepo;
 
     @PostMapping("/register")
     private ResponseEntity<ClubDto> createClub(@RequestBody ClubDto clubDto)
@@ -131,4 +132,5 @@ public class ClubController
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         StreamUtils.copy(resource,response.getOutputStream());
     }
+
 }
