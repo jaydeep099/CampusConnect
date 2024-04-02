@@ -26,4 +26,6 @@ public interface EventRepo extends JpaRepository<Event,Long>
 
     @Query("select e FROM Event e WHERE e.eventDate>= :today")
     public List<Event> getUpcomingEvents(@Param("today") Date date);
+
+    List<Event> findByEventNameContaining(String title);
 }

@@ -15,17 +15,22 @@ import {
 import {
   EventsBWDate,
   LoadAllEvents,
+  SearchPost,
   UpcomingEvents,
 } from "../services/event-service";
 import { Checkbox } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { EventCard } from "../components/EventCard";
+import "./search.css";
 
 const Event = () => {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [events, setEvents] = useState([]);
   const [isUpcomingEvent, setIsUpcomingEvent] = useState(false);
+
+  const [query, setQuery] = useState("");
+  const [searchResult, setSearchResult] = useState("");
 
   const navigate = useNavigate();
 
@@ -85,12 +90,52 @@ const Event = () => {
   };
 
   const handleClick = (eventId) => {
-    navigate("/eventDashBoard",{state:({event_Id:eventId})})
-  }
-  
+    navigate("/eventDashBoard", { state: { event_Id: eventId } });
+  };
+
+  const search = () => {
+    console.log(query);
+    SearchPost(query)
+      .then((response) => {
+        console.log(response);
+
+        let text = `<div class='list-group'>`;
+
+        response.forEach((event) => {
+          text += `<a href='/eventdetails/${event.eventId}' class='list-group-item list-group-action'>${event.eventName}</a>`;
+        });
+
+        text += "</div>";
+
+        setSearchResult(text);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <Base>
+      <div class="search-container">
+        <Input
+          onKeyUp={search}
+          id="search-input"
+          value={query}
+          class="form-"
+          type="text"
+          placeholder="Search..."
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        {query && (
+          <div
+            class="search-result"
+            dangerouslySetInnerHTML={{ __html: searchResult }}
+          >
+            {/* Content of search results */}
+            {/* {searchResult} */}
+          </div>
+        )}
+      </div>
       <Flex direction="row" maxW="100%">
         <Box w="200px" p="4" bg="gray.200">
           <Text>Filter Options</Text>
@@ -131,8 +176,13 @@ const Event = () => {
 
         <Flex direction="column" flex="1" p="4">
           {events.map((event) => (
-            <Box key={event.eventId} borderWidth="1px" borderRadius="lg" overflow="hidden">
-                <EventCard event={event}/>
+            <Box
+              key={event.eventId}
+              borderWidth="1px"
+              borderRadius="lg"
+              overflow="hidden"
+            >
+              <EventCard event={event} />
               {/* <Card key={event.eventId} mb="4">
                 <Flex direction="row" p="3">
                   <Image

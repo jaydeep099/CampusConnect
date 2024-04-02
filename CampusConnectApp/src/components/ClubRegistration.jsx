@@ -157,7 +157,7 @@ const ClubRegistration = () => {
 
           <FormControl mt={4}>
             <FormLabel>Club Image</FormLabel>
-            <Input type="file" name="brochure" onChange={handleImageChange} />
+            <Input type="file" name="logo" onChange={handleImageChange} />
           </FormControl>
 
           <HStack justifyContent="center" mt={5}>

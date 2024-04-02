@@ -34,6 +34,9 @@ public class ClubController
     private ClubService clubService;
 
     @Autowired
+    private ClubRepo clubRepo;
+
+    @Autowired
     @Qualifier("modelMapper")
     private ModelMapper modelMapper;
 
@@ -42,6 +45,7 @@ public class ClubController
 
     @Autowired
     private AdminRepo adminRepo;
+
     @Autowired
     private FileService fileService;
 
@@ -96,12 +100,15 @@ public class ClubController
         return new ResponseEntity<Long>(clubDto.getClubId(),HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/getclubtid/{username}/{password}")
-    public ResponseEntity<?> getClubIdByUsername(@PathVariable("username") String username,@PathVariable("password") String password)
+    @GetMapping("/getclubtid/{email}/{password}")
+    public ResponseEntity<?> getClubIdByEmail(@PathVariable("email") String email,@PathVariable("password") String password)
     {
-        ClubDto clubDto = clubService.getClubIdByUsernameAndPassword(username,password);
+        System.out.println(email);
+        System.out.println(password);
+        ClubDto clubDto = clubService.getClubIdByEmailAndPassword(email,password);
         System.out.println(clubDto.getClubId());
 
         return new ResponseEntity<ClubDto>(clubDto,HttpStatus.OK);
     }
+
 }
