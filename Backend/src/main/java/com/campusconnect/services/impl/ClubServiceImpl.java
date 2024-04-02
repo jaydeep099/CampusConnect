@@ -34,7 +34,6 @@ public class ClubServiceImpl implements ClubService {
 
     @Override
     public ClubDto updateClub(ClubDto clubDto,Long clubId) {
-
         Club club = this.clubRepo.findById(clubId).orElseThrow();
         club.setDept(clubDto.getDept());
         club.setMentor(clubDto.getMentor());
@@ -47,19 +46,17 @@ public class ClubServiceImpl implements ClubService {
     }
 
     @Override
+    public void deleteClub(Long clubId) {
+        this.clubRepo.findById(clubId)
+                .orElseThrow();
+
+        this.clubRepo.deleteById(clubId);
+    }
+
+    @Override
     public ClubDto getClubById(Long clubId) {
         Club club = this.clubRepo.findById(clubId).orElseThrow();
         return this.model.map(club,ClubDto.class);
-    }
-
-    @Override
-    public ClubDto getClubByName(String name) {
-        return null;
-    }
-
-    @Override
-    public List<ClubDto> getClubByDept(String dept) {
-        return null;
     }
 
     @Override

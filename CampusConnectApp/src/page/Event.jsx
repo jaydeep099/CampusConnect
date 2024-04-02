@@ -11,6 +11,7 @@ import {
   Text,
   Button,
   Input,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import {
   EventsBWDate,
@@ -183,41 +184,47 @@ const Event = () => {
               overflow="hidden"
             >
               <EventCard event={event} />
-              {/* <Card key={event.eventId} mb="4">
+              {/* {/* <Card key={event.eventId} mb="4">
                 <Flex direction="row" p="3">
                   <Image
-                    src="./assets/images/campusconnect.jpeg"
-                    alt="Event Logo"
-                    boxSize="100px"
-                    borderRadius="10px"
+                    src={
+                      BASE_URL + "/api/event/eventbroucher/" + event?.brochure
+                    }
+                    alt="Event Brochure"
                     objectFit="cover"
+                    boxSize="200px"
+                    borderRadius="10px"
                   />
+
                   <Flex direction="column" flex="1" ml="2">
                     <Text fontSize="xl" fontWeight="semibold">
                       {event.eventName}
                     </Text>
-                    <Text fontSize="md" mt="2">
+                    <Text fontSize="md">
                       Date: {printDate(event.eventDate)}
                     </Text>
+                    <Text fontSize="md">Time: {event.eventTime}</Text>
+                    <Text fontSize="md">Venue: {event.eventVenue}</Text>
                   </Flex>
                 </Flex>
-                <Center>
+                <Box> 
+                  <Center>
                   <Link
                     mt="auto"
-                    colorScheme="blue"
-                    to={"/eventdetails/"+event.eventId}
+                    to={"/eventdetails/" + event.eventId}
                     className="btn btn-primary"
                   >
                     View Details
                   </Link>
                 </Center>
-              </Card> */}
+                </Box>
+              </Card>
             </Box>
           ))}
         </Flex>
       </Flex>
     </Base>
   );
-};
+}; */}
 
 export default Event;

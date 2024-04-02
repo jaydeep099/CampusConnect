@@ -47,6 +47,9 @@ public class Club {
     @Column(name = "Logo_link", length = Integer.MAX_VALUE)
     private String logo;
 
+    @Column(name="report",length = Integer.MAX_VALUE)
+    private String pdf;
+
 //    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 //    @JsonManagedReference
 //    private List<Post> allposts=new ArrayList<>();

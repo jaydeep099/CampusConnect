@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import {
   Box,
   Flex,
@@ -28,7 +27,9 @@ import { getStudetnIdByStudentEmail } from "../services/student-service";
 import { getClubByClubEmail } from "../services/club-service";
 
 const Navbar = () => {
-  const [isLargerThan1023] = useMediaQuery("(min-width: 1024px)");
+  const [isLargerThan1023, isLargerThan768] = useMediaQuery(
+    "(min-width: 1024px), (min-width: 768px)"
+  );
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -36,14 +37,12 @@ const Navbar = () => {
 
   const handleClick = () => {
     const user = JSON.parse(localStorage.getItem("loggedInUser"));
-    // var studetn_Id;
     if (user) {
       console.log(user.email);
       if (user.role === "student") {
         getStudetnIdByStudentEmail(user.email, user.password)
           .then((response) => {
             navigate("/studentProfile/" + response.studentId);
-            // studetn_Id = response.studentId;
           })
           .catch((error) => {
             console.log(error);
@@ -54,15 +53,12 @@ const Navbar = () => {
           .then((response) => {
             console.log("navbar", response);
             navigate("/clubDetail/" + response.clubId);
-            // studetn_Id = response.studentId;
           })
           .catch((error) => {
             console.log(error);
             return;
           });
       }
-
-      // console.log(studetn_Id);
     }
   };
 
@@ -104,48 +100,89 @@ const Navbar = () => {
         </Box>
         <Box display="flex" alignItems="center" mr={2}>
           {isLargerThan1023 ? (
-            <Box display="flex" alignItems="center" mr={2}>
-              <Link
-                _hover={{ textDecoration: "none" }}
-                style={{ textDecoration: "none" }}
-                as={ReactLink}
-                to="/"
-                fontWeight="semibold"
-                mr={50}
-              >
-                Home
-              </Link>
-              <Link
-                _hover={{ textDecoration: "none" }}
-                style={{ textDecoration: "none" }}
-                as={ReactLink}
-                to="/events"
-                fontWeight="semibold"
-                mr={50}
-              >
-                Events
-              </Link>
-              <Link
-                _hover={{ textDecoration: "none" }}
-                style={{ textDecoration: "none" }}
-                as={ReactLink}
-                to="/clubs"
-                fontWeight="semibold"
-                mr={50}
-              >
-                Clubs
-              </Link>
-              <Link
-                _hover={{ textDecoration: "none" }}
-                style={{ textDecoration: "none" }}
-                as={ReactLink}
-                to="/contactus"
-                fontWeight="semibold"
-                mr={50}
-              >
-                Contact Us
-              </Link>
-            </Box>
+            <Flex>
+              <Box display="flex" alignItems="center" mr={2}>
+                <Link
+                  _hover={{ textDecoration: "none" }}
+                  style={{
+                    textDecoration: "none",
+                    fontSize: isLargerThan768 ? "md" : "sm",
+                  }}
+                  as={ReactLink}
+                  to="/"
+                  fontWeight="semibold"
+                  mr={50}
+                >
+                  Home
+                </Link>
+                <Link
+                  _hover={{ textDecoration: "none" }}
+                  style={{
+                    textDecoration: "none",
+                    fontSize: isLargerThan768 ? "md" : "sm",
+                  }}
+                  as={ReactLink}
+                  to="/events"
+                  fontWeight="semibold"
+                  mr={50}
+                >
+                  Events
+                </Link>
+                <Link
+                  _hover={{ textDecoration: "none" }}
+                  style={{
+                    textDecoration: "none",
+                    fontSize: isLargerThan768 ? "md" : "sm",
+                  }}
+                  as={ReactLink}
+                  to="/clubs"
+                  fontWeight="semibold"
+                  mr={50}
+                >
+                  Clubs
+                </Link>
+                <Link
+                  _hover={{ textDecoration: "none" }}
+                  style={{
+                    textDecoration: "none",
+                    fontSize: isLargerThan768 ? "md" : "sm",
+                  }}
+                  as={ReactLink}
+                  to="/contactus"
+                  fontWeight="semibold"
+                  mr={50}
+                >
+                  Contact Us
+                </Link>
+                <Box ml={4}>
+                  <Menu>
+                    <MenuButton as={Avatar} size="md" onClick={handleClick} />
+                    <MenuList>
+                      <Link
+                        _hover={{ textDecoration: "none" }}
+                        style={{ textDecoration: "none" }}
+                        as={ReactLink}
+                        to="/login"
+                        ml={2}
+                      >
+                        Login
+                      </Link>
+                      <MenuDivider />
+
+                      <Link
+                        _hover={{ textDecoration: "none" }}
+                        style={{ textDecoration: "none" }}
+                        as={ReactLink}
+                        to="/signup"
+                        ml={2}
+                      >
+                        SignUp
+                      </Link>
+                    </MenuList>
+                  </Menu>
+                </Box>
+              </Box>
+            </Flex>
           ) : (
             <Box display="flex" alignItems="center" mr={2}>
               <IconButton
@@ -161,7 +198,7 @@ const Navbar = () => {
                   <DrawerBody>
                     <Link
                       _hover={{ textDecoration: "none" }}
-                      style={{ textDecoration: "none" }}
+                      style={{ textDecoration: "none", fontSize: "md" }}
                       as={ReactLink}
                       to="/"
                       fontWeight="semibold"
@@ -171,7 +208,7 @@ const Navbar = () => {
                     <br />
                     <Link
                       _hover={{ textDecoration: "none" }}
-                      style={{ textDecoration: "none" }}
+                      style={{ textDecoration: "none", fontSize: "md" }}
                       as={ReactLink}
                       to="/events"
                       fontWeight="semibold"
@@ -181,7 +218,7 @@ const Navbar = () => {
                     <br />
                     <Link
                       _hover={{ textDecoration: "none" }}
-                      style={{ textDecoration: "none" }}
+                      style={{ textDecoration: "none", fontSize: "md" }}
                       as={ReactLink}
                       to="/clubs"
                       fontWeight="semibold"
@@ -191,12 +228,32 @@ const Navbar = () => {
                     <br />
                     <Link
                       _hover={{ textDecoration: "none" }}
-                      style={{ textDecoration: "none" }}
+                      style={{ textDecoration: "none", fontSize: "md" }}
                       as={ReactLink}
                       to="/contactus"
                       fontWeight="semibold"
                     >
                       Contact Us
+                    </Link>
+                    <br />
+                    <Link
+                      _hover={{ textDecoration: "none" }}
+                      style={{ textDecoration: "none", fontSize: "md" }}
+                      as={ReactLink}
+                      fontWeight="semibold"
+                      to="/login"
+                    >
+                      Login
+                    </Link>
+                    <br />
+                    <Link
+                      _hover={{ textDecoration: "none" }}
+                      style={{ textDecoration: "none", fontSize: "md" }}
+                      as={ReactLink}
+                      fontWeight="semibold"
+                      to="/signup"
+                    >
+                      SignUp
                     </Link>
                   </DrawerBody>
                 </DrawerContent>

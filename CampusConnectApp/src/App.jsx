@@ -11,7 +11,6 @@ import ClubDetail from "./page/ClubDetail";
 import EventDashboard from "./components/EventDashboard";
 import EventRegistration from "./components/ClubComponents/EventRegistration";
 import ClubRegistration from "./components/ClubRegistration";
-// import ClubNavbar from "./components/ClubComponents/ClubNavbar";
 import { AdminPage } from "./page/AdminPage";
 import StudentProfile from "./page/StudentProfile";
 import { EditEvent } from "./page/EditEvent";

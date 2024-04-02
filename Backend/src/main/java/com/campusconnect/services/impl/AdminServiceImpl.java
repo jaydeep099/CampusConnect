@@ -66,7 +66,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<Admin> getClubEmails() {
-       List<Admin> adminList = adminRepo.getAllAdmin();
+        List<Admin> adminList = adminRepo.getAllAdmin();
         return adminList;
     }
 

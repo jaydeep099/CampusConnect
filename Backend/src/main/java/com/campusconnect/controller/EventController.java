@@ -124,7 +124,6 @@ public class EventController
     public ResponseEntity<EventDto> getEventById(@PathVariable("eventId") Long eventId)
     {
         Event event = eventService.getEventbyId(eventId);
-        System.out.println(event.getClub().getClubId());
         return new ResponseEntity<EventDto>(modelMapper.map(event,EventDto.class),HttpStatus.OK);
     }
 
@@ -134,21 +133,21 @@ public class EventController
             @PathVariable Long eventId
     ) throws IOException
     {
-        EventDto eventDto = modelMapper.map(this.eventService.getEventbyId(eventId),EventDto.class);
+        EventDto eventDto = modelMapper.map(this.eventService.getEventbyId(eventId), EventDto.class);
         String fileName =  this.fileService.uploadImage(path,image);
         eventDto.setBrochure(fileName);
         EventDto updatePost = this.eventService.updateEvent(eventDto,eventId);
         return  new ResponseEntity<EventDto>(updatePost,HttpStatus.OK);
     }
 
-//    @GetMapping(value = "/eventbroucher/{image}" , produces = MediaType.IMAGE_JPEG_VALUE)
-//    public void ShowImage(@PathVariable("image") String image,
-//                            HttpServletResponse response) throws IOException {
-//        InputStream resource = this.fileService.getResources(path,image);
-//        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
-//        StreamUtils.copy(resource,response.getOutputStream());
-//
-//    }
+    @GetMapping(value = "/eventbroucher/{image}" , produces = MediaType.IMAGE_JPEG_VALUE)
+    public void ShowImage(@PathVariable("image") String image,
+                            HttpServletResponse response) throws IOException {
+        InputStream resource = this.fileService.getResources(path,image);
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        StreamUtils.copy(resource,response.getOutputStream());
+
+    }
 
     private Date convertToDate(String dateString) {
         try {

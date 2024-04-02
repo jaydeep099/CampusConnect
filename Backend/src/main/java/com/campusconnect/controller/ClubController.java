@@ -1,12 +1,9 @@
 package com.campusconnect.controller;
 
 
-import com.campusconnect.dto.AdminDto;
 import com.campusconnect.dto.ClubDto;
-import com.campusconnect.dto.StudentDto;
-import com.campusconnect.entities.Admin;
 import com.campusconnect.dto.EventDto;
-import com.campusconnect.entities.Club;
+import com.campusconnect.entities.Admin;
 import com.campusconnect.repositories.AdminRepo;
 import com.campusconnect.repositories.ClubRepo;
 import com.campusconnect.services.AdminService;
@@ -50,6 +47,7 @@ public class ClubController
     @Autowired
     private AdminRepo adminRepo;
 
+
     @Autowired
     private FileService fileService;
 
@@ -68,6 +66,17 @@ public class ClubController
         return new ResponseEntity<ClubDto>(clubDto1, HttpStatus.CREATED);
     }
 
+    @PutMapping("/updateclub/{clubId}")
+    private ResponseEntity<ClubDto> updateClub(@RequestBody ClubDto clubDto, @PathVariable Long clubId){
+        ClubDto clubDto1 = this.clubService.updateClub(clubDto,clubId);
+        return new ResponseEntity<>(clubDto1,HttpStatus.OK);
+
+    }
+
+    @DeleteMapping("/deleteClub/{clubId}")
+    private  void deleteClub(@PathVariable Long clubId){
+        this.clubService.deleteClub(clubId);
+    }
 
     @GetMapping("/allclub")
     private ResponseEntity<List<ClubDto>> getAllCLub()
@@ -104,15 +113,24 @@ public class ClubController
         return new ResponseEntity<Long>(clubDto.getClubId(),HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/getclubtid/{email}/{password}")
-    public ResponseEntity<?> getClubIdByEmail(@PathVariable("email") String email,@PathVariable("password") String password)
-    {
-        System.out.println(email);
-        System.out.println(password);
-        ClubDto clubDto = clubService.getClubIdByEmailAndPassword(email,password);
-        System.out.println(clubDto.getClubId());
+    @PostMapping("/image/upload/{clubId}")
+    public ResponseEntity<ClubDto> uploadlogo(
+            @RequestParam("logo")MultipartFile image,
+            @PathVariable Long clubId
+            ) throws IOException {
+        ClubDto clubDto = this.clubService.getClubById(clubId);
+        String fileName = this.fileService.uploadImage(path,image);
+        clubDto.setLogo(fileName);
+        ClubDto clubDto1 = this.clubService.updateClub(clubDto,clubId);
+        return  new ResponseEntity<ClubDto>(clubDto1,HttpStatus.OK);
+    }
 
-        return new ResponseEntity<ClubDto>(clubDto,HttpStatus.OK);
+    @GetMapping(value = "/logo/{image}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public void ShowLogo(@PathVariable("image") String image,
+                         HttpServletResponse response) throws IOException {
+        InputStream resource = this.fileService.getResources(path,image);
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        StreamUtils.copy(resource,response.getOutputStream());
     }
 
     @PostMapping("/image/upload/{clubId}")

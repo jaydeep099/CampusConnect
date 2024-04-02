@@ -177,15 +177,13 @@ import {
   CardBody,
   Text,
   Button,
-  Spacer,
 } from "@chakra-ui/react";
-import axios from "axios";
 import { LoadClubById } from "../services/club-service";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { BASE_URL } from "../services/helper";
 import { CheckClubStatus } from "../services/admin-service";
 
-const Club = () => {
+const ClubDetails = () => {
   const location = useLocation();
   const [club, setClub] = useState({});
   const { clubId } = useParams();
@@ -323,4 +321,4 @@ const Club = () => {
   );
 };
 
-export default Club;
+export default ClubDetails;

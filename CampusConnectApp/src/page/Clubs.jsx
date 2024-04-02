@@ -14,14 +14,14 @@ import {
 } from "@chakra-ui/react";
 import { LoadAllClubs } from "../services/club-service";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../services/helper";
 
-const Club = () => {
+const Clubs = () => {
   const navigate = useNavigate();
   const [clubs, setClubs] = useState([]);
   useEffect(() => {
     LoadAllClubs()
       .then((response) => {
-        // console.log(response);
         setClubs([...response]);
       })
       .catch((error) => {
@@ -44,8 +44,9 @@ const Club = () => {
             <Card maxW="sm">
               <CardBody paddingBottom="0">
                 <Image
-                  src="./assets/images/campusconnect.jpeg"
-                  alt="Club"
+                  src={BASE_URL+"/api/club/logo/"+club?.logo}
+                  alt="Event Brochure"
+                  objectFit="cover"
                   borderRadius="lg"
                 />
                 <Heading size="md" paddingTop="10px">
@@ -66,4 +67,4 @@ const Club = () => {
   );
 };
 
-export default Club;
+export default Clubs;
