@@ -83,7 +83,7 @@ const EventDashboard = () => {
         <Box flex="1" display="flex">
           <Box flex="2" padding="4">
             <Image
-              src={BASE_URL + "/api/event/eventbroucher/" + event?.brochure}
+              src="../assets/images/campusconnect.jpeg"
               alt="Event Brochure"
               objectFit="cover"
             />

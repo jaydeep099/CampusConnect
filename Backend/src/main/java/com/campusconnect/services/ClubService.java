@@ -13,7 +13,7 @@ public interface ClubService
 
     public ClubDto createClub(ClubDto clubDto);
 
-    public ClubDto updateClub(ClubDto clubDto);
+    public ClubDto updateClub(ClubDto clubDto,Long clubId);
 
     public ClubDto getClubById(Long clubId);
     public ClubDto getClubByName(String name);

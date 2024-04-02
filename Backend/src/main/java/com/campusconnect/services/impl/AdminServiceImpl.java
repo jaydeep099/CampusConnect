@@ -3,12 +3,16 @@ package com.campusconnect.services.impl;
 import com.campusconnect.dto.AdminDto;
 import com.campusconnect.entities.Admin;
 import com.campusconnect.entities.Club;
+import com.campusconnect.entities.Mail;
 import com.campusconnect.repositories.AdminRepo;
 import com.campusconnect.services.AdminService;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +26,26 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     @Qualifier("modelMapper")
     private ModelMapper model;
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+    @Value("${spring.mail.username}")
+    private String fromMail;
+
+    @Override
+    public void sendMail(String mail, Mail mailStructure)
+    {
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+
+        simpleMailMessage.setFrom(fromMail);
+        simpleMailMessage.setSubject(mailStructure.getSubject());
+        simpleMailMessage.setText(mailStructure.getMessage());
+        simpleMailMessage.setTo(mail);
+
+        mailSender.send(simpleMailMessage);
+    }
+
     @Override
     public AdminDto createAdmin(AdminDto admindto) {
         Admin admin = model.map(admindto,Admin.class);

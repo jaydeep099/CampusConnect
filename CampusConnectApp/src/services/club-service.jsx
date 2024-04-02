@@ -38,4 +38,16 @@ export const getClubByClubEmail = (email, password) => {
     });
 };
 
-
+export const uploadlogo = (image, clubId) => {
+  let formData = new FormData();
+  formData.append("logo", image.logo);
+  return myAxios
+    .post(`/api/club/image/upload/${clubId}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((response) => {
+      return response.data;
+    });
+};

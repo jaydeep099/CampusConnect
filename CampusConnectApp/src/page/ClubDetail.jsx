@@ -240,8 +240,10 @@ const Club = () => {
               <Flex>
                 <Box maxW="200px" overflow="hidden" mr={4}>
                   <Image
-                    borderRadius="20px"
-                    src="./assets/images/campusconnect.jpeg"
+                    src="../assets/images/campusconnect.jpeg"
+                    alt="Logo"
+                    objectFit="cover"
+                   borderRadius="lg"
                   />
                 </Box>
                 <Box as="h3" ml="50px" mt="20px">
@@ -280,7 +282,7 @@ const Club = () => {
                     >
                       <Flex direction="row" p="3">
                         <Image
-                          src="./assets/images/campusconnect.jpeg"
+                          src="../assets/images/campusconnect.jpeg"
                           alt="Event Logo"
                           boxSize="100px"
                           borderRadius="10px"

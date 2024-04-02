@@ -16,3 +16,8 @@ export const CheckClubStatus = (clubEmail) => {
     return response.data;
   });
 };
+
+export const SendMail = (clubEmail,mailData) => {
+  console.log("service",mailData);
+  return myAxios.post("/api/admin/send/"+clubEmail,mailData);
+}

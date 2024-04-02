@@ -39,11 +39,11 @@ export const UpdateEvent = (eventData,eventId) => {
   return myAxios.put('/api/event/updateEvent/' + eventId,eventData);
 }
 
-export const uploadlogo = (image, clubId) => {
+export const uploadImage = (image, eventId) => {
   let formData = new FormData();
-  formData.append("logo", image.logo); 
+  formData.append("brochure", image.brochure); 
   return myAxios
-    .post(`/api/club/image/upload/${clubId}`, formData, {
+    .post(`/api/event/image/upload/${eventId}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -51,10 +51,10 @@ export const uploadlogo = (image, clubId) => {
     .then((response) => {
       return response.data; 
     });
-};  
+};
 
 export const SearchPost = (query) => {
-  // const url = `/api/search/${query}`;
+  const url = `/api/search/${query}`;
   return myAxios.get("api/event/search/" + query).then((response) => {
     return response.data;
   });

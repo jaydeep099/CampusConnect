@@ -10,7 +10,7 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { LoadAllClubs, createClub } from "../services/club-service";
+import { LoadAllClubs, createClub, uploadlogo } from "../services/club-service";
 import { uploadImage } from "../services/event-service";
 import { useNavigate } from "react-router-dom";
 
@@ -25,6 +25,7 @@ const ClubRegistration = () => {
   });
   let [clubIds, setClubIds] = useState();
   const [image, setImage] = useState();
+  const { navigate } = useNavigate();
 
   useEffect(() => {
     LoadAllClubs().then((data) => {
@@ -58,7 +59,7 @@ const ClubRegistration = () => {
     createClub(clubInfo)
       .then((data) => {
 
-        uploadImage(image, clubIds)
+        uploadlogo(image, clubIds)
           .then((data) => {
             console.log("logo is uploaded");
           })
@@ -71,6 +72,7 @@ const ClubRegistration = () => {
         console.log(error);
       });
     console.log(clubInfo);
+    navigate("/clubDetail/" + clubInfo.clubId);
   };
 
   const handleReset = () => {

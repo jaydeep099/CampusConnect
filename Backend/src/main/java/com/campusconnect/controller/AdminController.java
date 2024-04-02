@@ -1,9 +1,11 @@
 package com.campusconnect.controller;
 
+
 import com.campusconnect.dto.AdminDto;
 import com.campusconnect.dto.ClubDto;
 import com.campusconnect.entities.Admin;
 import com.campusconnect.entities.Club;
+import com.campusconnect.entities.Mail;
 import com.campusconnect.repositories.ClubRepo;
 import com.campusconnect.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,14 @@ public class    AdminController {
 
     @Autowired
     private ClubRepo clubRepo;
+
+    @PostMapping("/send/{mail}")
+    public ResponseEntity<?> sendMail(@PathVariable String mail,@RequestBody Mail mailStructure)
+    {
+        System.out.println(mailStructure.getMessage());
+        adminService.sendMail(mail,mailStructure);
+        return new ResponseEntity<String>("Successfully set the mail!!",HttpStatus.OK);
+    }
 
     @PostMapping("/")
     private ResponseEntity<?> createAdmin(@RequestBody AdminDto adminDto){

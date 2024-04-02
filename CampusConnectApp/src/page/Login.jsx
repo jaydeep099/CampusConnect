@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -25,23 +25,34 @@ const Login = () => {
   const [data, setData] = useState({
     email: "",
     password: "",
-    role: "student",
+    role: "select--",
   });
   const navigate = useNavigate();
+
+
+  useEffect(() => {
+    if(localStorage.getItem("loggedInUser") !== null)
+    {
+      navigate("/");
+    }
+  })
 
   const handleChange = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
 
   const handleLogin = () => {
-    if (data.role === "student") {
 
+    if(data.role === "select--")
+    {
       if(data.email === "admin" && data.password === "admin")
       {
         console.log("admin");
         navigate("/admin");
       }
+    }
 
+    if (data.role === "student") {
       console.log(data);
       LoginStudent(data.email, data.password)
         .then((studentId) => {
@@ -130,6 +141,10 @@ const Login = () => {
                         size="sm"
                         borderRadius="6px"
                       >
+                        <option className="py-2" value="select--">
+                          Select--
+                        </option>
+
                         <option className="py-2" value="student">
                           Student
                         </option>
