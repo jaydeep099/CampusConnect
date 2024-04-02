@@ -155,6 +155,7 @@ const Event = () => {
                   </Flex>
                 </Flex>
                 <Box> 
+                  <Center>
                   <Link
                     mt="auto"
                     to={"/eventdetails/" + event.eventId}
@@ -163,6 +164,7 @@ const Event = () => {
                     View Details
                   </Link>
                 </Center>
+                </Box>
               </Card>
             </Box>
           ))}

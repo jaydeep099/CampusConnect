@@ -29,7 +29,7 @@ public class    AdminController {
         return new ResponseEntity<>(adminDto1, HttpStatus.CREATED);
     }
 
-   @DeleteMapping("/")
+    @DeleteMapping("/")
     private ResponseEntity<?> deleteAdmin(@RequestBody AdminDto adminDto){
         AdminDto adminDto1 = adminService.deleteAdmin(adminDto);
         return new ResponseEntity<>(adminDto1, HttpStatus.CREATED);
