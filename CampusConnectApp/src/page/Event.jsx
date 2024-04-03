@@ -143,20 +143,33 @@ const Event = () => {
           <Checkbox checked={isUpcomingEvent} onChange={handleCheckboxChange}>
             Upcoming Event
           </Checkbox>
-          <Input
-            id="fromDate"
-            type="date"
-            placeholder="Start Date"
-            value={fromDate}
-            mt="2"
-            onChange={(e) => setFromDate(e.target.value)}
-          />
+          {isUpcomingEvent ? (
+            <Input
+              id="fromDate"
+              type="date"
+              placeholder="Start Date"
+              value={fromDate}
+              mt="2"
+              min={new Date().toISOString().split("T")[0]} // Set the minimum date to today's date
+              onChange={(e) => setFromDate(e.target.value)}
+            />
+          ) : (
+            <Input
+              id="fromDate"
+              type="date"
+              placeholder="Start Date"
+              value={fromDate}
+              mt="2"
+              onChange={(e) => setFromDate(e.target.value)}
+            />
+          )}
           <Input
             id="toDate"
             type="date"
             placeholder="End Date"
             value={toDate}
             mt="2"
+            min={fromDate}
             onChange={(e) => setToDate(e.target.value)}
           />
           <Button
@@ -184,7 +197,7 @@ const Event = () => {
               overflow="hidden"
             >
               <EventCard event={event} />
-              {/* {/* <Card key={event.eventId} mb="4">
+              {/* <Card key={event.eventId} mb="4">
                 <Flex direction="row" p="3">
                   <Image
                     src={
@@ -218,13 +231,13 @@ const Event = () => {
                   </Link>
                 </Center>
                 </Box>
-              </Card>
+              </Card> */}
             </Box>
           ))}
         </Flex>
       </Flex>
     </Base>
   );
-}; */}
+};
 
 export default Event;

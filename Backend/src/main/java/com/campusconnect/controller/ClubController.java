@@ -133,24 +133,24 @@ public class ClubController
         StreamUtils.copy(resource,response.getOutputStream());
     }
 
-    @PostMapping("/image/upload/{clubId}")
-    public ResponseEntity<ClubDto> uploadlogo(
-            @RequestParam("logo")MultipartFile image,
-            @PathVariable Long clubId
-    ) throws IOException {
-        ClubDto clubDto = this.clubService.getClubById(clubId);
-        String fileName = this.fileService.uploadImage(path,image);
-        clubDto.setLogo(fileName);
-        ClubDto clubDto1 = this.clubService.updateClub(clubDto,clubId);
-        return  new ResponseEntity<ClubDto>(clubDto1,HttpStatus.OK);
-    }
+//    @PostMapping("/image/upload/{clubId}")
+//    public ResponseEntity<ClubDto> uploadlogo(
+//            @RequestParam("logo")MultipartFile image,
+//            @PathVariable Long clubId
+//    ) throws IOException {
+//        ClubDto clubDto = this.clubService.getClubById(clubId);
+//        String fileName = this.fileService.uploadImage(path,image);
+//        clubDto.setLogo(fileName);
+//        ClubDto clubDto1 = this.clubService.updateClub(clubDto,clubId);
+//        return  new ResponseEntity<ClubDto>(clubDto1,HttpStatus.OK);
+//    }
 
-    @GetMapping(value = "/logo/{image}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public void ShowLogo(@PathVariable("image") String image,
-                         HttpServletResponse response) throws IOException {
-        InputStream resource = this.fileService.getResources(path,image);
-        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
-        StreamUtils.copy(resource,response.getOutputStream());
-    }
+//    @GetMapping(value = "/logo/{image}", produces = MediaType.IMAGE_JPEG_VALUE)
+//    public void ShowLogo(@PathVariable("image") String image,
+//                         HttpServletResponse response) throws IOException {
+//        InputStream resource = this.fileService.getResources(path,image);
+//        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+//        StreamUtils.copy(resource,response.getOutputStream());
+//    }
 
 }

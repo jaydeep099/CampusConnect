@@ -11,7 +11,6 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { LoadAllClubs, createClub, uploadlogo } from "../services/club-service";
-import { LoadAllClubs, createClub, uploadlogo } from "../services/club-service";
 import { uploadImage } from "../services/event-service";
 import { useNavigate } from "react-router-dom";
 
