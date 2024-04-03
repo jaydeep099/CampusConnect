@@ -2,7 +2,6 @@ package com.campusconnect.controller;
 
 
 import com.campusconnect.dto.ClubDto;
-import com.campusconnect.dto.EventDto;
 import com.campusconnect.entities.Admin;
 import com.campusconnect.repositories.AdminRepo;
 import com.campusconnect.repositories.ClubRepo;
@@ -78,6 +77,14 @@ public class ClubController
         this.clubService.deleteClub(clubId);
     }
 
+    @GetMapping("/allclubs")
+    private ResponseEntity<List<ClubDto>> getAllUnacceptedClub(){
+        List<ClubDto> allClubs = clubService.getAllClub()
+                .stream()
+                .map(club -> modelMapper.map(club,ClubDto.class))
+                .collect(Collectors.toList());
+        return new ResponseEntity<List<ClubDto>>(allClubs, HttpStatus.OK);
+    }
     @GetMapping("/allclub")
     private ResponseEntity<List<ClubDto>> getAllCLub()
     {

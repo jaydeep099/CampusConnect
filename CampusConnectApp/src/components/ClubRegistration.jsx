@@ -10,16 +10,15 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { LoadAllClubs, createClub, uploadlogo } from "../services/club-service";
-import { uploadImage } from "../services/event-service";
+import { LoadAllClubs, Loadallunacceptedclub, createClub, uploadlogo } from "../services/club-service";
 import { useNavigate } from "react-router-dom";
 
 const ClubRegistration = () => {
   const [clubInfo, setClubInfo] = useState({
-    clubName: "",
+    clubEmail: "",
     dept: "",
     president: "",
-    clubEmail: "",
+    clubName: "",
     clubPassword: "",
     description: "",
     mentor: "",
@@ -29,7 +28,7 @@ const ClubRegistration = () => {
   const { navigate } = useNavigate();
 
   useEffect(() => {
-    LoadAllClubs().then((data) => {
+    Loadallunacceptedclub().then((data) => {
       console.log(data);
       const highestclubId = data.reduce(
         (max, club) => Math.max(max, club.clubId),
@@ -62,25 +61,26 @@ const ClubRegistration = () => {
         uploadlogo(image, clubIds)
           .then((data) => {
             console.log("logo is uploaded");
+            
           })
           .catch((error) => {
             console.log("Reupload and make sure it's size is less than 20MB");
           });
         console.log(data);
+        navigate("/clubDetails/" + clubInfo.clubId);
       })
       .catch((error) => {
         console.log(error);
       });
     console.log(clubInfo);
-    navigate("/clubDetail/" + clubInfo.clubId);
   };
 
   const handleReset = () => {
     setClubInfo({
-      clubName: "",
+      clubEmail: "",
       dept: "",
       president: "",
-      clubEmail: "",
+      clubName: "",
       clubPassword: "",
       description: "",
       mentor: "",
@@ -96,8 +96,8 @@ const ClubRegistration = () => {
             <FormLabel>Club Name</FormLabel>
             <Input
               type="text"
-              name="club_name"
-              value={clubInfo.club_name}
+              name="clubName"
+              value={clubInfo.clubName}
               onChange={handleChange}
               placeholder="Enter club name"
             />
@@ -140,8 +140,8 @@ const ClubRegistration = () => {
             <FormLabel>Club Email</FormLabel>
             <Input
               type="email"
-              name="club_email"
-              value={clubInfo.club_email}
+              name="clubEmail"
+              value={clubInfo.clubEmail}
               onChange={handleChange}
               placeholder="Enter club email"
             />
@@ -151,8 +151,8 @@ const ClubRegistration = () => {
             <FormLabel>Club Password</FormLabel>
             <Input
               type="password"
-              name="club_password"
-              value={clubInfo.club_password}
+              name="clubPassword"
+              value={clubInfo.clubPassword}
               onChange={handleChange}
               placeholder="Enter club password"
             />

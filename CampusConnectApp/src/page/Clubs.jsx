@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import Base from "../components/Base";
 import {
@@ -45,7 +43,7 @@ const Clubs = () => {
               <CardBody paddingBottom="0">
                 <Image
                   src={BASE_URL+"/api/club/logo/"+club?.logo}
-                  alt="Event Brochure"
+                  alt="Logo"
                   objectFit="cover"
                   borderRadius="lg"
                 />

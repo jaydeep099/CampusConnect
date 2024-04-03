@@ -103,10 +103,10 @@ export const AdminPage = () => {
             <Card maxW="sm" margin={5}>
               <CardBody paddingBottom="0">
                 <Image
-                  src="./assets/images/campusconnect.jpeg"
-                  alt="Logo"
-                  objectFit="cover"
-                  borderRadius="lg"
+                 src={BASE_URL + "/api/club/logo/" + club?.logo}
+                 alt="logo"
+                 objectFit="cover"
+                 borderRadius="lg"
                 />
 
                 <Heading size="md" paddingTop="10px">
