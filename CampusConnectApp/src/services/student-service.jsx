@@ -7,9 +7,7 @@ export const SignUpFunc = (student) => {
 };
 
 export const LoginStudent = (email, password) => {
-  // console.log(username);
-  // console.log(password);
-
+  console.log(email);
   return myAxios
     .get(`/api/student/${email}/${password}`)
     .then((response) => {

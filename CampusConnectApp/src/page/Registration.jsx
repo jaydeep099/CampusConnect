@@ -23,14 +23,12 @@ const Registration = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // const [errors, setErrors] = useState({});
-
   const [formData, setFormData] = useState({
     studentName: "",
-    studentUsername: location.state.username,
+    studentUsername: "",
     studentSem: "",
     studentDept: "",
-    studentEmail: "",
+    studentEmail: location.state.email,
     studentPassword: location.state.password,
   });
 
@@ -44,31 +42,13 @@ const Registration = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    //console.log(formData.studentDept);
     SignUpFunc(formData)
       .then((response) => {
-        // setFormData(response.data);
-        // console.log(response.data);
         toast.success("User Registered Successfully!!");
-        
-        // setErrors({});
-        // setFormData({
-        //   fullName: "",
-        //   studentUsername: "",
-        //   studentSem: "",
-        //   studentDept: "",
-        //   studentEmail: "",
-        //   studentPassword: "",
-        // });
       })
       .catch((error) => {
-        // setErrors(error.response.data.errors);
         toast.error(JSON.stringify(error.response.data.message));
       });
-
-    console.log(location.state.studentUsername);
-    console.log(formData.studentPassword);
     navigate("/");
   };
 
@@ -110,11 +90,11 @@ const Registration = () => {
                     />
                   </FormControl>
                   <FormControl>
-                    <FormLabel size="sm">Email</FormLabel>
+                    <FormLabel size="sm">Username</FormLabel>
                     <Input
                       type="text"
-                      name="studentEmail"
-                      value={formData.studentEmail}
+                      name="studentUsername"
+                      value={formData.studentUsername}
                       onChange={handleInputChange}
                       bg="white"
                       borderColor="#d8dee4"
@@ -151,7 +131,6 @@ const Registration = () => {
                       <option value="IT">Information Technology</option>
                       <option value="ECE">Electronics</option>
                       <option value="ME">Mechanical</option>
-                      {/* Add more department options as needed */}
                     </Select>
                   </FormControl>
                   <Button

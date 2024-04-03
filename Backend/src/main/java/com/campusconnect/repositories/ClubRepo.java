@@ -15,4 +15,5 @@ public interface ClubRepo extends JpaRepository<Club,Long> {
     public Club findClubByClubEmailAndClubPassword(String email,String password);
 
     public Club findClubByClubEmail(String email);
+
 }

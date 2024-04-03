@@ -5,5 +5,5 @@ import com.campusconnect.entities.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StudentRepo extends JpaRepository<Student, Long> {
-    Student findStudentByStudentUsernameAndStudentPassword(String email,String password);
+    Student findStudentByStudentEmailAndStudentPassword(String email,String password);
 }

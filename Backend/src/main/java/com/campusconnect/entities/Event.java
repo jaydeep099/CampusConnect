@@ -40,6 +40,9 @@ public class Event {
     @Column(name = "Event_Description")
     private String description;
 
+    @Column(name = "Event_Link")
+    private String eventLink;
+
     @Column(name = "Brochure")
     private String brochure;
 
@@ -47,11 +50,6 @@ public class Event {
     @JoinColumn(name = "Club_FK")
     @JsonBackReference
     private Club club;
-    
-//    @ManyToOne
-//    @JoinColumn(name = "uid")
-//    @JsonBackReference
-//    private User user;
 
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Student> student;

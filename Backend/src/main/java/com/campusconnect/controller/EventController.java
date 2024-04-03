@@ -48,7 +48,6 @@ public class EventController
     @PostMapping("/createEvent/{clubId}")
     public ResponseEntity<?> createEvent(@RequestBody EventDto eventDto, @PathVariable Long clubId)
     {
-        System.out.println("hii");
         EventDto eventDto1 = this.eventService.createEvent(eventDto, clubId);
         return new ResponseEntity<>(eventDto1, HttpStatus.CREATED);
     }

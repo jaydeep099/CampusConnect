@@ -47,20 +47,8 @@ public class Club {
     @Column(name = "Logo_link", length = Integer.MAX_VALUE)
     private String logo;
 
-    @Column(name="report",length = Integer.MAX_VALUE)
-    private String pdf;
-
-//    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-//    @JsonManagedReference
-//    private List<Post> allposts=new ArrayList<>();
-
     @OneToMany(mappedBy = "club", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Event> eventList = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "studentCollege",
-//            cascade = CascadeType.ALL,
-//            fetch = FetchType.EAGER
-//    )
-//    private List<Student> students;
 }

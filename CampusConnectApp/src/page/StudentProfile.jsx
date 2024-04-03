@@ -37,10 +37,6 @@ const StudentProfile = () => {
       });
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("loggedInUser");
-    navigate("/");
-  };
 
   return (
     <Base>
@@ -63,6 +59,10 @@ const StudentProfile = () => {
                       <Td>{profileData.studentUsername}</Td>
                     </Tr>
                     <Tr>
+                      <Td>Email</Td>
+                      <Td>{profileData.studentEmail}</Td>
+                    </Tr>
+                    <Tr>
                       <Td>SEMESTER</Td>
                       <Td>{profileData.studentSem}</Td>
                     </Tr>
@@ -73,9 +73,6 @@ const StudentProfile = () => {
                   </Tbody>
                 </Table>
               </CardBody>
-              <Button variant="solid" colorScheme="blue" maxW={"10%"} onClick={handleLogout}>
-                Logout
-              </Button>
             </Card>
           )}
         </Container>

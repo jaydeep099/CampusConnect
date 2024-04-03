@@ -5,6 +5,7 @@ import { LoadClubById } from "../services/club-service";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { BASE_URL } from "../services/helper";
 import { CheckClubStatus } from "../services/admin-service";
+import { EventCard } from "../components/EventCard";
 
 const ClubDetails = () => {
   const location = useLocation();
@@ -19,6 +20,7 @@ const ClubDetails = () => {
       .then((response) => {
         CheckClubStatus(response.clubEmail).then((res) => {
           console.log("checkCLubStatus", res);
+
           if (res === "pending") {
             setCheck(false);
             localStorage.removeItem("loggedInUser");
@@ -44,97 +46,69 @@ const ClubDetails = () => {
     navigate("/eventRegistry/" + clubId);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("loggedInUser");
-    navigate("/");
-  };
-
   return (
     <Base>
       {check ? (
-        <div>
-          <Center as="h1" size="xl" mb={4}>
-            {club.clubName}
-          </Center>
-          <Box ml="25%">
-            <Box p={4} textAlign="center">
+        <>
+          <Center>
+            <Card maxW="70%" mt="2" borderRadius="0">
+              <Center as="h1" size="xl" mb={4}>
+                {club.clubName}
+              </Center>
               <Flex>
-                <Box maxW="200px" overflow="hidden" mr={4}>
-                  <Image
-                     src={BASE_URL+"/api/club/logo/"+club?.logo}
-                     alt="Logo"
-                     objectFit="cover"
-                     borderRadius="lg"
-                  />
-                </Box>
-                <Box as="h3" ml="50px" mt="20px">
-                  {club.description}
+                <Image
+                  margin="3"
+                  boxSize="200px"
+                  src={BASE_URL + "/api/club/logo/" + club?.logo}
+                  alt="Logo"
+                  objectFit="cover"
+                  borderRadius="lg"
+                />
+                <Box ml="30px" mt="20px">
+                  <Text as="h4">Mentor: {club.mentor}</Text>
+                  <Text as="h4">President: {club.president}</Text>
+                  <Text as="h4">Department: {club.dept}</Text>
+                  <Text as="h4">Email: {club.clubEmail}</Text>
                 </Box>
               </Flex>
-            </Box>
-            {localStorage.getItem("loggedInUser") &&
-              JSON.parse(localStorage.getItem("loggedInUser")).email ===
-                club.clubEmail && (
-                <>
-                  <Button
-                    variant="solid"
-                    colorScheme="blue"
-                    onClick={() => handleCreate(club.clubId)}
-                  >
-                    Create New Event
-                  </Button>
-                  <Button
-                    variant="solid"
-                    colorScheme="blue"
-                    maxW={"10%"}
-                    onClick={handleLogout}
-                  >
-                    Logout
-                  </Button>
-                </>
-              )}
-            <Flex direction="row" justifyContent="space-between" maxW="100%">
-              {club.eventList &&
-                club.eventList.map((event) => (
-                  <Card key={event.eventId} maxW="sm">
+              <Text as="h6" m="3">
+                {club.description}
+              </Text>
+              {localStorage.getItem("loggedInUser") &&
+                JSON.parse(localStorage.getItem("loggedInUser")).email ===
+                  club.clubEmail && (
+                  <>
+                    <Button
+                      m="3"
+                      width="20%"
+                      variant="solid"
+                      colorScheme="blue"
+                      onClick={() => handleCreate(club.clubId)}
+                    >
+                      Create New Event
+                    </Button>
+                  </>
+                )}
+            </Card>
+          </Center>
+          <Flex direction="column" flex="1" p="4">
+            <Center>
+              <Box p={4} width="70%">
+                {club.eventList &&
+                  club.eventList.map((event) => (
                     <Box
-                      maxW="sm"
+                      key={event.eventId}
                       borderWidth="1px"
                       borderRadius="lg"
                       overflow="hidden"
                     >
-                      <Flex direction="row" p="3">
-                        <Image
-                          src="../assets/images/campusconnect.jpeg"
-                          alt="Event Logo"
-                          boxSize="100px"
-                          borderRadius="10px"
-                          objectFit="cover"
-                        />
-                        <Flex direction="column" flex="1" ml="2">
-                          <Text fontSize="xl" fontWeight="semibold">
-                            {event.eventName}
-                          </Text>
-                          <Text fontSize="md" mt="2">
-                            Date: {printDate(event.eventDate)}
-                          </Text>
-                        </Flex>
-                      </Flex>
-                      <Center>
-                        <Link
-                          mt="auto"
-                          to={"/eventdetails/" + event.eventId}
-                          className="btn btn-primary"
-                        >
-                          View Details
-                        </Link>
-                      </Center>
+                      <EventCard event={event} />
                     </Box>
-                  </Card>
-                ))}
-            </Flex>
-          </Box>
-        </div>
+                  ))}
+              </Box>
+            </Center>
+          </Flex>
+        </>
       ) : (
         <h2>
           Your request is sent successfully

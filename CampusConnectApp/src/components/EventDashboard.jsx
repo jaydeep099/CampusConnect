@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Box, Card, Center, Image, Text } from "@chakra-ui/react";
+import { Box, Button, Card, Center, Image, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { DeleteEventById, loadEventById } from "../services/event-service";
 import { Link, useParams } from "react-router-dom";
@@ -22,32 +22,31 @@ const EventDashboard = () => {
     // console.log("inIf");
     const user = JSON.parse(localStorage.getItem("loggedInUser"));
 
-    
     loadEventById(eventId)
-    .then((data) => {
-      // console.log(data);
-      // if(data.club.clubId === )
-      setEvent(data);
-      console.log(data);
-      if (user) {
-        getClubByClubEmail(user.email, user.password)
-          .then((response) => {
-            console.log("navbar", response);
-            if (response.clubId === data.club.clubId) {
-              setCheck(true);
-            }
-            // studetn_Id = response.studentId;
-          })
-          .catch((error) => {
-            console.log(error);
-            return;
-          });
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-      toast.error("Error in loading the event");
-    });
+      .then((data) => {
+        // console.log(data);
+        // if(data.club.clubId === )
+        setEvent(data);
+        console.log(data);
+        if (user) {
+          getClubByClubEmail(user.email, user.password)
+            .then((response) => {
+              console.log("navbar", response);
+              if (response.clubId === data.club.clubId) {
+                setCheck(true);
+              }
+              // studetn_Id = response.studentId;
+            })
+            .catch((error) => {
+              console.log(error);
+              return;
+            });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Error in loading the event");
+      });
     // }
     // console.log("clubclucb",event.club.clubId);
   }, [eventId]);
@@ -95,11 +94,24 @@ const EventDashboard = () => {
             <Text>Venue :{event?.eventVenue}</Text>
             <Text>Description :{event?.description}</Text>
             <Text>Club :{event?.club.clubName}</Text>
+            <Link
+              mt="auto"
+              colorScheme="blue"
+              to={event?.eventLink}
+              className="btn btn-primary"
+            >
+              Register
+            </Link>
           </Box>
         </Box>
         {check && (
           <>
-            <Link mt="auto" colorScheme="blue" className="btn btn-primary" to={"/editEvent/"+eventId}>
+            <Link
+              mt="auto"
+              colorScheme="blue"
+              className="btn btn-primary"
+              to={"/editEvent/" + eventId}
+            >
               Update
             </Link>
             <br />

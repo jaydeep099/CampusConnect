@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/jsx-key */
 import { useEffect, useState } from "react";
 import Base from "../components/Base";
 import {
@@ -12,7 +10,10 @@ import {
   Button,
   Input,
   SimpleGrid,
+  InputGroup,
+  InputLeftElement,
 } from "@chakra-ui/react";
+import { FaSearch } from "react-icons/fa";
 import {
   EventsBWDate,
   LoadAllEvents,
@@ -117,26 +118,6 @@ const Event = () => {
 
   return (
     <Base>
-      <div class="search-container">
-        <Input
-          onKeyUp={search}
-          id="search-input"
-          value={query}
-          class="form-"
-          type="text"
-          placeholder="Search..."
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        {query && (
-          <div
-            class="search-result"
-            dangerouslySetInnerHTML={{ __html: searchResult }}
-          >
-            {/* Content of search results */}
-            {/* {searchResult} */}
-          </div>
-        )}
-      </div>
       <Flex direction="row" maxW="100%">
         <Box w="200px" p="4" bg="gray.200">
           <Text>Filter Options</Text>
@@ -150,7 +131,7 @@ const Event = () => {
               placeholder="Start Date"
               value={fromDate}
               mt="2"
-              min={new Date().toISOString().split("T")[0]} // Set the minimum date to today's date
+              min={new Date().toISOString().split("T")[0]}
               onChange={(e) => setFromDate(e.target.value)}
             />
           ) : (
@@ -189,50 +170,34 @@ const Event = () => {
         </Box>
 
         <Flex direction="column" flex="1" p="4">
+          <div class="search-container">
+            <InputGroup width="100%" mb={1}>
+              <InputLeftElement
+                pointerEvents="none"
+                children={<FaSearch color="gray.300" />}
+              />
+              <Input
+                onKeyUp={search}
+                id="search-input"
+                value={query}
+                class="form-"
+                type="text"
+                placeholder="Search Events here..."
+                borderRadius={4}
+                bg="white"
+                borderColor="black"
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </InputGroup>
+            {query && (
+              <div
+                class="search-result"
+                dangerouslySetInnerHTML={{ __html: searchResult }}
+              ></div>
+            )}
+          </div>
           {events.map((event) => (
-            <Box
-              key={event.eventId}
-              borderWidth="1px"
-              borderRadius="lg"
-              overflow="hidden"
-            >
-              <EventCard event={event} />
-              {/* <Card key={event.eventId} mb="4">
-                <Flex direction="row" p="3">
-                  <Image
-                    src={
-                      BASE_URL + "/api/event/eventbroucher/" + event?.brochure
-                    }
-                    alt="Event Brochure"
-                    objectFit="cover"
-                    boxSize="200px"
-                    borderRadius="10px"
-                  />
-
-                  <Flex direction="column" flex="1" ml="2">
-                    <Text fontSize="xl" fontWeight="semibold">
-                      {event.eventName}
-                    </Text>
-                    <Text fontSize="md">
-                      Date: {printDate(event.eventDate)}
-                    </Text>
-                    <Text fontSize="md">Time: {event.eventTime}</Text>
-                    <Text fontSize="md">Venue: {event.eventVenue}</Text>
-                  </Flex>
-                </Flex>
-                <Box> 
-                  <Center>
-                  <Link
-                    mt="auto"
-                    to={"/eventdetails/" + event.eventId}
-                    className="btn btn-primary"
-                  >
-                    View Details
-                  </Link>
-                </Center>
-                </Box>
-              </Card> */}
-            </Box>
+            <EventCard event={event} />
           ))}
         </Flex>
       </Flex>

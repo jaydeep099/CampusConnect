@@ -61,13 +61,12 @@ const ClubRegistration = () => {
         uploadlogo(image, clubIds)
           .then((data) => {
             console.log("logo is uploaded");
-            
+            navigate("/clubDetail/" + data.clubId);
           })
           .catch((error) => {
             console.log("Reupload and make sure it's size is less than 20MB");
           });
         console.log(data);
-        navigate("/clubDetails/" + clubInfo.clubId);
       })
       .catch((error) => {
         console.log(error);
@@ -88,7 +87,7 @@ const ClubRegistration = () => {
   };
 
   return (
-    <Card p={8} m={4} borderRadius={0} boxShadow="lg" maxW="70%" mx="auto">
+    <Card p={8} m={4} borderRadius={0} boxShadow="lg" W="500px" mx="auto">
       <Stack spacing={4}>
         <Heading mb={4}>Register Your Club Here!</Heading>
         <form onSubmit={handleSubmit}>

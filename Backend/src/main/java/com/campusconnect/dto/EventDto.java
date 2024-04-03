@@ -30,6 +30,7 @@ public class EventDto
 
     private String brochure;
 
-//    @JsonBackReference
+    private String eventLink;
+
     private ClubDto club    ;
 }

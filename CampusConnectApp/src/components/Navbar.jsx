@@ -35,31 +35,35 @@ const Navbar = () => {
 
   const handleToggle = () => setIsOpen(!isOpen);
 
-  const handleClick = () => {
+  const handleProfile = () => {
     const user = JSON.parse(localStorage.getItem("loggedInUser"));
-    if (user) {
-      console.log(user.email);
-      if (user.role === "student") {
-        getStudetnIdByStudentEmail(user.email, user.password)
-          .then((response) => {
-            navigate("/studentProfile/" + response.studentId);
-          })
-          .catch((error) => {
-            console.log(error);
-            return;
-          });
-      } else if (user.role === "club") {
-        getClubByClubEmail(user.email, user.password)
-          .then((response) => {
-            console.log("navbar", response);
-            navigate("/clubDetail/" + response.clubId);
-          })
-          .catch((error) => {
-            console.log(error);
-            return;
-          });
-      }
+    console.log(user.email);
+    if (user.role === "student") {
+      getStudetnIdByStudentEmail(user.email, user.password)
+        .then((response) => {
+          navigate("/studentProfile/" + response.studentId);
+        })
+        .catch((error) => {
+          console.log(error);
+          return;
+        });
+    } else if (user.role === "club") {
+      console.log(user.email, user.password);
+      getClubByClubEmail(user.email, user.password)
+        .then((response) => {
+          console.log("navbar", response);
+          navigate("/clubDetail/" + response.clubId);
+        })
+        .catch((error) => {
+          console.log(error);
+          return;
+        });
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("loggedInUser");
+    navigate("/");
   };
 
   return (
@@ -156,36 +160,61 @@ const Navbar = () => {
                 </Link>
                 <Box ml={4}>
                   <Menu>
-                    <MenuButton as={Avatar} size="md" onClick={handleClick} />
-                    <MenuList>
-                      <Link
-                        _hover={{ textDecoration: "none" }}
-                        style={{ textDecoration: "none" }}
-                        as={ReactLink}
-                        to="/login"
-                        ml={2}
-                      >
-                        Login
-                      </Link>
-                      <MenuDivider />
+                    <MenuButton as={Avatar} size="md" />
+                    {localStorage.getItem("loggedInUser") === null ? (
+                      <MenuList>
+                        <Link
+                          _hover={{ textDecoration: "none" }}
+                          style={{ textDecoration: "none" }}
+                          as={ReactLink}
+                          to="/login"
+                          ml={2}
+                        >
+                          Login
+                        </Link>
+                        <MenuDivider />
 
-                      <Link
-                        _hover={{ textDecoration: "none" }}
-                        style={{ textDecoration: "none" }}
-                        as={ReactLink}
-                        to="/signup"
-                        ml={2}
-                      >
-                        SignUp
-                      </Link>
-                    </MenuList>
+                        <Link
+                          _hover={{ textDecoration: "none" }}
+                          style={{ textDecoration: "none" }}
+                          as={ReactLink}
+                          to="/signup"
+                          ml={2}
+                        >
+                          SignUp
+                        </Link>
+                      </MenuList>
+                    ) : (
+                      <MenuList>
+                        <Link
+                          _hover={{ textDecoration: "none" }}
+                          style={{ textDecoration: "none" }}
+                          as={ReactLink}
+                          onClick={handleProfile}
+                          ml={2}
+                        >
+                          Profile
+                        </Link>
+                        <MenuDivider />
+
+                        <Link
+                          _hover={{ textDecoration: "none" }}
+                          style={{ textDecoration: "none" }}
+                          as={ReactLink}
+                          onClick={handleLogout}
+                          ml={2}
+                        >
+                          Logout
+                        </Link>
+                      </MenuList>
+                    )}
                   </Menu>
                 </Box>
               </Box>
             </Flex>
           </Box>
         )}
-        {isLargerThan768 && !isLargerThan1023 && (
+        {!isLargerThan768 && !isLargerThan1023 && (
           <Box display="flex" alignItems="center" mr={2}>
             <IconButton
               aria-label="Options"
@@ -238,25 +267,51 @@ const Navbar = () => {
                     Contact Us
                   </Link>
                   <br />
-                  <Link
-                    _hover={{ textDecoration: "none" }}
-                    style={{ textDecoration: "none", fontSize: "md" }}
-                    as={ReactLink}
-                    fontWeight="semibold"
-                    to="/login"
-                  >
-                    Login
-                  </Link>
-                  <br />
-                  <Link
-                    _hover={{ textDecoration: "none" }}
-                    style={{ textDecoration: "none", fontSize: "md" }}
-                    as={ReactLink}
-                    fontWeight="semibold"
-                    to="/signup"
-                  >
-                    SignUp
-                  </Link>
+                  {localStorage.getItem("loggedInUser") === null ? (
+                    <>
+                      <Link
+                        _hover={{ textDecoration: "none" }}
+                        style={{ textDecoration: "none", fontSize: "md" }}
+                        as={ReactLink}
+                        fontWeight="semibold"
+                        to="/login"
+                      >
+                        Login
+                      </Link>
+                      <br />
+                      <Link
+                        _hover={{ textDecoration: "none" }}
+                        style={{ textDecoration: "none", fontSize: "md" }}
+                        as={ReactLink}
+                        fontWeight="semibold"
+                        to="/signup"
+                      >
+                        SignUp
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        _hover={{ textDecoration: "none" }}
+                        style={{ textDecoration: "none", fontSize: "md" }}
+                        as={ReactLink}
+                        fontWeight="semibold"
+                        onClick={handleProfile}
+                      >
+                        Profile
+                      </Link>
+                      <br />
+                      <Link
+                        _hover={{ textDecoration: "none" }}
+                        style={{ textDecoration: "none", fontSize: "md" }}
+                        as={ReactLink}
+                        fontWeight="semibold"
+                        onClick={handleLogout}
+                      >
+                        Logout
+                      </Link>
+                    </>
+                  )}
                 </DrawerBody>
               </DrawerContent>
             </Drawer>

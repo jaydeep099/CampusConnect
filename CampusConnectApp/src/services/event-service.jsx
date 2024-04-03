@@ -25,8 +25,9 @@ export const loadEventById = (eventId) => {
 };
 
 export const createEvent = (eventData, clubId) => {
+  console.log(clubId);
   return myAxios
-    .post(`/api/event/createEvent/` + clubId, eventData);
+    .post(`/api/event/createEvent/${clubId}`, eventData);
 };
 
 export const DeleteEventById = (eventId) => {

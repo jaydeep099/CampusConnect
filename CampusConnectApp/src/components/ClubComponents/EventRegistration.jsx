@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   Heading,
@@ -9,14 +9,14 @@ import {
   FormControl,
   FormLabel,
   Stack,
+  Card,
 } from "@chakra-ui/react";
-import { toast } from "react-toastify";
 import {
   LoadAllEvents,
   createEvent,
   uploadImage,
 } from "../../services/event-service";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 const EventRegistration = () => {
   const [eventInfo, setEventInfo] = useState({
@@ -25,11 +25,15 @@ const EventRegistration = () => {
     eventTime: "",
     eventVenue: "",
     description: "",
+    eventLink: ""
   });
 
   const [image, setImage] = useState({
     brochure: "",
   });
+
+  const { clubId } = useParams();
+  const  navigate  = useNavigate();
 
   let [eventId, setEventId] = useState();
   useEffect(() => {
@@ -60,7 +64,6 @@ const EventRegistration = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(eventInfo,clubId);
     createEvent(eventInfo, clubId)
       .then((data) => {
         uploadImage(image, eventId)
@@ -70,6 +73,7 @@ const EventRegistration = () => {
           .catch((error) => {
             console.log("Reupload and make sure it's size is less than 20MB");
           });
+        navigate("/clubDetail/" + clubId);
       })
       .catch((error) => {
         console.log(error);
@@ -77,13 +81,15 @@ const EventRegistration = () => {
   };
 
   return (
-    <Box
+    <Card
       p={8}
       borderWidth={1}
       borderRadius={8}
       boxShadow="lg"
       maxW="600px"
       mx="auto"
+      mt={4}
+      mb={4}
     >
       <Heading mb={4} textAlign="center">
         Event Registration
@@ -113,7 +119,7 @@ const EventRegistration = () => {
             />
           </FormControl>
 
-          <FormControl>
+          <FormControl isRequired>
             <FormLabel>Time</FormLabel>
             <Input
               type="time"
@@ -147,6 +153,18 @@ const EventRegistration = () => {
             />
           </FormControl>
 
+          <FormControl isRequired>
+            <FormLabel>Registration Link</FormLabel>
+            <Input
+              type="url"
+              placeholder="Enter Link"
+              name="eventLink"
+              value={eventInfo.eventLink}
+              onChange={handleChange}
+              required
+            />
+          </FormControl>
+
           <FormControl>
             <FormLabel>Event Brochure</FormLabel>
             <Input type="file" name="brochure" onChange={handleImageChange} />
@@ -158,7 +176,7 @@ const EventRegistration = () => {
           </Flex>
         </Stack>
       </form>
-    </Box>
+    </Card>
   );
 };
 

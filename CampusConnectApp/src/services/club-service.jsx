@@ -21,6 +21,7 @@ export const LoadClubById = (clubId) => {
 };
 
 export const createClub = (clubdata) => {
+  console.log(clubdata);
   return myAxios.post(`/api/club/register`, clubdata);
 };
 
@@ -56,4 +57,10 @@ export const uploadlogo = (image, clubId) => {
     .then((response) => {
       return response.data;
     });
+};
+
+export const FilterByDept = (dept) => {
+  return myAxios.get("/api/club/filter/" + dept).then((response) => {
+    return response.data;
+  });
 };

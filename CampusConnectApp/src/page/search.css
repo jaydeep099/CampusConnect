@@ -3,16 +3,10 @@
 }
 
 .search-result {
-  /* position: absolute;
-      background: white;
-      width: 100%;
-      padding: 10px;
-      border: 1px solid gray; */
-  /* display: none; */
   position: absolute;
   background: white;
   width: 100%;
   padding: 10px;
-  border: 1px solid gray;
-  z-index: 999; /* Set a higher z-index value */
+  border: 1px solid rgb(1, 0, 0);
+  z-index: 999;
 }
