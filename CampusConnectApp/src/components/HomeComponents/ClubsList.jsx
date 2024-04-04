@@ -1,84 +1,71 @@
+import React, { useEffect, useState } from "react";
 import {
-  SimpleGrid,
+  Heading,
+  Center,
+  Image,
+  Flex,
   Card,
   CardBody,
-  CardFooter,
-  Text,
-  CardHeader,
   Button,
-  Heading,
-  Box,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../services/helper";
+import Base from "../Base";
+import { LoadAllClubs } from "../../services/club-service";
+
 const ClubsList = () => {
+  const navigate = useNavigate();
+  const [clubs, setClubs] = useState([]);
+  const [dept, setDept] = useState("");
+  useEffect(() => {
+    LoadAllClubs()
+      .then((response) => {
+        setClubs([...response]);
+      })
+      .catch((error) => {
+        console.error("Error loading events:", error);
+      });
+  }, []);
+
+  const handleClick = (clubId) => {
+    navigate(`/clubDetail/${clubId}`);
+  };
+
   return (
-    <Box m={2}>
-      <Heading ml={4}>Clubs</Heading>
-        <hr/> 
-      <SimpleGrid
-        spacing={30}
-        templateColumns="repeat(auto-fill, minmax(250px, 1fr))"
-      >
-        <Card borderRadius={0}>
-          <CardHeader>
-            <Heading size="md"> Sports Club </Heading>
-          </CardHeader>
-          <CardBody>
-            <Text>
-              🏀⚽ Unleash your passion! Join the Sports Club for exhilarating
-              moments, teamwork, and unforgettable victories. 🏆🎉
-            </Text>
-          </CardBody>
-          <CardFooter>
-            <Button  variant="solid" colorScheme="blue">View here</Button>
-          </CardFooter>
-        </Card>
-        <Card borderRadius={0}>
-          <CardHeader>
-            <Heading size="md"> Samvad </Heading>
-          </CardHeader>
-          <CardBody>
-            <Text>
-              🗣️✨ Elevate your voice! Join Samvad Events for empowering
-              dialogues, confident public speaking, and a journey of impactful
-              conversations. 🎙️🤝
-            </Text>
-          </CardBody>
-          <CardFooter>
-            <Button  variant="solid" colorScheme="blue">View here</Button>
-          </CardFooter>
-        </Card>
-        <Card borderRadius={0}>
-          <CardHeader>
-            <Heading size="md"> Computer Society of India (CSI)</Heading>
-          </CardHeader>
-          <CardBody>
-            <Text>
-              🖥️💡 Dive into tech wonders! Join CSI Events for coding
-              adventures, innovation, and a byte-sized journey into the digital
-              realm. 🚀👩‍💻
-            </Text>
-          </CardBody>
-          <CardFooter>
-            <Button  variant="solid" colorScheme="blue">View here</Button>
-          </CardFooter>
-        </Card>
-        <Card borderRadius={0}>
-          <CardHeader>
-            <Heading size="md"> Decrypters </Heading>
-          </CardHeader>
-          <CardBody>
-            <Text>
-              🔐💻 Crack the code! Join Decrypters for coding challenges,
-              competitions, and workshops, unlocking a world of tech brilliance.
-              🚀
-            </Text>
-          </CardBody>
-          <CardFooter>
-            <Button  variant="solid" colorScheme="blue" >View here</Button>
-          </CardFooter>
-        </Card>
-      </SimpleGrid>
-    </Box>
+    <div style={{ paddingTop: "10px" }}>
+    <Heading ml={4}>Clubs</Heading>
+      <hr />
+      {Array.from({ length: 1 }).map((_, rowIndex) => (
+        <Flex key={rowIndex} justifyContent="center" alignItems="flex-start">
+          {clubs.slice(0, 4).map((club) => (
+            <Card key={club.clubId} maxW="sm" mx={2} mt={2}>
+              <CardBody paddingBottom="0">
+                <Image
+                  src={BASE_URL + "/api/club/logo/" + club?.logo}
+                  alt="Logo"
+                  boxSize="350px"
+                  objectFit="cover"
+                  borderRadius="lg"
+                />
+                <Heading size="md" paddingTop="10px">
+                  {club.clubName}
+                </Heading>
+              </CardBody>
+              <Center>
+                <Button
+                  variant="solid"
+                  colorScheme="blue"
+                  onClick={() => handleClick(club.clubId)}
+                  mb={2}
+                >
+                  View Details
+                </Button>
+              </Center>
+            </Card>
+          ))}
+        </Flex>
+      ))}
+    </div>
   );
 };
 

@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-vars */
 import { Box, Button, Card, Center, Image, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { DeleteEventById, loadEventById } from "../services/event-service";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../services/helper";
 import { getClubByClubEmail } from "../services/club-service";
@@ -16,6 +15,9 @@ const EventDashboard = () => {
   };
 
   const [check, setCheck] = useState(false);
+  const [isEventPast, setIsEventPast] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -37,6 +39,9 @@ const EventDashboard = () => {
               return;
             });
         }
+        const eventDate = new Date(data.eventDate);
+        const currentDate = new Date();
+        setIsEventPast(eventDate < currentDate);
       })
       .catch((error) => {
         console.log(error);
@@ -88,37 +93,44 @@ const EventDashboard = () => {
               <Text>Venue :{event?.eventVenue}</Text>
               <Text>Description :{event?.description}</Text>
               <Text>Club :{event?.club.clubName}</Text>
-              <Link
-                mt="auto"
-                to={event?.eventLink}
-                className="btn btn-primary"
-              >
-                Register
-              </Link>
-          {check && (
-            
-              <Box mt={4}>
-                <Box display="inline-block" marginRight="2">
-                  <Link
-                    mt="auto"
-                    className="btn btn-primary"
-                    to={"/editEvent/" + eventId}
-                  >
-                    Update
-                  </Link>
+
+              {isEventPast ? (
+                <b>You are past the Registration Date. Registration is closed.</b>
+              ) : (
+                <Link
+                  mt="auto"
+                  to={
+                    localStorage.getItem("loggedInUser") === null
+                      ? "/login"
+                      : { pathname: event?.eventLink }
+                  }
+                  className="btn btn-primary"
+                >
+                  Register
+                </Link>
+              )}
+              {check && (
+                <Box mt={4}>
+                  <Box display="inline-block" marginRight="2">
+                    <Link
+                      mt="auto"
+                      className="btn btn-primary"
+                      to={"/editEvent/" + eventId}
+                    >
+                      Update
+                    </Link>
+                  </Box>
+                  <Box display="inline-block">
+                    <Link
+                      mt="auto"
+                      className="btn btn-primary"
+                      onClick={handleDelete}
+                    >
+                      Delete
+                    </Link>
+                  </Box>
                 </Box>
-                <Box display="inline-block">
-                  <Link
-                    mt="auto"
-                    className="btn btn-primary"
-                    onClick={handleDelete}
-                  >
-                    Delete
-                  </Link>
-                </Box>
-              </Box>
-            
-          )}
+              )}
             </Box>
           </Box>
         </Card>
