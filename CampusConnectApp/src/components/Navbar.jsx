@@ -2,9 +2,6 @@ import {
   Box,
   Flex,
   IconButton,
-  Input,
-  InputGroup,
-  InputRightElement,
   Menu,
   MenuButton,
   MenuList,
@@ -19,8 +16,7 @@ import {
   DrawerCloseButton,
   DrawerBody,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import { FaSearch } from "react-icons/fa";
+import { useState } from "react";;
 import { NavLink as ReactLink, useNavigate } from "react-router-dom";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { getStudetnIdByStudentEmail } from "../services/student-service";
@@ -85,7 +81,7 @@ const Navbar = () => {
           <Image
             borderRadius="full"
             boxSize="55px"
-            src="./assets/images/campusconnectlogo.jpeg"
+            src="../assets/images/campusconnectlogo.jpeg"
             alt="CampusConnect"
             mr={2}
           />
@@ -145,19 +141,7 @@ const Navbar = () => {
                 >
                   Clubs
                 </Link>
-                <Link
-                  _hover={{ textDecoration: "none" }}
-                  style={{
-                    textDecoration: "none",
-                    fontSize: isLargerThan768 ? "md" : "sm",
-                  }}
-                  as={ReactLink}
-                  to="/contactus"
-                  fontWeight="semibold"
-                  mr={50}
-                >
-                  Contact Us
-                </Link>
+
                 <Box ml={4}>
                   <Menu>
                     <MenuButton as={Avatar} size="md" />
@@ -257,16 +241,7 @@ const Navbar = () => {
                     Clubs
                   </Link>
                   <br />
-                  <Link
-                    _hover={{ textDecoration: "none" }}
-                    style={{ textDecoration: "none", fontSize: "md" }}
-                    as={ReactLink}
-                    to="/contactus"
-                    fontWeight="semibold"
-                  >
-                    Contact Us
-                  </Link>
-                  <br />
+
                   {localStorage.getItem("loggedInUser") === null ? (
                     <>
                       <Link

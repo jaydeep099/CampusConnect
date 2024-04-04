@@ -145,7 +145,6 @@ public class EventController
         InputStream resource = this.fileService.getResources(path,image);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         StreamUtils.copy(resource,response.getOutputStream());
-
     }
 
     private Date convertToDate(String dateString) {

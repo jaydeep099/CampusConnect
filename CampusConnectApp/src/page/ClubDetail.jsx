@@ -34,14 +34,6 @@ const ClubDetails = () => {
       });
   }, [clubId]);
 
-  function printDate(date) {
-    return new Date(date).toLocaleDateString();
-  }
-
-  const handleClick = (eventId) => {
-    navigate("/eventdetails", { state: { event_Id: eventId } });
-  };
-
   const handleCreate = (clubId) => {
     navigate("/eventRegistry/" + clubId);
   };
@@ -110,11 +102,11 @@ const ClubDetails = () => {
           </Flex>
         </>
       ) : (
-        <h2>
-          Your request is sent successfully
-          <br />
-          Wait for a reply
-        </h2>
+        <Center mt={10}>
+        <Text as="h4">
+          Your request is sent successfully to the admin. Please wait for the conformation
+        </Text>
+        </Center>
       )}
     </Base>
   );

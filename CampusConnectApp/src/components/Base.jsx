@@ -1,5 +1,4 @@
 import Navbar from "./Navbar";
-
 const Base = ({ children }) => {
   return (
     <>

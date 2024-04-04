@@ -20,7 +20,7 @@ import { BASE_URL } from "../services/helper";
 export const AdminPage = () => {
   const [clubs, setClubs] = useState([]);
   const [mailData, setMailData] = useState({
-    subject: "about your Club request.",
+    subject: "About your Club request.",
     message: "",
   });
 
@@ -37,7 +37,7 @@ export const AdminPage = () => {
       });
   }, []);
 
-  const handleAccept = (Email,clubName) => {
+  const handleAccept = (Email, clubName) => {
     console.log(Email);
     ChangeClubStatus(Email, "accepted").then(() => {
       console.log("accepted!!");
@@ -51,9 +51,9 @@ export const AdminPage = () => {
         });
 
       mailData.message =
-        "Your club " +
+        "We are thrilled to inform you that your club " +
         clubName +
-        " is registered in CampusConnect.\nNow you can add event.";
+        " registration has been accepted! 🥳 On behalf of Campus Connect, we extend our warmest congratulations and welcome you to our community of clubs";
       SendMail(Email, mailData)
         .then(() => {
           console.log("mail send");
@@ -88,7 +88,7 @@ export const AdminPage = () => {
 
   const handleClick = (clubName) => {
     setReject(clubName);
-  }
+  };
 
   const handleChange = (event) => {
     setMailData({ ...mailData, [event.target.name]: event.target.value });
@@ -96,17 +96,19 @@ export const AdminPage = () => {
 
   return (
     <div>
-      <h2>pending requests</h2>
+      <Text as="h2" m={4}>
+        Pending requests..
+      </Text>
       {clubs &&
         clubs.map((club) => (
           <>
             <Card maxW="sm" margin={5}>
               <CardBody paddingBottom="0">
                 <Image
-                 src={BASE_URL + "/api/club/logo/" + club?.logo}
-                 alt="logo"
-                 objectFit="cover"
-                 borderRadius="lg"
+                  src={BASE_URL + "/api/club/logo/" + club?.logo}
+                  alt="logo"
+                  objectFit="cover"
+                  borderRadius="lg"
                 />
 
                 <Heading size="md" paddingTop="10px">
@@ -114,38 +116,41 @@ export const AdminPage = () => {
                 </Heading>
                 <Text>{club.description}</Text>
               </CardBody>
-              <Center>
-                <CardFooter style={{ margin: 0 }}>
-                  <Button
-                    variant="solid"
-                    colorScheme="blue"
-                    onClick={() => {
-                      handleAccept(club.clubEmail,club.clubName);
-                    }}
-                  >
-                    Accept
-                  </Button>
-                  <Button
-                    variant="solid"
-                    colorScheme="blue"
-                    onClick={() => handleClick(club.clubName)}
-                  >
-                    Reject
-                  </Button>
-                  {}
-                </CardFooter>
-              </Center>
+
+              <CardFooter style={{ margin: 0 }}>
+                <Button
+                  variant="solid"
+                  colorScheme="blue"
+                  onClick={() => {
+                    handleAccept(club.clubEmail, club.clubName);
+                  }}
+                  mr={1}
+                >
+                  Accept
+                </Button>
+                <Button
+                  variant="solid"
+                  colorScheme="blue"
+                  ml={1}
+                  onClick={() => handleClick(club.clubName)}
+                >
+                  Reject
+                </Button>
+              </CardFooter>
+
               {reject === club.clubName && (
                 <>
                   <Textarea
                     value={mailData.message}
                     name="message"
                     onChange={handleChange}
+                    m={1}
                   />
                   <Button
                     variant="solid"
                     colorScheme="blue"
                     onClick={() => handleReject(club.clubEmail, club.clubName)}
+                    m={1}
                   >
                     Submit FeedBack
                   </Button>

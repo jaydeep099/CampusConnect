@@ -25,7 +25,7 @@ const ClubRegistration = () => {
   });
   let [clubIds, setClubIds] = useState();
   const [image, setImage] = useState();
-  const { navigate } = useNavigate();
+  const  navigate  = useNavigate();
 
   useEffect(() => {
     Loadallunacceptedclub().then((data) => {
@@ -61,12 +61,12 @@ const ClubRegistration = () => {
         uploadlogo(image, clubIds)
           .then((data) => {
             console.log("logo is uploaded");
-            navigate("/clubDetail/" + data.clubId);
           })
           .catch((error) => {
             console.log("Reupload and make sure it's size is less than 20MB");
           });
         console.log(data);
+        navigate("/clubDetail/"+clubIds);
       })
       .catch((error) => {
         console.log(error);

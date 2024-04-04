@@ -16,7 +16,7 @@ export const EventCard = (prop) => {
         <Card mb="4">
           <Flex direction="row" p="3">
             <Image
-              src={BASE_URL + "/api/event/eventbrochure/" + event.brochure}
+              src={BASE_URL + "/api/event/eventbroucher/" + event.brochure}
               alt="Event Logo"
               boxSize="200px"
               borderRadius="10px"
