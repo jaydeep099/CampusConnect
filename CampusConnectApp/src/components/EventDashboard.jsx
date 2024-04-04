@@ -1,4 +1,3 @@
-import { Box, Button, Card, Center, Image, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { DeleteEventById, loadEventById } from "../services/event-service";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -6,17 +5,13 @@ import { toast } from "react-toastify";
 import { BASE_URL } from "../services/helper";
 import { getClubByClubEmail } from "../services/club-service";
 import Base from "./Base";
+import { Box, Button, Card, Center, Image, Text } from "@chakra-ui/react";
 
 const EventDashboard = () => {
   const { eventId } = useParams();
   const [event, setEvent] = useState(null);
-  const printDate = (date) => {
-    return new Date(date).toLocaleDateString();
-  };
-
-  const [check, setCheck] = useState(false);
   const [isEventPast, setIsEventPast] = useState(false);
-
+  const [check, setCheck] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,18 +20,15 @@ const EventDashboard = () => {
     loadEventById(eventId)
       .then((data) => {
         setEvent(data);
-        console.log(data);
         if (user) {
           getClubByClubEmail(user.email, user.password)
             .then((response) => {
-              console.log("navbar", response);
               if (response.clubId === data.club.clubId) {
                 setCheck(true);
               }
             })
             .catch((error) => {
               console.log(error);
-              return;
             });
         }
         const eventDate = new Date(data.eventDate);
@@ -51,12 +43,17 @@ const EventDashboard = () => {
 
   const handleDelete = () => {
     DeleteEventById(eventId)
-      .then((response) => {
-        toast.success("Post Deleted Successfully!!");
+      .then(() => {
+        toast.success("Event Deleted Successfully!!");
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const printDate = (date) => {
+    return new Date(date).toLocaleDateString();
   };
 
   return (
@@ -81,33 +78,38 @@ const EventDashboard = () => {
           <Box flex="1" display="flex">
             <Box flex="2" padding="4">
               <Image
-                src={BASE_URL + "/api/event/eventbroucher/" + event?.brochure}
+                src={
+                  event
+                    ? BASE_URL + "/api/event/eventbroucher/" + event.brochure
+                    : ""
+                }
                 alt="Event Brochure"
                 objectFit="cover"
               />
             </Box>
             <Box flex="3" padding="4">
-              <Text>Name :{event?.eventName}</Text>
-              <Text>Date :{printDate(event?.eventDate)}</Text>
-              <Text>Time :{event?.eventTime}</Text>
-              <Text>Venue :{event?.eventVenue}</Text>
-              <Text>Description :{event?.description}</Text>
-              <Text>Club :{event?.club.clubName}</Text>
+              <Text>Name: {event?.eventName}</Text>
+              <Text>Date: {event ? printDate(event.eventDate) : ""}</Text>
+              <Text>Time: {event?.eventTime}</Text>
+              <Text>Venue: {event?.eventVenue}</Text>
+              <Text>Description: {event?.description}</Text>
+              <Text>Club: {event?.club.clubName}</Text>
 
               {isEventPast ? (
-                <b>You are past the Registration Date. Registration is closed.</b>
+                <b>
+                  You are past the Registration Date. Registration is closed.
+                </b>
               ) : (
-                <Link
+                event && (
+                  <Link
                   mt="auto"
-                  to={
-                    localStorage.getItem("loggedInUser") === null
-                      ? "/login"
-                      : { pathname: event?.eventLink }
-                  }
+                  to={localStorage.getItem("loggedInUser") === null ? "/login" : event.eventLink}
                   className="btn btn-primary"
                 >
                   Register
                 </Link>
+                
+                )
               )}
               {check && (
                 <Box mt={4}>
@@ -121,13 +123,14 @@ const EventDashboard = () => {
                     </Link>
                   </Box>
                   <Box display="inline-block">
-                    <Link
+                    <Button
                       mt="auto"
                       className="btn btn-primary"
+                      colorScheme="red"
                       onClick={handleDelete}
                     >
                       Delete
-                    </Link>
+                    </Button>
                   </Box>
                 </Box>
               )}

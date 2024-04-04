@@ -65,7 +65,6 @@ export const AdminPage = () => {
   };
 
   const handleReject = (Email, clubName) => {
-    // setReject(clubName);
     console.log(mailData);
 
     ChangeClubStatus(Email, "rejected")
@@ -78,7 +77,6 @@ export const AdminPage = () => {
           .catch((error) => {
             console.log(error);
           });
-        // mailData.message = "Sorry your club " + clubName + " is not valid";
         SendMail(Email, mailData);
       })
       .catch((error) => {
@@ -144,7 +142,7 @@ export const AdminPage = () => {
                     value={mailData.message}
                     name="message"
                     onChange={handleChange}
-                    m={1}
+                    
                   />
                   <Button
                     variant="solid"

@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
-  Box,
   Button,
   Card,
   CardBody,
@@ -14,10 +13,11 @@ import {
   Stack,
   Image,
   VStack,
-  Select, 
+  Select,
 } from "@chakra-ui/react";
 import { SignUpFunc } from "../services/student-service";
 import { toast } from "react-toastify";
+import Base from "../components/Base";
 
 const Registration = () => {
   const location = useLocation();
@@ -53,8 +53,8 @@ const Registration = () => {
   };
 
   return (
-    <Box>
-      <Center>
+    <Base>
+      <Center m={4}>
         <Stack spacing="4">
           <Card variant="outline" w="150%">
             <VStack as="header" spacing="6" mt="8">
@@ -149,7 +149,7 @@ const Registration = () => {
           </Card>
         </Stack>
       </Center>
-    </Box>
+    </Base>
   );
 };
 

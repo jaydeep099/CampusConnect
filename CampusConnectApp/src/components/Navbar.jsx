@@ -95,7 +95,7 @@ const Navbar = () => {
             fontSize="xl"
             fontWeight="extrabold"
           >
-            Campus Connect
+            Club Hub
           </Link>
         </Box>
         {isLargerThan1023 && (
