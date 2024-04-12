@@ -5,10 +5,10 @@ Club Hub is a comprehensive club management and event promotion platform.
 ## Technologies Used
 
 - Frontend:
-  -React JS
+  - React JS
 
 - Backend:
-  -Spring Boot
+  - Spring Boot
   
 - Database:
   - MySql
