@@ -1,4 +1,4 @@
-import { Card, Center, Flex, Image, Text, Heading } from "@chakra-ui/react";
+import { Card, Center, Flex, Image, Text, Heading,Box} from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { BASE_URL } from "../services/helper";
@@ -11,9 +11,9 @@ export const EventCard = (prop) => {
   };
 
   return (
-    <div>
+    <Box mb="4">
       {event && (
-        <Card mb="4">
+        <Card>
           <Flex direction="row" p="3">
             <Image
               src={BASE_URL + "/api/event/eventbroucher/" + event.brochure}
@@ -38,6 +38,6 @@ export const EventCard = (prop) => {
           </Flex>
         </Card>
       )}
-    </div>
+      </Box>
   );
 };

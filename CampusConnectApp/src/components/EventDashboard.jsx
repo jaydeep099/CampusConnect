@@ -88,28 +88,43 @@ const EventDashboard = () => {
               />
             </Box>
             <Box flex="3" padding="4">
-              <Text>Name: {event?.eventName}</Text>
-              <Text>Date: {event ? printDate(event.eventDate) : ""}</Text>
-              <Text>Time: {event?.eventTime}</Text>
-              <Text>Venue: {event?.eventVenue}</Text>
-              <Text>Description: {event?.description}</Text>
-              <Text>Club: {event?.club.clubName}</Text>
+              <Text>
+                <strong>Name:</strong> {event?.eventName}
+              </Text>
+              <Text>
+                <strong>Date:</strong> {event ? printDate(event.eventDate) : ""}
+              </Text>
+              <Text>
+                <strong>Time:</strong> {event?.eventTime}
+              </Text>
+              <Text>
+                <strong>Venue:</strong> {event?.eventVenue}
+              </Text>
+              <Text>
+                <strong>Description:</strong> {event?.description}
+              </Text>
+              <Text>
+                <strong>Club : </strong> {event?.club.clubName}
+              </Text>
 
               {isEventPast ? (
                 <b>
                   You are past the Registration Date. Registration is closed.
                 </b>
-              ) : (
-                event && (
+              ) : localStorage.getItem("loggedInUser") ? (
+                event ? (
                   <Link
-                  mt="auto"
-                  to={localStorage.getItem("loggedInUser") === null ? "/login" : event.eventLink}
-                  className="btn btn-primary"
-                >
-                  Register
+                    mt="auto"
+                    to={event.eventLink}
+                    className="btn btn-primary"
+                  >
+                    Register
+                  </Link>
+                ) : null
+              ) : (
+                <Link mt="auto" className="btn btn-danger" to={"/login"}>
+                  Login to Register for Event
                 </Link>
-                
-                )
               )}
               {check && (
                 <Box mt={4}>
