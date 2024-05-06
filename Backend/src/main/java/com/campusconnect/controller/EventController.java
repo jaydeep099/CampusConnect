@@ -161,7 +161,6 @@ public class EventController
     @GetMapping("/search/{query}")
     public ResponseEntity<List<Event>> search(@PathVariable("query") String query)
     {
-        System.out.println(query);
         List<Event> eventList = this.eventRepo.findByEventNameContaining(query);
 
         return new ResponseEntity<List<Event>>(eventList, HttpStatus.OK);

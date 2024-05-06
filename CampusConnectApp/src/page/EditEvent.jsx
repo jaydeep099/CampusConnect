@@ -4,7 +4,9 @@ import Base from "../components/Base";
 import {
   Box,
   Card,
+  Center,
   Container,
+  Flex,
   FormControl,
   FormLabel,
   Input,
@@ -12,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { Button } from "antd";
 import { UpdateEvent, loadEventById } from "../services/event-service";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export const EditEvent = () => {
   const [event, setEvent] = useState(null);
@@ -54,7 +56,7 @@ export const EditEvent = () => {
     const newDate = new Date(date);
 
     const day = String(newDate.getDate()).padStart(2, "0");
-    const month = String(newDate.getMonth() + 1).padStart(2, "0"); // Month is zero-based, so we add 1
+    const month = String(newDate.getMonth() + 1).padStart(2, "0");
     const year = newDate.getFullYear();
 
     return `${year}-${month}-${day}`;
@@ -68,15 +70,15 @@ export const EditEvent = () => {
       .catch((error) => {
         console.log(error);
       });
-    // console.log("update", event);
   };
 
   return (
     <Base>
       {check ? (
         event && (
-          <Card p={4}>
-            <Container maxW="sm">
+          <Container  maxW='lg' justifyContent='center'>
+          <Card p={4} m={5} >
+            <Container>
               <FormControl>
                 <FormLabel>Event Name</FormLabel>
                 <Input
@@ -122,16 +124,25 @@ export const EditEvent = () => {
                 />
               </FormControl>
               <Container textAlign="center" mt={4}>
-                <Button
-                  variant="solid"
-                  colorScheme="blue"
+                <Link
+                  className="btn btn-primary"
                   onClick={handleUpdate}
+                  to={"/eventdetails/" + event.eventId}
                 >
-                  View Details
-                </Button>
+                  Update
+                </Link>
+                <Link
+                  style={{ marginLeft: '10px' }}
+                  className="btn btn-danger"
+                  onClick={handleUpdate}
+                  to={"/eventdetails/" + event.eventId}
+                >
+                  Cancel
+                </Link>
               </Container>
             </Container>
           </Card>
+          </Container>
         )
       ) : (
         <h2>This is not your post</h2>
