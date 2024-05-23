@@ -1,6 +1,6 @@
-# Club Hub
+# Campus Connect
 
-Club Hub is a comprehensive club management and event promotion platform.
+Campus Connect is a comprehensive club management and event promotion platform.
 
 ## Technologies Used
 
@@ -16,7 +16,7 @@ Club Hub is a comprehensive club management and event promotion platform.
   
 ## Functionalities Implemented
 
-Club Hub offers the following functionalities:
+Campus Connect offers the following functionalities:
 
 1. **User Authentication:**
   - Users can register and log in to the website.
